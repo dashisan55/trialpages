@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ToRaNOS 練習用</title>
+<style>
+:root{
+  --bg:#0a0e1a;--accent:#00bfff;--pink:#ff2d7a;--cyan:#00e5ff;
+  --green:#39ff14;--yellow:#ffe600;--border:#2a3a5a;--info-bg:#13192b;
+  --btn-login:#e8dcc8;--practice:#ff6600;--tl-line:#ff2d7a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{
+  font-family:'Hiragino Sans','Meiryo',sans-serif;
+  background:var(--bg);color:#fff;min-height:100vh;max-width:480px;margin:0 auto;overflow-x:hidden;
+}
+.practice-banner{background:var(--practice);color:#fff;text-align:center;padding:5px;font-size:12px;font-weight:bold;letter-spacing:3px;position:sticky;top:0;z-index:200;}
+.header{background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #1a2540;min-height:54px;position:relative;}
+.header-moon{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:52px;height:52px;background:radial-gradient(circle at 60% 40%,#d4c88a 0%,#b8a85a 40%,#8a7a30 70%,transparent 100%);border-radius:50%;opacity:0.5;pointer-events:none;}
+.menu-btn{background:none;border:none;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;z-index:1;padding:4px;}
+.menu-btn span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;}
+.menu-label{font-size:9px;color:#aaa;margin-top:1px;}
+.logo-wrap{z-index:1;text-align:center;}
+.logo-text{font-size:24px;font-weight:900;letter-spacing:2px;color:#fff;text-shadow:0 0 10px var(--accent),0 0 20px var(--accent);line-height:1;}
+.logo-sub{font-size:8px;color:#6a8aaa;letter-spacing:1px;}
+.info-area{background:var(--info-bg);padding:8px 14px 6px;border-bottom:1px solid var(--border);font-size:13px;line-height:1.9;}
+.tl-wrap{padding:4px 0 8px;}
+.tl-item{display:flex;align-items:center;min-height:30px;position:relative;padding-left:22px;margin-bottom:2px;}
+.tl-line-v{position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--tl-line);}
+.tl-item:first-child .tl-line-v{top:50%;}
+.tl-item:last-child .tl-line-v{bottom:50%;}
+.tl-dot{position:absolute;left:4px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:var(--tl-line);z-index:1;}
+.tl-label{font-size:13px;flex:1;color:#fff;}
+.tl-time{font-size:13px;font-weight:bold;background:#1e2d4a;padding:2px 10px;border-radius:4px;min-width:88px;text-align:center;color:#fff;}
+.btn{display:block;width:100%;padding:13px 10px;border:none;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;transition:opacity .15s,transform .1s;letter-spacing:1px;margin-bottom:8px;}
+.btn:active{transform:scale(.97);opacity:.8;}
+.btn:disabled{opacity:.3;cursor:not-allowed;}
+.btn-cyan{background:#00e5ff;color:#000;}
+.btn-pink{background:#ff2d7a;color:#fff;}
+.btn-green{background:#39ff14;color:#000;}
+.btn-yellow{background:#ffe600;color:#000;}
+.btn-gray{background:#2a3a5a;color:#fff;}
+.btn-white{background:#fff;color:#000;}
+.btn-outline{background:transparent;border:2px solid #fff;color:#fff;}
+.btn-login{background:#e8dcc8;color:#222;font-size:16px;}
+.form-label{font-size:14px;color:#fff;margin-bottom:6px;display:block;}
+.form-input{width:100%;background:#1e2d4a;border:1px solid #2a3a5a;border-radius:4px;padding:12px;font-size:15px;color:#fff;-webkit-appearance:none;}
+.form-input:focus{outline:none;border-color:var(--accent);}
+.line-row{display:flex;align-items:stretch;margin-bottom:3px;width:100%;text-align:left;border:none;}
+.line-main{flex:1;padding:7px 14px;}
+.line-name{font-size:14px;font-weight:bold;color:#fff;}
+.line-status{font-size:12px;color:rgba(255,255,255,.85);margin-top:2px;}
+.line-nyuko-btn{background:rgba(0,0,0,.25);border:none;color:#fff;font-size:11px;font-weight:bold;padding:0 12px;cursor:pointer;min-width:60px;display:flex;align-items:center;justify-content:center;line-height:1.3;text-align:center;}
+.line-nyuko-btn:disabled{opacity:.4;cursor:not-allowed;}
+.status-line-row{display:flex;align-items:stretch;margin-bottom:3px;}
+.status-line-main{flex:1;padding:8px 14px;}
+.status-badge{display:flex;align-items:center;justify-content:center;padding:0 14px;font-size:12px;font-weight:bold;min-width:70px;}
+.badge-running{background:#2a3a5a;color:#aaa;}
+.badge-done{background:#1a3a1a;color:#39ff14;}
+.select-list-item{display:block;width:100%;background:#1e2d4a;border:none;border-radius:6px;color:#fff;font-size:15px;font-weight:bold;padding:14px 16px;margin-bottom:8px;text-align:left;cursor:pointer;transition:opacity .15s;}
+.select-list-item:active{opacity:.7;}
+.select-list-item.done{background:#1a3a2a;color:#39ff14;}
+.contact-card{background:#1e2d4a;border-radius:8px;padding:14px 16px;margin-bottom:10px;}
+.contact-name{font-size:13px;color:#aaa;margin-bottom:4px;}
+.contact-tel{font-size:18px;font-weight:bold;color:#00e5ff;letter-spacing:2px;}
+.call-btn{display:block;width:100%;background:#00e5ff;color:#000;border:none;border-radius:6px;padding:12px;font-size:14px;font-weight:bold;margin-top:8px;cursor:pointer;text-decoration:none;text-align:center;}
+.dialog-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;align-items:center;justify-content:center;}
+.dialog-overlay.show{display:flex;}
+.dialog-box{background:#1a2035;border:1px solid var(--border);border-radius:10px;padding:20px 18px;max-width:340px;width:92%;}
+.dialog-title{font-size:15px;color:#fff;margin-bottom:10px;line-height:1.6;}
+.chk-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;color:#fff;cursor:pointer;}
+.chk-item:last-child{border-bottom:none;}
+.chk-item input[type=checkbox]{width:18px;height:18px;margin-top:2px;accent-color:var(--cyan);flex-shrink:0;}
+.dialog-actions{display:flex;gap:10px;margin-top:14px;}
+.dialog-actions .btn{margin-bottom:0;flex:1;}
+.drawer{position:fixed;top:0;left:-240px;width:220px;height:100vh;background:#0d1322;border-right:1px solid var(--border);z-index:400;transition:left .25s;padding-top:56px;}
+.drawer.open{left:0;}
+.drawer-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:399;}
+.drawer-ov.show{display:block;}
+.drawer-item{padding:14px 20px;font-size:14px;color:#fff;border-bottom:1px solid var(--border);cursor:pointer;}
+.drawer-item:hover{background:#1a2540;}
+.drawer-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#fff;font-size:20px;cursor:pointer;}
+.screen{display:none;}
+.screen.active{display:block;}
+.done-msg{padding:20px 16px 8px;font-size:20px;font-weight:bold;line-height:1.5;}
+.section{padding:10px 14px;}
+.refresh-btn{display:block;margin:4px auto;background:none;border:none;color:var(--cyan);font-size:24px;cursor:pointer;}
+.menu-select-item{display:block;width:100%;background:#1e2d4a;border:none;border-radius:8px;color:#fff;font-size:16px;font-weight:bold;padding:18px 16px;margin-bottom:10px;text-align:left;cursor:pointer;border-left:5px solid var(--cyan);transition:opacity .15s;}
+.menu-select-item:active{opacity:.7;}
+.send-status{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1e2d4a;border:1px solid var(--border);border-radius:20px;padding:6px 18px;font-size:12px;color:#aaa;z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;}
+.send-status.show{opacity:1;}
+.send-status.ok{border-color:var(--green);color:var(--green);}
+.send-status.err{border-color:var(--pink);color:var(--pink);}
+</style>
+</head>
+<body>
+<div class="practice-banner">🔶 練 習 用 サ イ ト 🔶</div>
+<div class="send-status" id="send-toast"></div>
+
+<!-- ドロワー -->
+<div class="drawer-ov" id="dov" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  <div class="drawer-item" onclick="drawerGoto('work');closeDrawer();">・当日作業</div>
+  <div class="drawer-item" onclick="drawerGoto('nyuko-status');closeDrawer();">・終電入庫状況</div>
+  <div class="drawer-item" onclick="drawerGoto('contact');closeDrawer();">・その他（問合せ先）</div>
+  <div class="drawer-item" onclick="doLogout()">・ログアウト</div>
+</div>
+
+<!-- ログイン -->
+<div id="sc-login" class="screen active">
+  <div class="header">
+    <div style="width:36px;"></div>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div><div class="logo-sub">tokyu railway night operation system</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div class="section">
+    <div style="font-size:18px;padding:12px 0 16px;" id="login-date"></div>
+    <div style="margin-bottom:14px;">
+      <label class="form-label">監督者コード</label>
+      <input class="form-input" id="inp-sup" type="text" inputmode="numeric">
+    </div>
+    <div style="margin-bottom:16px;">
+      <label class="form-label">申請番号</label>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <input class="form-input" id="inp-app1" type="text" inputmode="numeric" style="flex:1;">
+        <span style="font-size:20px;padding:0 2px;">-</span>
+        <input class="form-input" id="inp-app2" type="text" inputmode="numeric" style="flex:2;">
+      </div>
+    </div>
+    <button class="btn btn-login" onclick="doLogin()">ログイン</button>
+  </div>
+</div>
+
+<!-- メニュー選択 -->
+<div id="sc-menu" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div class="section" style="padding-top:20px;">
+    <button class="menu-select-item" style="border-left-color:#00e5ff;" onclick="pushGo('sc-mc');showMCList();">MC進路設定完了登録</button>
+    <button class="menu-select-item" style="border-left-color:#ff2d7a;" onclick="pushGo('sc-station');showSTList();">駅業務終了連絡登録</button>
+  </div>
+</div>
+
+<!-- 作業準備 -->
+<div id="sc-prep" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div class="info-area" id="prep-info"></div>
+  <div class="section">
+    <button class="btn btn-cyan" id="btn-prep" onclick="doPrepStart()">作業準備開始</button>
+    <button class="btn btn-pink" onclick="openStopDlg()">作業中止</button>
+  </div>
+  <div class="tl-wrap section" id="prep-tl"></div>
+</div>
+
+<!-- 入庫確認 -->
+<div id="sc-nyuko" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div class="info-area" id="nyuko-info"></div>
+  <div class="section" style="padding-bottom:4px;">
+    <button class="btn btn-pink" id="btn-nyuko-all" onclick="doNyukoAll()">全線一括</button>
+  </div>
+  <div id="line-list"></div>
+  <button class="refresh-btn" onclick="renderNyuko()">↻</button>
+  <div class="section">
+    <button class="btn btn-cyan" id="btn-to-senko" onclick="goSenkoStart()" disabled>線閉作業開始</button>
+    <button class="btn btn-pink" onclick="openStopDlg()">作業中止</button>
+  </div>
+  <div class="tl-wrap section" id="nyuko-tl"></div>
+</div>
+
+<!-- 線閉作業開始 -->
+<div id="sc-senko-start" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div class="info-area" id="ss-info"></div>
+  <div class="section">
+    <div style="background:#1a2a4a;border-radius:6px;padding:12px 14px;margin-bottom:10px;font-size:14px;line-height:1.7;color:#ccc;">
+      ✅ 全路線の入庫確認が完了しました。<br>線閉作業を開始してください。
+    </div>
+    <button class="btn btn-cyan" id="btn-senko-start" onclick="doSenkoStart()">線閉作業開始</button>
+    <button class="btn btn-pink" onclick="openStopDlg()">作業中止</button>
+  </div>
+  <div class="tl-wrap section" id="ss-tl"></div>
+</div>
+
+<!-- 線閉作業中 -->
+<div id="sc-senko-working" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div class="info-area" id="sw-info"></div>
+  <div class="section">
+    <button class="btn btn-yellow" onclick="openSenkoEndDlg()">線閉作業終了</button>
+    <button class="btn btn-pink" onclick="openStopDlg()">作業中止</button>
+  </div>
+  <div class="tl-wrap section" id="sw-tl"></div>
+</div>
+
+<!-- 全作業終了 -->
+<div id="sc-allend" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div class="info-area" id="ae-info"></div>
+  <div class="section">
+    <div style="background:#1a2a4a;border-radius:6px;padding:12px 14px;margin-bottom:10px;font-size:14px;color:#ccc;">
+      線閉作業終了時間を確認したら「全作業終了」を押してください。
+    </div>
+    <button class="btn btn-green" onclick="doAllEnd()">全作業終了</button>
+  </div>
+  <div class="tl-wrap section" id="ae-tl"></div>
+</div>
+
+<!-- 初電確認 -->
+<div id="sc-shoden" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div class="done-msg">本日の作業<br>お疲れ様でした。</div>
+  <div class="info-area" id="shoden-info"></div>
+  <div class="section">
+    <div style="background:#2a1a4a;padding:10px 14px;border-radius:6px;font-size:15px;font-weight:bold;text-align:center;margin-bottom:10px;">初電確認</div>
+    <div style="display:flex;gap:8px;margin-bottom:10px;">
+      <button class="btn btn-outline" onclick="doShoden(true)" style="flex:1;margin:0;padding:12px 0;" id="btn-shoden-confirm">確認</button>
+      <button class="btn btn-outline" onclick="doShoden(false)" style="flex:1;margin:0;padding:12px 0;" id="btn-shoden-skip">確認不要</button>
+    </div>
+  </div>
+  <div class="tl-wrap section" id="shoden-tl"></div>
+  <div class="section" id="shoden-after" style="display:none;">
+    <button class="btn btn-outline" onclick="resetAll()">最初からやり直す</button>
+  </div>
+</div>
+
+<!-- 作業中止 -->
+<div id="sc-stopped" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div class="info-area" id="stop-info"></div>
+  <div class="tl-wrap section" id="stop-tl"></div>
+  <div class="section">
+    <button class="btn btn-outline" onclick="resetAll()">最初からやり直す</button>
+  </div>
+</div>
+
+<!-- 終電入庫状況 -->
+<div id="sc-nyuko-status" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div style="padding:8px 14px 4px;font-size:13px;color:#aaa;border-bottom:1px solid var(--border);">終電入庫状況</div>
+  <div id="nyuko-status-list"></div>
+  <button class="refresh-btn" onclick="renderNyukoStatus()">↻</button>
+  <div class="section"><button class="btn btn-outline" onclick="goBack()">← 戻る</button></div>
+</div>
+
+<!-- MC進路設定完了登録 -->
+<div id="sc-mc" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div style="background:#00bcd4;padding:10px 14px;font-size:14px;font-weight:bold;color:#000;text-align:center;">MC進路設定完了登録</div>
+  <div id="mc-kankatsu-area" class="section">
+    <div style="background:#1e2d4a;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:15px;font-weight:bold;text-align:center;">【横浜管内】</div>
+    <div id="mc-station-list"></div>
+    <button class="btn btn-outline" style="margin-top:6px;" onclick="goBack()">← 戻る</button>
+  </div>
+  <div id="mc-reg-area" class="section" style="display:none;">
+    <div id="mc-reg-label" style="background:#1e2d4a;border-radius:6px;padding:12px 14px;margin-bottom:10px;font-size:15px;font-weight:bold;color:#fff;"></div>
+    <button class="btn btn-login" id="btn-mc-reg" onclick="doMCRegister()">登録</button>
+    <button class="btn btn-outline" style="margin-top:8px;" onclick="showMCList()">← 戻る</button>
+  </div>
+</div>
+
+<!-- 駅業務終了連絡登録 -->
+<div id="sc-station" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div style="background:#e91e8c;padding:10px 14px;font-size:14px;font-weight:bold;color:#fff;text-align:center;">駅業務終了連絡登録</div>
+  <div id="st-kankatsu-area" class="section">
+    <div style="background:#1e2d4a;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:15px;font-weight:bold;text-align:center;">【横浜管内】</div>
+    <div id="st-station-list"></div>
+    <button class="btn btn-outline" style="margin-top:6px;" onclick="goBack()">← 戻る</button>
+  </div>
+  <div id="st-reg-area" class="section" style="display:none;">
+    <div id="st-reg-label" style="background:#1e2d4a;border-radius:6px;padding:12px 14px;margin-bottom:10px;font-size:15px;font-weight:bold;color:#fff;"></div>
+    <button class="btn btn-login" id="btn-st-reg" onclick="doSTRegister()">登録</button>
+    <button class="btn btn-outline" style="margin-top:8px;" onclick="showSTList()">← 戻る</button>
+  </div>
+</div>
+
+<!-- その他・問い合わせ先 -->
+<div id="sc-contact" class="screen">
+  <div class="header">
+    <button class="menu-btn" onclick="openDrawer()"><span></span><span></span><span></span><div class="menu-label">MENU</div></button>
+    <div class="logo-wrap"><div class="logo-text">ToRaNOS</div></div>
+    <div style="width:36px;"></div><div class="header-moon"></div>
+  </div>
+  <div class="section" style="padding-top:16px;">
+    <div class="contact-card"><div class="contact-name">OCC</div><div class="contact-tel">044-852-5381</div><a class="call-btn" href="tel:0448525381">044 852 5381 に発信</a></div>
+    <div class="contact-card"><div class="contact-name">ECC</div><div class="contact-tel">044-854-1911</div><a class="call-btn" href="tel:0448541911">044 854 1911 に発信</a></div>
+    <div class="contact-card"><div class="contact-name">ECC</div><div class="contact-tel">044-854-1912</div><a class="call-btn" href="tel:0448541912">044 854 1912 に発信</a></div>
+    <button class="btn btn-outline" style="margin-top:8px;" onclick="goBack()">← 戻る</button>
+  </div>
+</div>
+
+<!-- 線閉終了確認 -->
+<div class="dialog-overlay" id="dlg-senko-end">
+  <div class="dialog-box">
+    <div class="dialog-title">線閉作業を終了しますが<br>よろしいでしょうか<br><br>監督者コード（認定証番号）と<br>申請番号があっているか確認してください。</div>
+    <div id="senko-chk-list"></div>
+    <div class="dialog-actions">
+      <button class="btn btn-gray" onclick="hideDlg('dlg-senko-end')">いいえ</button>
+      <button class="btn btn-white" id="btn-senko-ok" onclick="confirmSenkoEnd()" disabled>はい</button>
+    </div>
+  </div>
+</div>
+
+<!-- 作業中止確認 -->
+<div class="dialog-overlay" id="dlg-stop">
+  <div class="dialog-box">
+    <div class="dialog-title">作業を中止しますが<br>よろしいでしょうか<br><br>監督者コード（認定証番号）と<br>申請番号があっているか確認してください。</div>
+    <div id="stop-chk-list"></div>
+    <div class="dialog-actions">
+      <button class="btn btn-gray" onclick="hideDlg('dlg-stop')">いいえ</button>
+      <button class="btn btn-white" id="btn-stop-ok" onclick="confirmStop()" disabled>はい</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const GAS_URL='https://script.google.com/macros/s/AKfycbzaHPIRxMcaF_8me7fKbP8UUZs7gCYLJuw96T55cHmV3dhlbM6njIi-qJvh931qqILt/exec';
+
+function sendToGAS(action,detail){
+  const payload={日時:fmtFull(N()),監督者コード:U.sup||'',申請番号:U.app||'',操作:action,詳細:detail||''};
+  const params=new URLSearchParams({data:JSON.stringify(payload)});
+  fetch(GAS_URL+'?'+params.toString(),{method:'GET',mode:'no-cors'})
+  .then(()=>showToast('✅ ログ送信完了','ok'))
+  .catch(()=>showToast('⚠️ 送信失敗','err'));
+}
+let toastTimer=null;
+function showToast(msg,type){
+  const el=document.getElementById('send-toast');
+  el.textContent=msg;el.className='send-status show '+(type||'');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.className='send-status';},2500);
+}
+
+const LINES=[
+  {id:'toyoko',name:'東横線',color:'#e4002b'},
+  {id:'meguro',name:'目黒線',color:'#00ada9'},
+  {id:'shinyoko',name:'東急新横浜線',color:'#8f76d6'},
+  {id:'denen',name:'田園都市線',color:'#35a738'},
+  {id:'oimachi',name:'大井町線',color:'#f39700'},
+  {id:'ikegami',name:'池上線',color:'#c8002b'},
+  {id:'tamagawa',name:'東急多摩川線',color:'#c8002b'},
+  {id:'setagaya',name:'世田谷線',color:'#75c800'},
+  {id:'minatomirai',name:'みなとみらい線',color:'#0070bb'},
+  {id:'kodomo',name:'こどもの国線',color:'#f39700'},
+];
+const MC_STATIONS=['菊名','横浜'];
+const ST_STATIONS=['菊名','横浜'];
+
+let U={sup:'',app:''};
+let W={prepTime:null,nyukoTimes:{},senkoStartTime:null,senkoEndTime:null,allEndTime:null,shodenTime:null,shodenSkip:false,stopTime:null};
+let MC_DONE={},ST_DONE={},MC_SEL=null,ST_SEL=null;
+let scHistory=['sc-login'];
+
+const N=()=>new Date();
+function fmt(d){if(!d)return '';return pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());}
+function fmtFull(d){if(!d)return '';return d.getFullYear()+'/'+pad(d.getMonth()+1)+'/'+pad(d.getDate())+' '+fmt(d);}
+function fmtDate(d){return d.getFullYear()+'/'+pad(d.getMonth()+1)+'/'+pad(d.getDate());}
+function pad(n){return String(n).padStart(2,'0');}
+function addLog(action,detail){sendToGAS(action,detail);}
+
+function pushGo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  scHistory.push(id);window.scrollTo(0,0);
+}
+function goBack(){
+  if(scHistory.length>1)scHistory.pop();
+  const prev=scHistory[scHistory.length-1];
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(prev).classList.add('active');
+  window.scrollTo(0,0);
+  if(prev==='sc-nyuko')renderNyuko();
+  if(prev==='sc-nyuko-status')renderNyukoStatus();
+  if(prev==='sc-mc')showMCList();
+  if(prev==='sc-station')showSTList();
+}
+function resetGo(id){
+  scHistory=[id];
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('dov').classList.add('show');}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('dov').classList.remove('show');}
+function drawerGoto(type){
+  if(!U.sup&&type!=='contact'){alert('ログインしてください');return;}
+  if(type==='work'){
+    let t='sc-prep';
+    if(W.stopTime)t='sc-stopped';
+    else if(W.shodenTime||W.shodenSkip)t='sc-shoden';
+    else if(W.allEndTime)t='sc-shoden';
+    else if(W.senkoEndTime)t='sc-allend';
+    else if(W.senkoStartTime)t='sc-senko-working';
+    else if(W.prepTime)t='sc-nyuko';
+    pushGo(t);if(t==='sc-nyuko')renderNyuko();
+  }else if(type==='nyuko-status'){renderNyukoStatus();pushGo('sc-nyuko-status');}
+  else if(type==='contact'){pushGo('sc-contact');}
+}
+function showDlg(id){document.getElementById(id).classList.add('show');}
+function hideDlg(id){document.getElementById(id).classList.remove('show');}
+
+function buildTL(cid){
+  const items=[
+    {label:'作業準備開始',t:W.prepTime},
+    {label:'東横 入庫確認',t:W.nyukoTimes['toyoko']||null},
+    {label:'線閉作業終了',t:W.senkoEndTime},
+    {label:'全作業終了',t:W.allEndTime},
+    {label:'初電確認',t:W.shodenTime},
+  ];
+  if(W.stopTime){const idx=items.findIndex(i=>!i.t);items.splice(idx<0?items.length:idx,items.length,{label:'作業中止',t:W.stopTime});}
+  const el=document.getElementById(cid);if(!el)return;
+  el.innerHTML=items.map((item,i)=>`<div class="tl-item">
+    <div class="tl-line-v" style="${i===0?'top:50%;':''}${i===items.length-1?'bottom:50%;':''}"></div>
+    <div class="tl-dot"></div><span class="tl-label">${item.label}</span>
+    ${item.t?`<span class="tl-time">${fmt(item.t)}</span>`:`<span class="tl-time" style="background:#12192e;color:#2a3a5a;">――――</span>`}
+  </div>`).join('');
+}
+function buildInfo(id){
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML=`申請番号：${U.app}<br>作業名：テスト<br>作業種別：線路閉鎖作業<br>終電入庫`;
+}
+
+window.addEventListener('DOMContentLoaded',()=>{document.getElementById('login-date').textContent=fmtDate(N());});
+
+function doLogin(){
+  const sup=document.getElementById('inp-sup').value.trim();
+  const a1=document.getElementById('inp-app1').value.trim();
+  const a2=document.getElementById('inp-app2').value.trim();
+  if(!sup){alert('監督者コードを入力してください');return;}
+  if(!a1||!a2){alert('申請番号を入力してください');return;}
+  U={sup,app:a1+'-'+a2};
+  W={prepTime:null,nyukoTimes:{},senkoStartTime:null,senkoEndTime:null,allEndTime:null,shodenTime:null,shodenSkip:false,stopTime:null};
+  MC_DONE={};ST_DONE={};MC_SEL=null;ST_SEL=null;
+  addLog('ログイン',`監督者コード:${sup} 申請番号:${U.app}`);
+  buildInfo('prep-info');buildTL('prep-tl');resetGo('sc-prep');
+}
+function doPrepStart(){
+  W.prepTime=N();addLog('作業準備開始',`時刻:${fmt(W.prepTime)}`);
+  document.getElementById('btn-prep').disabled=true;
+  document.getElementById('btn-prep').textContent=`作業準備開始済み (${fmt(W.prepTime)})`;
+  buildTL('prep-tl');
+  setTimeout(()=>{buildInfo('nyuko-info');renderNyuko();pushGo('sc-nyuko');},600);
+}
+function renderNyuko(){
+  buildInfo('nyuko-info');
+  document.getElementById('line-list').innerHTML=LINES.map(line=>{
+    const done=!!W.nyukoTimes[line.id];
+    return `<div class="line-row" style="background:${line.color};">
+      <div class="line-main"><div class="line-name">${line.name}</div>
+      <div class="line-status">${done?`運行終了 (${fmt(W.nyukoTimes[line.id])})`:'運行中'}</div></div>
+      <button class="line-nyuko-btn" onclick="doNyukoLine('${line.id}')" ${done?'disabled':''}>
+        ${done?'確認済':'入庫<br>確認'}</button></div>`;
+  }).join('');
+  const allDone=LINES.every(l=>!!W.nyukoTimes[l.id]);
+  document.getElementById('btn-to-senko').disabled=!allDone;
+  document.getElementById('btn-nyuko-all').disabled=allDone;
+  buildTL('nyuko-tl');
+}
+function doNyukoLine(id){
+  if(W.nyukoTimes[id])return;
+  W.nyukoTimes[id]=N();
+  addLog('入庫確認',`路線:${LINES.find(l=>l.id===id).name} 時刻:${fmt(W.nyukoTimes[id])}`);
+  renderNyuko();
+}
+function doNyukoAll(){
+  const t=N();LINES.forEach(l=>{if(!W.nyukoTimes[l.id])W.nyukoTimes[l.id]=t;});
+  addLog('入庫確認（全線一括）',`時刻:${fmt(t)}`);renderNyuko();
+}
+function goSenkoStart(){buildInfo('ss-info');buildTL('ss-tl');pushGo('sc-senko-start');}
+function doSenkoStart(){
+  W.senkoStartTime=N();addLog('線閉作業開始',`時刻:${fmt(W.senkoStartTime)}`);
+  document.getElementById('btn-senko-start').disabled=true;buildTL('ss-tl');
+  setTimeout(()=>{buildInfo('sw-info');buildTL('sw-tl');pushGo('sc-senko-working');},600);
+}
+function openSenkoEndDlg(){
+  document.getElementById('senko-chk-list').innerHTML=[
+    `監督者コード（認定証番号）：<span style="color:#aaa;font-size:12px;">${U.sup}</span>`,
+    `申請番号：<span style="color:#aaa;font-size:12px;">${U.app}</span>`,
+    '作業者全員 退避済みですか？'
+  ].map((txt,i)=>`<label class="chk-item"><input type="checkbox" id="sch${i}" onchange="chkSenkoEnd()"><span>${txt}</span></label>`).join('');
+  document.getElementById('btn-senko-ok').disabled=true;showDlg('dlg-senko-end');
+}
+function chkSenkoEnd(){document.getElementById('btn-senko-ok').disabled=![0,1,2].every(i=>document.getElementById('sch'+i)?.checked);}
+function confirmSenkoEnd(){
+  hideDlg('dlg-senko-end');W.senkoEndTime=N();
+  addLog('線閉作業終了',`時刻:${fmt(W.senkoEndTime)}`);
+  buildInfo('ae-info');buildTL('ae-tl');pushGo('sc-allend');
+}
+function doAllEnd(){
+  W.allEndTime=N();addLog('全作業終了',`時刻:${fmt(W.allEndTime)}`);buildTL('ae-tl');
+  setTimeout(()=>{buildInfo('shoden-info');buildTL('shoden-tl');pushGo('sc-shoden');},400);
+}
+function doShoden(confirm){
+  const bc=document.getElementById('btn-shoden-confirm');
+  const bs=document.getElementById('btn-shoden-skip');
+  if(bc.disabled)return;
+  if(confirm){
+    W.shodenTime=N();addLog('初電確認',`時刻:${fmt(W.shodenTime)}`);
+    bc.style.cssText='flex:1;margin:0;padding:12px 0;background:#39ff14;color:#000;';
+    bc.textContent=`確認 (${fmt(W.shodenTime)})`;
+  }else{
+    W.shodenSkip=true;addLog('初電確認不要',`時刻:${fmt(N())}`);
+    bs.style.cssText='flex:1;margin:0;padding:12px 0;background:#00e5ff;color:#000;';
+  }
+  bc.disabled=true;bs.disabled=true;buildTL('shoden-tl');
+  document.getElementById('shoden-after').style.display='block';
+}
+function openStopDlg(){
+  document.getElementById('stop-chk-list').innerHTML=[
+    `監督者コード（認定証番号）：<span style="color:#aaa;font-size:12px;">${U.sup}</span>`,
+    `申請番号：<span style="color:#aaa;font-size:12px;">${U.app}</span>`
+  ].map((txt,i)=>`<label class="chk-item"><input type="checkbox" id="stch${i}" onchange="chkStop()"><span>${txt}</span></label>`).join('');
+  document.getElementById('btn-stop-ok').disabled=true;showDlg('dlg-stop');
+}
+function chkStop(){document.getElementById('btn-stop-ok').disabled=![0,1].every(i=>document.getElementById('stch'+i)?.checked);}
+function confirmStop(){
+  hideDlg('dlg-stop');W.stopTime=N();addLog('作業中止',`時刻:${fmt(W.stopTime)}`);
+  buildInfo('stop-info');buildTL('stop-tl');pushGo('sc-stopped');
+}
+function renderNyukoStatus(){
+  const el=document.getElementById('nyuko-status-list');if(!el)return;
+  el.innerHTML=LINES.map(line=>{
+    const done=!!W.nyukoTimes[line.id];
+    return `<div class="status-line-row" style="background:${line.color};margin-bottom:3px;">
+      <div class="status-line-main"><div class="line-name">${line.name}</div>
+      <div class="line-status">${done?`運行終了 (${fmt(W.nyukoTimes[line.id])})`:'運行中'}</div></div>
+      <div class="status-badge ${done?'badge-done':'badge-running'}">${done?'入庫済':'運行中'}</div></div>`;
+  }).join('');
+}
+function showMCList(){
+  document.getElementById('mc-kankatsu-area').style.display='block';
+  document.getElementById('mc-reg-area').style.display='none';
+  document.getElementById('mc-station-list').innerHTML=MC_STATIONS.map(st=>{
+    const done=!!MC_DONE[st];
+    return done?`<div class="select-list-item done" style="display:flex;justify-content:space-between;"><span>${st}（登録済み）</span><span style="font-size:12px;">${fmt(MC_DONE[st])}</span></div>`
+      :`<button class="select-list-item" onclick="selectMC('${st}')">${st}</button>`;
+  }).join('');
+}
+function selectMC(st){
+  MC_SEL=st;document.getElementById('mc-kankatsu-area').style.display='none';
+  document.getElementById('mc-reg-area').style.display='block';
+  document.getElementById('mc-reg-label').textContent=st;
+  const btn=document.getElementById('btn-mc-reg');btn.disabled=false;btn.textContent='登録';btn.style.background='';btn.style.color='';
+}
+function doMCRegister(){
+  if(!MC_SEL)return;MC_DONE[MC_SEL]=N();
+  addLog('MC進路設定完了登録',`駅:${MC_SEL} 時刻:${fmt(MC_DONE[MC_SEL])}`);
+  const btn=document.getElementById('btn-mc-reg');
+  btn.disabled=true;btn.style.background='#39ff14';btn.style.color='#000';
+  btn.textContent=`登録済 (${fmt(MC_DONE[MC_SEL])})`;
+  document.getElementById('mc-reg-label').textContent=`${MC_SEL}（${fmt(MC_DONE[MC_SEL])}）`;
+  setTimeout(()=>showMCList(),800);
+}
+function showSTList(){
+  document.getElementById('st-kankatsu-area').style.display='block';
+  document.getElementById('st-reg-area').style.display='none';
+  document.getElementById('st-station-list').innerHTML=ST_STATIONS.map(st=>{
+    const done=!!ST_DONE[st];
+    return done?`<div class="select-list-item done" style="display:flex;justify-content:space-between;"><span>${st}（登録済み）</span><span style="font-size:12px;">${fmt(ST_DONE[st])}</span></div>`
+      :`<button class="select-list-item" onclick="selectST('${st}')">${st}</button>`;
+  }).join('');
+}
+function selectST(st){
+  ST_SEL=st;document.getElementById('st-kankatsu-area').style.display='none';
+  document.getElementById('st-reg-area').style.display='block';
+  document.getElementById('st-reg-label').textContent=st;
+  const btn=document.getElementById('btn-st-reg');btn.disabled=false;btn.textContent='登録';btn.style.background='';btn.style.color='';
+}
+function doSTRegister(){
+  if(!ST_SEL)return;ST_DONE[ST_SEL]=N();
+  addLog('駅業務終了連絡登録',`駅:${ST_SEL} 時刻:${fmt(ST_DONE[ST_SEL])}`);
+  const btn=document.getElementById('btn-st-reg');
+  btn.disabled=true;btn.style.background='#39ff14';btn.style.color='#000';
+  btn.textContent=`登録済 (${fmt(ST_DONE[ST_SEL])})`;
+  document.getElementById('st-reg-label').textContent=`${ST_SEL}（${fmt(ST_DONE[ST_SEL])}）`;
+  setTimeout(()=>showSTList(),800);
+}
+function doLogout(){closeDrawer();addLog('ログアウト',`時刻:${fmtFull(N())}`);resetAll();}
+function resetAll(){
+  U={sup:'',app:''};
+  W={prepTime:null,nyukoTimes:{},senkoStartTime:null,senkoEndTime:null,allEndTime:null,shodenTime:null,shodenSkip:false,stopTime:null};
+  MC_DONE={};ST_DONE={};MC_SEL=null;ST_SEL=null;
+  ['inp-sup','inp-app1','inp-app2'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('login-date').textContent=fmtDate(N());
+  const bc=document.getElementById('btn-shoden-confirm');
+  const bs=document.getElementById('btn-shoden-skip');
+  if(bc){bc.disabled=false;bc.style.cssText='flex:1;margin:0;padding:12px 0;';bc.textContent='確認';}
+  if(bs){bs.disabled=false;bs.style.cssText='flex:1;margin:0;padding:12px 0;';bs.textContent='確認不要';}
+  document.getElementById('shoden-after').style.display='none';
+  const bp=document.getElementById('btn-prep');if(bp){bp.disabled=false;bp.textContent='作業準備開始';}
+  const bss=document.getElementById('btn-senko-start');if(bss){bss.disabled=false;}
+  scHistory=['sc-login'];resetGo('sc-login');
+}
+</script>
+</body>
+</html>
