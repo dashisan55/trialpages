@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ホームドア異常予兆検知ダッシュボード</title>
+<style>
+  :root {
+    --primary:#1a4a8a; --primary-light:#2d6bcf;
+    --danger:#dc2626;  --warning:#ca8a04; --success:#16a34a;
+    --bg:#f0f4f8; --card:#fff; --border:#d0d9e6; --text:#2c3e50;
+    --text-light:#6b7c93;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI','Meiryo',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;padding:14px 24px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 8px rgba(0,0,0,.2);position:sticky;top:0;z-index:100;}
+  header h1{font-size:18px;}
+  header p{font-size:11px;opacity:.8;margin-top:2px;}
+  .header-right{margin-left:auto;display:flex;align-items:center;gap:12px;}
+  .last-updated{font-size:11px;opacity:.7;}
+  .btn-refresh{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;transition:background .15s;}
+  .btn-refresh:hover{background:rgba(255,255,255,.3);}
+  .container{max-width:1400px;margin:0 auto;padding:16px;}
+  .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+  @media(max-width:800px){.summary-grid{grid-template-columns:repeat(2,1fr);}}
+  .summary-card{background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border);text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);}
+  .summary-card .val{font-size:36px;font-weight:700;}
+  .summary-card .lbl{font-size:12px;color:var(--text-light);margin-top:4px;}
+  .card-normal .val{color:var(--success);}
+  .card-warning .val{color:var(--warning);}
+  .card-danger .val{color:var(--danger);}
+  .card-total .val{color:var(--primary);}
+  .main-grid{display:grid;grid-template-columns:1fr 360px;gap:16px;}
+  @media(max-width:1000px){.main-grid{grid-template-columns:1fr;}}
+  .card{background:var(--card);border-radius:10px;border:1px solid var(--border);box-shadow:0 2px 6px rgba(0,0,0,.06);overflow:hidden;margin-bottom:16px;}
+  .card-header{background:var(--primary);color:#fff;padding:10px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;}
+  .card-body{padding:16px;}
+  .result-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .result-table th{background:var(--primary);color:#fff;padding:8px 10px;text-align:left;white-space:nowrap;}
+  .result-table td{padding:7px 10px;border-bottom:1px solid #f0f0f0;}
+  .result-table tr:hover td{background:#f8faff;}
+  .result-table tr.row-danger td{background:#fff5f5;}
+  .result-table tr.row-warning td{background:#fefce8;}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;white-space:nowrap;}
+  .badge-normal{background:#dcfce7;color:#166534;}
+  .badge-warning{background:#fef9c3;color:#92400e;}
+  .badge-danger{background:#fee2e2;color:#991b1b;}
+  .badge-unknown{background:#f3f4f6;color:#6b7280;}
+  .score-bar{display:flex;align-items:center;gap:6px;min-width:100px;}
+  .bar-bg{flex:1;height:8px;border-radius:4px;background:#e5e7eb;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:4px;transition:width .3s;}
+  .fill-n{background:#22c55e;}
+  .fill-w{background:#facc15;}
+  .fill-d{background:#ef4444;}
+  .filter-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);background:#f8f9fa;}
+  .filter-bar select,.filter-bar input{padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;}
+  .filter-bar label{font-size:12px;color:var(--text-light);}
+  .detail-panel{font-size:12px;}
+  .detail-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f0;}
+  .detail-row .key{color:var(--text-light);}
+  .detail-row .val-num{font-weight:600;color:var(--primary);}
+  .model-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .model-item{background:#f8f9fa;border-radius:6px;padding:8px;font-size:11px;}
+  .model-item .m-name{color:var(--text-light);margin-bottom:4px;}
+  .model-item .m-score{font-weight:700;font-size:14px;}
+  canvas{width:100%!important;}
+  .loading{text-align:center;padding:40px;color:var(--text-light);}
+  .spinner{display:inline-block;width:32px;height:32px;border:3px solid #e5e7eb;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .pagination{display:flex;gap:4px;justify-content:center;padding:12px 0;}
+  .page-btn{padding:4px 10px;border:1px solid var(--border);border-radius:4px;cursor:pointer;font-size:12px;background:#fff;}
+  .page-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+  .page-btn:hover:not(.active){background:#f0f4f8;}
+  .empty{text-align:center;padding:40px;color:var(--text-light);}
+  .empty .e-icon{font-size:40px;margin-bottom:10px;}
+  ::-webkit-scrollbar{width:5px;height:5px;}
+  ::-webkit-scrollbar-thumb{background:#c0c8d8;border-radius:3px;}
+</style>
+</head>
+<body>
+<header>
+  <div style="font-size:26px;">🚉</div>
+  <div>
+    <h1>ホームドア異常予兆検知ダッシュボード</h1>
+    <p id="stationInfo">五反田駅 1番線</p>
+  </div>
+  <div class="header-right">
+    <span class="last-updated" id="lastUpdated">読み込み中...</span>
+    <button class="btn-refresh" onclick="loadResults()">🔄 更新</button>
+  </div>
+</header>
+<div class="container">
+  <div class="summary-grid">
+    <div class="summary-card card-total"><div class="val" id="s-total">-</div><div class="lbl">📊 総判定数</div></div>
+    <div class="summary-card card-normal"><div class="val" id="s-normal">-</div><div class="lbl">✅ 正常</div></div>
+    <div class="summary-card card-warning"><div class="val" id="s-warning">-</div><div class="lbl">⚠️ 要注意</div></div>
+    <div class="summary-card card-danger"><div class="val" id="s-danger">-</div><div class="lbl">🚨 異常予兆</div></div>
+  </div>
+  <div class="main-grid">
+    <div>
+      <div class="card">
+        <div class="card-header">📋 判定結果一覧</div>
+        <div class="filter-bar">
+          <label>動作種別 <select id="filterAction" onchange="applyFilter()"><option value="">すべて</option><option value="開動作">開動作</option><option value="閉動作">閉動作</option></select></label>
+          <label>号車 <select id="filterCar" onchange="applyFilter()"><option value="">すべて</option><option value="1">1号車</option><option value="2">2号車</option><option value="3">3号車</option></select></label>
+          <label>判定 <select id="filterLabel" onchange="applyFilter()"><option value="">すべて</option><option value="danger">異常予兆</option><option value="warning">要注意</option><option value="normal">正常</option></select></label>
+          <label>左右 <select id="filterSide" onchange="applyFilter()"><option value="">すべて</option><option value="left">左扉</option><option value="right">右扉</option></select></label>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="result-table">
+            <thead><tr><th>日時</th><th>号車</th><th>ドア</th><th>左右</th><th>動作</th><th>スコア</th><th>判定</th><th>詳細</th></tr></thead>
+            <tbody id="resultTableBody"><tr><td colspan="8"><div class="loading"><div class="spinner"></div><p>データ読み込み中...</p></div></td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-header">📈 スコア推移</div>
+        <div class="card-body" style="padding:12px;"><canvas id="scoreChart" height="160"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header">🔍 選択データ詳細</div>
+        <div class="card-body"><div id="detailPanel"><div class="empty"><div class="e-icon">👆</div><p>テーブルの行を<br>クリックしてください</p></div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header">🧠 モデル別スコア比較</div>
+        <div class="card-body"><div id="modelPanel"><div class="empty"><div class="e-icon">🤖</div><p>行を選択すると<br>モデル別スコアを表示</p></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const RESULTS_URL="./data/results/results_latest.json";
+const PAGE_SIZE=20;
+let allResults=[],filteredResults=[],currentPage=1,selectedIdx=-1;
+
+async function loadResults(){
+  document.getElementById("lastUpdated").textContent="読み込み中...";
+  try{
+    let data;
+    try{
+      const res=await fetch(RESULTS_URL+"?t="+Date.now());
+      if(!res.ok)throw new Error("fetch failed");
+      data=await res.json();
+    }catch{data=generateDemoResults();}
+    allResults=data.results||[];
+    document.getElementById("s-total").textContent=data.total||0;
+    document.getElementById("s-normal").textContent=data.normal||0;
+    document.getElementById("s-warning").textContent=data.warning||0;
+    document.getElementById("s-danger").textContent=data.danger||0;
+    const dt=data.predicted_at?new Date(data.predicted_at).toLocaleString("ja-JP"):"不明";
+    document.getElementById("lastUpdated").textContent="最終更新: "+dt;
+    applyFilter();drawScoreChart();
+  }catch(e){console.error(e);document.getElementById("lastUpdated").textContent="読み込みエラー";}
+}
+
+function generateDemoResults(){
+  const results=[];const actions=["開動作","閉動作"];const sides=["left","right"];const now=new Date();
+  for(let car=1;car<=3;car++){for(let door=1;door<=3;door++){for(const action of actions){for(const side of sides){
+    const isAnomaly=(car===2&&door===1&&side==="left");
+    const isWarning=(car===1&&door===3&&action==="閉動作");
+    const score=isAnomaly?0.72+Math.random()*0.1:isWarning?0.45+Math.random()*0.1:Math.random()*0.30;
+    const label=score>=0.65?"danger":score>=0.40?"warning":"normal";
+    results.push({id:`${now.toISOString()}_${car}_${door}_${side}`,datetime:now.toISOString().slice(0,16).replace("T"," "),car:String(car),door:String(door),side,action,score:parseFloat(score.toFixed(4)),label,
+      model_details:{individual_isolation_forest:{score:parseFloat((score+Math.random()*0.05).toFixed(4)),label,source:"individual"},individual_lof:{score:parseFloat((score+Math.random()*0.05).toFixed(4)),label,source:"individual"},unified_isolation_forest:{score:parseFloat((score+Math.random()*0.05).toFixed(4)),label,source:"unified"}},
+      features:{steady_mean:parseFloat((300+Math.random()*80).toFixed(1)),decel_max:parseFloat((250+Math.random()*200).toFixed(1)),lock_accel_y_max:parseFloat((5+Math.random()*8).toFixed(3)),decel_spike_ratio:parseFloat((1+Math.random()*0.5).toFixed(3))}});
+  }}}}
+  const danger=results.filter(r=>r.label==="danger").length;
+  const warning=results.filter(r=>r.label==="warning").length;
+  return{predicted_at:now.toISOString(),total:results.length,normal:results.length-danger-warning,warning,danger,has_anomaly:danger>0,results};
+}
+
+function applyFilter(){
+  const fA=document.getElementById("filterAction").value;
+  const fC=document.getElementById("filterCar").value;
+  const fL=document.getElementById("filterLabel").value;
+  const fS=document.getElementById("filterSide").value;
+  filteredResults=allResults.filter(r=>{
+    if(fA&&r.action!==fA)return false;
+    if(fC&&r.car!==fC)return false;
+    if(fL&&r.label!==fL)return false;
+    if(fS&&r.side!==fS)return false;
+    return true;
+  });
+  currentPage=1;renderTable();renderPagination();
+}
+
+function renderTable(){
+  const tbody=document.getElementById("resultTableBody");
+  const start=(currentPage-1)*PAGE_SIZE;
+  const items=filteredResults.slice(start,start+PAGE_SIZE);
+  if(items.length===0){tbody.innerHTML=`<tr><td colspan="8"><div class="empty"><div class="e-icon">📭</div><p>該当データがありません</p></div></td></tr>`;return;}
+  tbody.innerHTML=items.map((r,i)=>{
+    const absIdx=start+i;
+    const rowCls=r.label==="danger"?"row-danger":r.label==="warning"?"row-warning":"";
+    const badgeCls=`badge-${r.label||"unknown"}`;
+    const badgeText=r.label==="danger"?"🚨 異常予兆":r.label==="warning"?"⚠️ 要注意":r.label==="normal"?"✅ 正常":"❓ 不明";
+    const fillCls=r.label==="danger"?"fill-d":r.label==="warning"?"fill-w":"fill-n";
+    const pct=Math.min(100,(r.score||0)*100).toFixed(0);
+    const sideLabel=r.side==="left"?"左":"右";
+    return `<tr class="${rowCls}" onclick="selectRow(${absIdx})" style="cursor:pointer;">
+      <td style="white-space:nowrap;">${r.datetime||"-"}</td>
+      <td>${r.car}号車</td><td>${r.door}番</td><td>${sideLabel}扉</td><td>${r.action}</td>
+      <td><div class="score-bar"><div class="bar-bg"><div class="bar-fill ${fillCls}" style="width:${pct}%"></div></div><span style="font-size:11px;font-weight:600;min-width:36px;">${(r.score||0).toFixed(3)}</span></div></td>
+      <td><span class="badge ${badgeCls}">${badgeText}</span></td>
+      <td><button onclick="selectRow(${absIdx});event.stopPropagation();" style="background:none;border:1px solid #d0d9e6;border-radius:4px;padding:2px 8px;cursor:pointer;font-size:11px;">詳細</button></td>
+    </tr>`;
+  }).join("");
+}
+
+function renderPagination(){
+  const total=Math.ceil(filteredResults.length/PAGE_SIZE);
+  const el=document.getElementById("pagination");
+  if(total<=1){el.innerHTML="";return;}
+  let html="";
+  for(let i=1;i<=total;i++)html+=`<button class="page-btn ${i===currentPage?"active":""}" onclick="goPage(${i})">${i}</button>`;
+  el.innerHTML=html;
+}
+
+function goPage(p){currentPage=p;renderTable();renderPagination();}
+
+function selectRow(idx){
+  selectedIdx=idx;const r=filteredResults[idx];if(!r)return;
+  const dp=document.getElementById("detailPanel");
+  const featureRows=Object.entries(r.features||{}).map(([k,v])=>`<div class="detail-row"><span class="key">${k}</span><span class="val-num">${typeof v==="number"?v.toFixed(3):v}</span></div>`).join("");
+  dp.innerHTML=`
+    <div class="detail-row"><span class="key">日時</span><span class="val-num">${r.datetime}</span></div>
+    <div class="detail-row"><span class="key">対象</span><span class="val-num">${r.car}号車 ${r.door}番ドア ${r.side==="left"?"左":"右"}扉 ${r.action}</span></div>
+    <div class="detail-row"><span class="key">アンサンブルスコア</span><span class="val-num" style="color:${r.label==="danger"?"var(--danger)":r.label==="warning"?"var(--warning)":"var(--success)"};">${(r.score||0).toFixed(4)}</span></div>
+    <div style="margin-top:10px;font-size:11px;font-weight:600;color:var(--text-light);margin-bottom:6px;">特徴量</div>${featureRows}`;
+  const mp=document.getElementById("modelPanel");
+  const details=r.model_details||{};
+  const modelItems=Object.entries(details).map(([name,d])=>{
+    const sc=d.score!=null?d.score.toFixed(3):"N/A";
+    const lc=d.label||"unknown";
+    const fill=lc==="danger"?"fill-d":lc==="warning"?"fill-w":"fill-n";
+    const pct=d.score!=null?Math.min(100,d.score*100).toFixed(0):0;
+    const srcLabel=d.source==="individual"?"個別":"統合";
+    return `<div class="model-item"><div class="m-name">[${srcLabel}] ${name.replace(d.source+"_","")}</div><div class="m-score">${sc}</div><div class="bar-bg" style="margin-top:4px;"><div class="bar-fill ${fill}" style="width:${pct}%;"></div></div></div>`;
+  }).join("");
+  mp.innerHTML=`<div class="model-grid">${modelItems}</div>`;
+}
+
+function drawScoreChart(){
+  const canvas=document.getElementById("scoreChart");
+  const W=canvas.offsetWidth||340;canvas.width=W;canvas.height=160;
+  const ctx=canvas.getContext("2d");ctx.clearRect(0,0,W,160);
+  const data=allResults.slice(-40);if(data.length===0)return;
+  const pad={l:40,r:10,t:10,b:30};
+  const cW=W-pad.l-pad.r;const cH=160-pad.t-pad.b;
+  ctx.strokeStyle="#e5e7eb";ctx.lineWidth=0.5;
+  [0,0.4,0.65,1.0].forEach(v=>{
+    const y=pad.t+cH*(1-v);
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+cW,y);ctx.stroke();
+    ctx.fillStyle="#aaa";ctx.font="9px sans-serif";ctx.textAlign="right";
+    ctx.fillText(v.toFixed(2),pad.l-3,y+3);
+  });
+  [{v:0.40,c:"#ca8a04"},{v:0.65,c:"#dc2626"}].forEach(({v,c})=>{
+    const y=pad.t+cH*(1-v);
+    ctx.strokeStyle=c;ctx.setLineDash([4,3]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+cW,y);ctx.stroke();ctx.setLineDash([]);
+  });
+  ctx.strokeStyle="#1d4ed8";ctx.lineWidth=1.5;ctx.beginPath();
+  data.forEach((r,i)=>{
+    const x=pad.l+(i/(data.length-1))*cW;
+    const y=pad.t+cH*(1-(r.score||0));
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });ctx.stroke();
+  data.forEach((r,i)=>{
+    const x=pad.l+(i/(data.length-1))*cW;
+    const y=pad.t+cH*(1-(r.score||0));
+    const c=r.label==="danger"?"#dc2626":r.label==="warning"?"#ca8a04":"#16a34a";
+    ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();
+  });
+  ctx.strokeStyle="#555";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+cH);ctx.lineTo(pad.l+cW,pad.t+cH);ctx.stroke();
+  ctx.fillStyle="#555";ctx.font="10px sans-serif";ctx.textAlign="center";
+  ctx.fillText("直近の動作データ（スコア推移）",pad.l+cW/2,158);
+}
+
+window.addEventListener("load",loadResults);
+window.addEventListener("resize",drawScoreChart);
+</script>
+</body>
+</html>
