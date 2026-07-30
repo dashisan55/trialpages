@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+venv/
+.venv/
+
+# データファイル（大容量のため除外）
+data/raw/
+*.xlsx
+
+# ただし特徴量CSVとモデルはコミット対象
+!data/features/
+!data/results/
+!models/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
