@@ -7,7 +7,7 @@ venv/
 .venv/
 
 # データファイル（大容量のため除外）
-data/raw/
+#data/raw/
 *.xlsx
 
 # ただし特徴量CSVとモデルはコミット対象
