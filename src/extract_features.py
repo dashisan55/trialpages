@@ -29,68 +29,119 @@ def load_config(config_path: str = "config/settings.yaml") -> dict:
         return yaml.safe_load(f)
 
 
+def parse_csv_file(filepath: str) -> tuple:
+    """
+    CSVファイルを読み込む（#コメント行を手動スキップ）
+    """
+    # まず生のテキストとして読み込む
+    lines = None
+    for encoding in ["cp932", "shift-jis", "utf-8", "utf-8-sig"]:
+        try:
+            with open(filepath, "r", encoding=encoding) as f:
+                lines = f.readlines()
+            break
+        except UnicodeDecodeError:
+            continue
+
+    if lines is None:
+        logger.error(f"文字コード判定失敗: {filepath}")
+        return None, None
+
+    # メタデータ収集
+    meta = {}
+    data_header_idx = None
+
+    for i, line in enumerate(lines):
+        line = line.strip()
+        if line.startswith("#"):
+            continue
+        if "," not in line:
+            continue
+
+        parts = line.split(",")
+        key = parts[0].strip()
+        val = parts[1].strip() if len(parts) > 1 else ""
+
+        if "駅名"       in key: meta["station"]       = val
+        elif "番線"     in key: meta["line"]           = val
+        elif "号車番号"  in key: meta["car"]            = val
+        elif "ドア番号"  in key: meta["door"]           = val
+        elif "動作日時"  in key: meta["datetime"]       = val
+        elif "動作種別"  in key: meta["operation_raw"]  = val
+        elif "時間"     in key:
+            data_header_idx = i
+            break
+
+    if data_header_idx is None:
+        logger.warning(f"データ開始行が見つかりません: {filepath}")
+        return None, None
+
+    # データ部分だけ読み込む
+    data_lines = []
+    for line in lines[data_header_idx + 1:]:
+        line = line.strip()
+        if line.startswith("#") or line == "":
+            continue
+        data_lines.append(line)
+
+    if len(data_lines) == 0:
+        logger.warning(f"データ行が空です: {filepath}")
+        return None, None
+
+    from io import StringIO
+    data_str = "\n".join(data_lines)
+    try:
+        df = pd.read_csv(StringIO(data_str), header=None)
+    except Exception as e:
+        logger.error(f"データ読み込みエラー: {filepath} → {e}")
+        return None, None
+
+    return meta, df
+
+
 def parse_excel(filepath: str) -> tuple:
     """
     ExcelまたはCSVファイルを読み込む
     """
     ext = os.path.splitext(filepath)[1].lower()
 
-    try:
-        if ext == ".xlsx":
+    if ext == ".xlsx":
+        try:
             raw = pd.read_excel(filepath, header=None, engine="openpyxl")
-        elif ext == ".csv":
-            raw = None
-            for encoding in ["cp932", "shift-jis", "utf-8", "utf-8-sig"]:
-                try:
-                    raw = pd.read_csv(
-                        filepath,
-                        header=None,
-                        encoding=encoding,
-                        on_bad_lines='skip',
-                        comment='#'
-                    )
-                    logger.debug(f"読み込み成功 ({encoding}): {filepath}")
-                    break
-                except UnicodeDecodeError:
-                    continue
-                except Exception as e:
-                    logger.debug(f"エラー ({encoding}): {e}")
-                    continue
-            if raw is None:
-                logger.error(f"文字コード判定失敗: {filepath}")
-                return None, None
-        else:
-            logger.error(f"非対応ファイル形式: {filepath}")
+        except Exception as e:
+            logger.error(f"ファイル読み込みエラー: {filepath} → {e}")
             return None, None
 
-    except Exception as e:
-        logger.error(f"ファイル読み込みエラー: {filepath} → {e}")
+        meta = {}
+        data_start = None
+
+        for i, row in raw.iterrows():
+            cell = str(row.iloc[0]) if len(row) > 0 and pd.notna(row.iloc[0]) else ""
+            val  = str(row.iloc[1]) if len(row) > 1 and pd.notna(row.iloc[1]) else ""
+
+            if "駅名"       in cell: meta["station"]      = val
+            elif "番線"     in cell: meta["line"]          = val
+            elif "号車番号"  in cell: meta["car"]           = val
+            elif "ドア番号"  in cell: meta["door"]          = val
+            elif "動作日時"  in cell: meta["datetime"]      = val
+            elif "動作種別"  in cell: meta["operation_raw"] = val
+            elif "時間"     in cell and data_start is None:
+                data_start = i + 1
+
+        if data_start is None:
+            logger.warning(f"データ開始行が見つかりません: {filepath}")
+            return None, None
+
+        df = raw.iloc[data_start:].reset_index(drop=True)
+        df.columns = range(len(df.columns))
+        return meta, df
+
+    elif ext == ".csv":
+        return parse_csv_file(filepath)
+
+    else:
+        logger.error(f"非対応ファイル形式: {filepath}")
         return None, None
-
-    meta = {}
-    data_start = None
-
-    for i, row in raw.iterrows():
-        cell = str(row.iloc[0]) if len(row) > 0 and pd.notna(row.iloc[0]) else ""
-        val  = str(row.iloc[1]) if len(row) > 1 and pd.notna(row.iloc[1]) else ""
-
-        if "駅名"      in cell: meta["station"]  = val
-        elif "番線"    in cell: meta["line"]      = val
-        elif "号車番号" in cell: meta["car"]      = val
-        elif "ドア番号" in cell: meta["door"]     = val
-        elif "動作日時" in cell: meta["datetime"] = val
-        elif "動作種別" in cell: meta["operation_raw"] = val
-        elif "時間"    in cell and data_start is None:
-            data_start = i + 1
-
-    if data_start is None:
-        logger.warning(f"データ開始行が見つかりません: {filepath}")
-        return None, None
-
-    df = raw.iloc[data_start:].reset_index(drop=True)
-    df.columns = range(len(df.columns))
-
-    return meta, df
 
 
 def extract_features(meta: dict, df: pd.DataFrame, filepath: str) -> dict:
@@ -98,15 +149,15 @@ def extract_features(meta: dict, df: pd.DataFrame, filepath: str) -> dict:
     メタデータとデータフレームから特徴量を抽出する
     """
     try:
-        # 時刻列と電流列を取得（0列目:時間, 1列目:左扉電流, 2列目:右扉電流）
-        time_col    = pd.to_numeric(df.iloc[:, 0], errors='coerce')
+        # 時刻列と電流列を取得
+        time_col      = pd.to_numeric(df.iloc[:, 0], errors='coerce')
         current_left  = pd.to_numeric(df.iloc[:, 1], errors='coerce')
         current_right = pd.to_numeric(df.iloc[:, 2], errors='coerce')
 
         # NaNを除去
         valid = ~(time_col.isna() | current_left.isna())
-        time_arr  = time_col[valid].values
-        curr_left = current_left[valid].values
+        time_arr   = time_col[valid].values
+        curr_left  = current_left[valid].values
         curr_right = current_right[valid].values if not current_right.isna().all() else curr_left
 
         # 合成電流（左右平均）
