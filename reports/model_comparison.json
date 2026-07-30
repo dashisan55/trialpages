@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-30T10:23:24.419742",
+  "generated_at": "2026-07-30T10:45:21.784609",
   "individual_model_count": 2,
   "unified_model_count": 2,
   "recommendation": "推奨: 個別モデル / lof （score_std=0.0924 が最小で最も安定）",
@@ -17,7 +17,7 @@
       "type": "個別モデル",
       "model_id": "car1_door1_close",
       "algorithm": "lof",
-      "score_mean": 0.02776544252249636,
+      "score_mean": 0.027765442522496363,
       "score_std": 0.11434813641283557,
       "threshold_warning": 0.05142890996077957,
       "threshold_danger": 0.83190808355413
@@ -26,10 +26,10 @@
       "type": "個別モデル",
       "model_id": "car1_door1_close",
       "algorithm": "one_class_svm",
-      "score_mean": 0.5415408533516677,
-      "score_std": 0.2630941927160084,
-      "threshold_warning": 0.9987360482508865,
-      "threshold_danger": 0.9997092464556103
+      "score_mean": 0.5403857864435437,
+      "score_std": 0.2626719733432497,
+      "threshold_warning": 0.9970855124882355,
+      "threshold_danger": 0.9996711496390832
     },
     {
       "type": "個別モデル",
@@ -53,10 +53,10 @@
       "type": "個別モデル",
       "model_id": "car1_door1_open",
       "algorithm": "one_class_svm",
-      "score_mean": 0.4594216677515711,
-      "score_std": 0.25585078126750666,
-      "threshold_warning": 0.9974094951200351,
-      "threshold_danger": 0.9994268229417762
+      "score_mean": 0.45871511995351877,
+      "score_std": 0.2553572044253941,
+      "threshold_warning": 0.9937570478377433,
+      "threshold_danger": 0.9986984267416904
     },
     {
       "type": "統合モデル",
@@ -80,8 +80,8 @@
       "type": "統合モデル",
       "model_id": "unified_open",
       "algorithm": "one_class_svm",
-      "score_mean": 0.4594216677515711,
-      "score_std": 0.25585078126750666,
+      "score_mean": 0.45871511995351877,
+      "score_std": 0.2553572044253941,
       "threshold_warning": null,
       "threshold_danger": null
     },
@@ -98,7 +98,7 @@
       "type": "統合モデル",
       "model_id": "unified_close",
       "algorithm": "lof",
-      "score_mean": 0.02776544252249636,
+      "score_mean": 0.027765442522496363,
       "score_std": 0.11434813641283557,
       "threshold_warning": null,
       "threshold_danger": null
@@ -107,8 +107,8 @@
       "type": "統合モデル",
       "model_id": "unified_close",
       "algorithm": "one_class_svm",
-      "score_mean": 0.5415408533516677,
-      "score_std": 0.2630941927160084,
+      "score_mean": 0.5403857864435437,
+      "score_std": 0.2626719733432497,
       "threshold_warning": null,
       "threshold_danger": null
     }
