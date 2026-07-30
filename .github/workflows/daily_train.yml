@@ -1,0 +1,78 @@
+# ===============================================
+# 毎週月曜 AM2:00(JST) に自動再学習
+# ===============================================
+name: 毎週自動再学習
+
+on:
+  schedule:
+    - cron: "0 17 * * 0"   # UTC日曜17:00 = JST月曜02:00
+  workflow_dispatch:         # 手動実行ボタンも有効化
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # モデルファイルをリポジトリに保存するため
+
+    steps:
+      # ① リポジトリをチェックアウト
+      - name: リポジトリ取得
+        uses: actions/checkout@v4
+
+      # ② Python環境セットアップ
+      - name: Python 3.11 セットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      # ③ 依存パッケージインストール
+      - name: パッケージインストール
+        run: pip install -r requirements.txt
+
+      # ④ 特徴量抽出
+      - name: 特徴量抽出
+        run: |
+          python src/extract_features.py \
+            --input  data/raw \
+            --output data/features \
+            --config config/settings.yaml
+
+      # ⑤ モデル学習
+      - name: モデル学習・比較
+        run: |
+          python src/train_models.py \
+            --features data/features/features_latest.csv \
+            --models   models \
+            --reports  reports \
+            --config   config/settings.yaml
+
+      # ⑥ 検証AI実行
+      - name: 検証AI・自動デバッグ
+        run: |
+          python src/validate_ai.py \
+            --features data/features/features_latest.csv \
+            --models   models \
+            --reports  reports
+
+      # ⑦ 生成ファイルをリポジトリにコミット・プッシュ
+      - name: モデル・レポートをコミット
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add models/ reports/ data/features/
+          git diff --cached --quiet || git commit -m \
+            "🤖 自動再学習 $(date +'%Y-%m-%d %H:%M JST')"
+          git push
+
+      # ⑧ 学習完了通知
+      - name: 完了通知（メール・Teams）
+        env:
+          MAIL_FROM:         ${{ secrets.MAIL_FROM }}
+          MAIL_TO:           ${{ secrets.MAIL_TO }}
+          MAIL_PASSWORD:     ${{ secrets.MAIL_PASSWORD }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        run: |
+          python src/notify.py \
+            --event retrain_complete \
+            --report reports/model_comparison.json
