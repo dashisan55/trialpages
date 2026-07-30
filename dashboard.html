@@ -499,7 +499,12 @@ function extractFeatures(text, filename) {
 
 // ==================== ベースライン判定 ====================
 function judgeWithBaseline(features) {
+  console.log("=== judgeWithBaseline 開始 ===");
+  console.log("baselineStats件数:", Object.keys(baselineStats).length);
+  console.log("features.mean_current:", features.mean_current);
+
   if (Object.keys(baselineStats).length === 0) {
+    console.log("ベースラインなし → unknown");
     return { label:"unknown", score:0, maxDrift:0, details:[] };
   }
 
@@ -525,6 +530,7 @@ function judgeWithBaseline(features) {
       return;
     }
     const drift = Math.abs(features[feat] - bMean) / bStd;
+    console.log(`${feat}: 現在=${features[feat]} 基準=${bMean.toFixed(3)} std=${bStd.toFixed(3)} drift=${drift.toFixed(2)}σ`);
     maxDrift = Math.max(maxDrift, drift);
     details.push({
       feature: feat,
@@ -536,9 +542,11 @@ function judgeWithBaseline(features) {
     });
   });
 
+  console.log("maxDrift:", maxDrift);
   const label = maxDrift >= 3.0 ? "danger"
               : maxDrift >= 2.0 ? "warning"
               : "normal";
+  console.log("判定:", label);
   return {
     label,
     score:    +(Math.min(1.0, maxDrift/5.0)).toFixed(3),
