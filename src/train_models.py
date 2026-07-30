@@ -41,15 +41,14 @@ def load_config(path="config/settings.yaml"):
 
 
 FEATURE_COLS = [
-    "idle_mean",    "idle_std",
-    "startup_mean", "startup_max",
-    "steady_mean",  "steady_std",  "steady_max",
-    "decel_mean",   "decel_std",   "decel_max",   "decel_spike_ratio", "decel_slope",
-    "bounce_mean",  "bounce_max",
-    "lock_mean",    "lock_max",
-    "lock_accel_x_max", "lock_accel_y_max", "lock_accel_z_max",
-    "steady_lr_diff_mean", "steady_lr_diff_max",
-    "total_mean",   "total_std",   "total_max",
+    "mean_current", "std_current", "max_current", "min_current", "range_current",
+    "p25_current", "p50_current", "p75_current",
+    "duration", "data_points",
+    "mean_diff", "max_diff",
+    "energy", "rms_current",
+    "skewness", "kurtosis",
+    "mean_current_left", "mean_current_right",
+    "max_current_left", "max_current_right",
 ]
 
 def get_available_features(df):
@@ -98,12 +97,12 @@ def train_individual_models(df, config, models_dir):
     logger.info(f"使用特徴量: {len(feature_cols)}列")
 
     summary = {}
-    group_keys = ["car", "door", "side", "action"]
+    group_keys = ["car", "door", "operation"]
     groups = df.groupby(group_keys, dropna=False)
 
     for key, group_df in groups:
-        car, door, side, action = key
-        model_id = f"car{car}_door{door}_{side}_{action.replace('動作','')}"
+        car, door, operation = key
+        model_id = f"car{car}_door{door}_{operation}"
 
         if len(group_df) < 10:
             logger.warning(f"  スキップ（データ不足）: {model_id} ({len(group_df)}件)")
@@ -165,9 +164,9 @@ def train_unified_model(df, config, models_dir):
     feature_cols  = get_available_features(df)
 
     summary = {}
-    for action in df["action"].unique():
-        action_df = df[df["action"] == action]
-        model_id  = f"unified_{action.replace('動作','')}"
+    for operation in df["operation"].unique():
+        action_df = df[df["operation"] == operation]
+        model_id  = f"unified_{operation}"
         logger.info(f"  学習中: {model_id}  ({len(action_df)}件)")
 
         X = preprocess(action_df, feature_cols)
@@ -304,6 +303,106 @@ def _recommend_model(df_report):
             f"（score_std={best['score_std']:.4f} が最小で最も安定）")
 
 
+def save_baseline_if_not_exists(df, models_dir):
+    """
+    ベースラインモデルが存在しない場合のみ保存する
+    （初回学習時のデータを基準として保持）
+    """
+    baseline_path = os.path.join(models_dir, "baseline_stats.json")
+    if os.path.exists(baseline_path):
+        logger.info("ベースラインは既に存在します。スキップします。")
+        return
+
+    feature_cols = get_available_features(df)
+    baseline = {
+        "created_at": datetime.now().isoformat(),
+        "n_samples": len(df),
+        "feature_cols": feature_cols,
+        "stats": {}
+    }
+
+    for col in feature_cols:
+        baseline["stats"][col] = {
+            "mean": float(df[col].mean()),
+            "std":  float(df[col].std()),
+            "p25":  float(df[col].quantile(0.25)),
+            "p50":  float(df[col].quantile(0.50)),
+            "p75":  float(df[col].quantile(0.75)),
+            "min":  float(df[col].min()),
+            "max":  float(df[col].max()),
+        }
+
+    os.makedirs(models_dir, exist_ok=True)
+    with open(baseline_path, "w", encoding="utf-8") as f:
+        json.dump(baseline, f, ensure_ascii=False, indent=2)
+    logger.info(f"ベースライン保存: {baseline_path}")
+
+
+def compare_with_baseline(df, models_dir, reports_dir):
+    """
+    現在のデータとベースラインを比較してドリフトを検出する
+    """
+    baseline_path = os.path.join(models_dir, "baseline_stats.json")
+    if not os.path.exists(baseline_path):
+        logger.warning("ベースラインが存在しません。スキップします。")
+        return
+
+    with open(baseline_path, "r", encoding="utf-8") as f:
+        baseline = json.load(f)
+
+    feature_cols = get_available_features(df)
+    drift_results = []
+
+    for col in feature_cols:
+        if col not in baseline["stats"]:
+            continue
+        b = baseline["stats"][col]
+        current_mean = float(df[col].mean())
+        baseline_mean = b["mean"]
+        baseline_std  = b["std"]
+
+        if baseline_std == 0:
+            drift = 0.0
+        else:
+            drift = abs(current_mean - baseline_mean) / baseline_std
+
+        status = "正常"
+        if drift > 3.0:
+            status = "異常"
+        elif drift > 2.0:
+            status = "警告"
+
+        drift_results.append({
+            "feature":        col,
+            "baseline_mean":  round(baseline_mean, 4),
+            "current_mean":   round(current_mean, 4),
+            "drift_sigma":    round(drift, 4),
+            "status":         status,
+        })
+
+    df_drift = pd.DataFrame(drift_results)
+    os.makedirs(reports_dir, exist_ok=True)
+    drift_path = os.path.join(reports_dir, "baseline_drift.csv")
+    df_drift.to_csv(drift_path, index=False, encoding="utf-8-sig")
+    logger.info(f"ドリフト検出結果: {drift_path}")
+
+    # 警告・異常があればログに出力
+    warnings_df = df_drift[df_drift["status"] != "正常"]
+    if len(warnings_df) > 0:
+        logger.warning(f"=== ドリフト検出: {len(warnings_df)}件 ===")
+        for _, row in warnings_df.iterrows():
+            logger.warning(
+                f"  [{row['status']}] {row['feature']}: "
+                f"baseline={row['baseline_mean']} → "
+                f"current={row['current_mean']} "
+                f"({row['drift_sigma']:.1f}σ)"
+            )
+    else:
+        logger.info("ドリフト検出: 異常なし")
+
+    return df_drift
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--features", default="data/features/features_latest.csv")
@@ -317,6 +416,12 @@ def main():
     logger.info(f"特徴量読み込み: {args.features}")
     df = pd.read_csv(args.features)
     logger.info(f"  {len(df)}件 / {len(df.columns)}列")
+
+    # ベースライン保存（初回のみ）
+    save_baseline_if_not_exists(df, args.models)
+
+    # ベースラインとの比較（ドリフト検出）
+    compare_with_baseline(df, args.models, args.reports)
 
     individual_summary = {}
     unified_summary    = {}
