@@ -39,18 +39,23 @@ def parse_excel(filepath: str) -> tuple:
         if ext == ".xlsx":
             raw = pd.read_excel(filepath, header=None, engine="openpyxl")
         elif ext == ".csv":
-            # 文字コードを自動判定（UTF-8 → Shift-JIS の順で試みる）
-            for encoding in ["utf-8", "shift-jis", "cp932"]:
+            raw = None
+            for encoding in ["cp932", "shift-jis", "utf-8", "utf-8-sig"]:
                 try:
                     raw = pd.read_csv(
                         filepath,
                         header=None,
-                        encoding=encoding
+                        encoding=encoding,
+                        on_bad_lines='skip'
                     )
+                    logger.debug(f"読み込み成功 ({encoding}): {filepath}")
                     break
-                except (UnicodeDecodeError, Exception):
+                except UnicodeDecodeError:
                     continue
-            else:
+                except Exception as e:
+                    logger.debug(f"エラー ({encoding}): {e}")
+                    continue
+            if raw is None:
                 logger.error(f"文字コード判定失敗: {filepath}")
                 return None, None
         else:
@@ -73,177 +78,167 @@ def parse_excel(filepath: str) -> tuple:
         elif "号車番号" in cell: meta["car"]      = val
         elif "ドア番号" in cell: meta["door"]     = val
         elif "動作日時" in cell: meta["datetime"] = val
-        elif "動作種別" in cell: meta["action"]   = val
-        elif "温度"    in cell: meta["temp"]      = float(val) if val else None
-        elif "湿度"    in cell: meta["humidity"]  = float(val) if val else None
-        elif "気圧"    in cell: meta["pressure"]  = float(val) if val else None
-        elif "# データ部開始" in cell:
+        elif "時刻"    in cell and data_start is None:
             data_start = i + 1
-            break
 
     if data_start is None:
-        logger.warning(f"データ部が見つかりません: {filepath}")
-        return meta, None
+        logger.warning(f"データ開始行が見つかりません: {filepath}")
+        return None, None
 
-    header_row = raw.iloc[data_start]
-    df = raw.iloc[data_start + 1:].copy()
-    df.columns = header_row.tolist()
-    df = df[~df.iloc[:, 0].astype(str).str.contains("#", na=False)]
+    df = raw.iloc[data_start:].reset_index(drop=True)
+    df.columns = range(len(df.columns))
 
-    col_map = {
-        "時間[s]":              "time",
-        "左扉モータ電流[mA]":    "left_current",
-        "右扉モータ電流[mA]":    "right_current",
-        "DC24V電圧[V]":          "voltage_dc24",
-        "AC200V電圧[V]":         "voltage_ac200",
-        "開口全体の消費電流[mA]": "total_current",
-        "X軸方向加速度[m/s^2]":  "accel_x",
-        "Y軸方向加速度[m/s^2]":  "accel_y",
-        "Z軸方向加速度[m/s^2]":  "accel_z",
-    }
-    df = df.rename(columns=col_map)
-
-    for col in ["time", "left_current", "right_current",
-                "voltage_dc24", "voltage_ac200", "total_current",
-                "accel_x", "accel_y", "accel_z"]:
-        if col in df.columns:
-            df[col] = pd.to_numeric(df[col], errors="coerce")
-
-    df = df.dropna(subset=["time"]).reset_index(drop=True)
     return meta, df
 
 
-def extract_phase(df, t_start, t_end):
-    return df[(df["time"] >= t_start) & (df["time"] < t_end)].copy()
+def extract_features(meta: dict, df: pd.DataFrame, filepath: str) -> dict:
+    """
+    メタデータとデータフレームから特徴量を抽出する
+    """
+    try:
+        # 時刻列と電流列を取得
+        time_col = df.iloc[:, 0].astype(float)
+        current_col = df.iloc[:, 1].astype(float)
 
+        # NaNを除去
+        valid = ~(time_col.isna() | current_col.isna())
+        time_arr = time_col[valid].values
+        curr_arr = current_col[valid].values
 
-def compute_features(meta, df, phases, side="left"):
-    col = f"{side}_current"
-    if col not in df.columns:
-        return {}
+        if len(curr_arr) < 10:
+            logger.warning(f"データ点数不足: {filepath}")
+            return None
 
-    feat = {}
-    feat["station"]  = meta.get("station", "")
-    feat["line"]     = meta.get("line", "")
-    feat["car"]      = meta.get("car", "")
-    feat["door"]     = meta.get("door", "")
-    feat["action"]   = meta.get("action", "")
-    feat["side"]     = side
-    feat["datetime"] = meta.get("datetime", "")
-    feat["temp"]     = meta.get("temp", float("nan"))
-    feat["humidity"] = meta.get("humidity", float("nan"))
-    feat["pressure"] = meta.get("pressure", float("nan"))
-
-    for phase_name, (t0, t1) in phases.items():
-        ph = extract_phase(df, t0, t1)
-        c  = ph[col].dropna()
-        if len(c) == 0:
-            for sfx in ["mean","std","max","min","range","skew"]:
-                feat[f"{phase_name}_{sfx}"] = float("nan")
-            continue
-        feat[f"{phase_name}_mean"]  = c.mean()
-        feat[f"{phase_name}_std"]   = c.std()
-        feat[f"{phase_name}_max"]   = c.max()
-        feat[f"{phase_name}_min"]   = c.min()
-        feat[f"{phase_name}_range"] = c.max() - c.min()
-        feat[f"{phase_name}_skew"]  = float(c.skew()) if len(c) > 2 else 0.0
-
-    lock = extract_phase(df, phases["lock"][0], phases["lock"][1])
-    for ax in ["accel_x", "accel_y", "accel_z"]:
-        if ax in lock.columns:
-            vals = lock[ax].abs().dropna()
-            feat[f"lock_{ax}_max"]  = vals.max()  if len(vals) > 0 else float("nan")
-            feat[f"lock_{ax}_mean"] = vals.mean() if len(vals) > 0 else float("nan")
-
-    c_all = df[col].dropna()
-    feat["total_mean"] = c_all.mean()
-    feat["total_std"]  = c_all.std()
-    feat["total_max"]  = c_all.max()
-    feat["total_min"]  = c_all.min()
-
-    steady = extract_phase(df, phases["steady"][0], phases["steady"][1])
-    if "left_current" in steady.columns and "right_current" in steady.columns:
-        diff = (steady["left_current"] - steady["right_current"]).abs()
-        feat["steady_lr_diff_mean"] = diff.mean()
-        feat["steady_lr_diff_max"]  = diff.max()
-
-    decel = extract_phase(df, phases["decel"][0], phases["decel"][1])
-    if len(decel) > 0:
-        dc = decel[col].dropna()
-        steady_mean = feat.get("steady_mean", dc.mean())
-        feat["decel_spike_ratio"] = dc.max() / (steady_mean + 1e-6)
-        if len(dc) > 1:
-            feat["decel_slope"] = float(
-                np.polyfit(range(len(dc)), dc.values, 1)[0]
-            )
+        # ファイル名から動作種別を取得
+        filename = os.path.basename(filepath)
+        if "開動作" in filename:
+            operation = "open"
+        elif "閉動作" in filename:
+            operation = "close"
         else:
-            feat["decel_slope"] = 0.0
+            operation = "unknown"
 
-    return feat
+        # ファイル名からタイムスタンプを取得
+        timestamp_str = filename.split("_")[0]
+        try:
+            timestamp = datetime.strptime(timestamp_str, "%Y%m%d%H%M%S")
+        except Exception:
+            timestamp = datetime.now()
 
+        # 特徴量計算
+        features = {
+            "timestamp": timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            "station": meta.get("station", "unknown"),
+            "line": meta.get("line", "unknown"),
+            "car": meta.get("car", "unknown"),
+            "door": meta.get("door", "unknown"),
+            "operation": operation,
+            "filename": filename,
 
-def process_file(filepath, phases):
-    meta, df = parse_excel(filepath)
-    if df is None or len(df) == 0:
-        logger.warning(f"スキップ: {filepath}")
-        return []
+            # 基本統計量
+            "mean_current": float(np.mean(curr_arr)),
+            "std_current": float(np.std(curr_arr)),
+            "max_current": float(np.max(curr_arr)),
+            "min_current": float(np.min(curr_arr)),
+            "range_current": float(np.max(curr_arr) - np.min(curr_arr)),
 
-    results = []
-    for side in ["left", "right"]:
-        feat = compute_features(meta, df, phases, side)
-        if feat:
-            feat["filepath"] = os.path.basename(filepath)
-            results.append(feat)
-    return results
+            # パーセンタイル
+            "p25_current": float(np.percentile(curr_arr, 25)),
+            "p50_current": float(np.percentile(curr_arr, 50)),
+            "p75_current": float(np.percentile(curr_arr, 75)),
 
+            # 時間特徴量
+            "duration": float(time_arr[-1] - time_arr[0]) if len(time_arr) > 1 else 0.0,
+            "data_points": int(len(curr_arr)),
 
-def extract_all(raw_dir, output_dir, config):
-    phases = config["feature_extraction"]["phases"]
+            # 変化率特徴量
+            "mean_diff": float(np.mean(np.abs(np.diff(curr_arr)))) if len(curr_arr) > 1 else 0.0,
+            "max_diff": float(np.max(np.abs(np.diff(curr_arr)))) if len(curr_arr) > 1 else 0.0,
 
-    # ExcelとCSVの両方を対象にする
-    files_xlsx = glob.glob(
-        os.path.join(raw_dir, "**", "*.xlsx"), recursive=True)
-    files_csv  = glob.glob(
-        os.path.join(raw_dir, "**", "*.csv"),  recursive=True)
-    files = sorted(files_xlsx + files_csv)
+            # エネルギー
+            "energy": float(np.sum(curr_arr ** 2)),
+            "rms_current": float(np.sqrt(np.mean(curr_arr ** 2))),
 
-    logger.info(f"対象ファイル数: {len(files)}")
+            # 歪度・尖度
+            "skewness": float(pd.Series(curr_arr).skew()),
+            "kurtosis": float(pd.Series(curr_arr).kurtosis()),
 
-    all_features = []
-    for i, fp in enumerate(files, 1):
-        feats = process_file(fp, phases)
-        all_features.extend(feats)
-        if i % 100 == 0:
-            logger.info(f"  処理済み: {i}/{len(files)}")
+            # ラベル（正常=0, 異常=1）※初期値は正常
+            "label": 0
+        }
 
-    if not all_features:
-        logger.error("特徴量を抽出できませんでした")
-        return pd.DataFrame()
+        return features
 
-    df_feat = pd.DataFrame(all_features)
-    os.makedirs(output_dir, exist_ok=True)
-    out_path = os.path.join(
-        output_dir,
-        f"features_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
-    )
-    df_feat.to_csv(out_path, index=False, encoding="utf-8-sig")
-    logger.info(f"特徴量CSV出力: {out_path}  ({len(df_feat)}行)")
-
-    latest_path = os.path.join(output_dir, "features_latest.csv")
-    df_feat.to_csv(latest_path, index=False, encoding="utf-8-sig")
-    return df_feat
+    except Exception as e:
+        logger.error(f"特徴量抽出エラー: {filepath} → {e}")
+        return None
 
 
 def main():
-    parser = argparse.ArgumentParser(description="特徴量抽出スクリプト")
-    parser.add_argument("--input",  default="data/raw")
-    parser.add_argument("--output", default="data/features")
-    parser.add_argument("--config", default="config/settings.yaml")
+    parser = argparse.ArgumentParser(description="特徴量抽出")
+    parser.add_argument("--input",  default="data/raw",      help="入力フォルダ")
+    parser.add_argument("--output", default="data/features", help="出力フォルダ")
+    parser.add_argument("--config", default="config/settings.yaml", help="設定ファイル")
     args = parser.parse_args()
 
-    config = load_config(args.config)
-    df = extract_all(args.input, args.output, config)
-    logger.info(f"完了: {len(df)}件の特徴量を抽出しました")
+    # 出力フォルダ作成
+    os.makedirs(args.output, exist_ok=True)
+
+    # 対象ファイル取得
+    patterns = [
+        os.path.join(args.input, "*.xlsx"),
+        os.path.join(args.input, "*.csv"),
+    ]
+    files = []
+    for pattern in patterns:
+        files.extend(glob.glob(pattern))
+    files = sorted(files)
+
+    logger.info(f"対象ファイル数: {len(files)}")
+
+    if len(files) == 0:
+        logger.error("対象ファイルが見つかりません")
+        return
+
+    all_features = []
+    skipped = 0
+
+    for i, filepath in enumerate(files):
+        if (i + 1) % 100 == 0:
+            logger.info(f"  処理済み: {i+1}/{len(files)}")
+
+        meta, df = parse_excel(filepath)
+        if meta is None or df is None:
+            logger.warning(f"スキップ: {filepath}")
+            skipped += 1
+            continue
+
+        features = extract_features(meta, df, filepath)
+        if features is None:
+            skipped += 1
+            continue
+
+        all_features.append(features)
+
+    if len(all_features) == 0:
+        logger.error("特徴量を抽出できませんでした")
+        return
+
+    # CSV出力
+    df_features = pd.DataFrame(all_features)
+
+    # 最新版として保存
+    latest_path = os.path.join(args.output, "features_latest.csv")
+    df_features.to_csv(latest_path, index=False, encoding="utf-8-sig")
+    logger.info(f"特徴量CSV出力: {latest_path}")
+
+    # 日付付きでも保存
+    date_str = datetime.now().strftime("%Y%m%d")
+    dated_path = os.path.join(args.output, f"features_{date_str}.csv")
+    df_features.to_csv(dated_path, index=False, encoding="utf-8-sig")
+
+    logger.info(f"完了: {len(all_features)}件の特徴量を抽出しました")
+    logger.info(f"スキップ: {skipped}件")
 
 
 if __name__ == "__main__":
