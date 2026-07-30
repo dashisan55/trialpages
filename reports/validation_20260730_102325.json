@@ -1,0 +1,146 @@
+{
+  "timestamp": "2026-07-30T10:23:25.062414",
+  "summary": {
+    "total": 27,
+    "passed": 22,
+    "errors": 1,
+    "warnings": 4
+  },
+  "details": [
+    {
+      "check": "特徴量CSVが存在する",
+      "status": "PASS",
+      "detail": "data/features/features_latest.csv が見つかりません"
+    },
+    {
+      "check": "行数が1以上",
+      "status": "PASS",
+      "detail": "行数=430"
+    },
+    {
+      "check": "必須列が存在する",
+      "status": "ERROR",
+      "detail": "['timestamp', 'station', 'line', 'car', 'door', 'operation', 'filename', 'mean_current', 'std_current', 'max_current', 'min_current', 'range_current', 'p25_current', 'p50_current', 'p75_current', 'duration', 'data_points', 'mean_diff', 'max_diff', 'energy', 'rms_current', 'skewness', 'kurtosis', 'mean_current_left', 'mean_current_right', 'max_current_left', 'max_current_right', 'label']"
+    },
+    {
+      "check": "数値列の欠損率が10%以下",
+      "status": "PASS",
+      "detail": "欠損率=0.0%"
+    },
+    {
+      "check": "モデルファイルが1件以上存在",
+      "status": "PASS",
+      "detail": "検索パス=models"
+    },
+    {
+      "check": "モデルファイルが空でない: lof.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=73166bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: scaler.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1607bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: isolation_forest.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1609353bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: one_class_svm.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=3615bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: lof.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=73166bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: scaler.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1607bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: isolation_forest.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=2049705bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: one_class_svm.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=4863bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: lof.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=73166bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: scaler.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1607bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: isolation_forest.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=2049705bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: one_class_svm.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=4863bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: lof.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=73166bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: scaler.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1607bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: isolation_forest.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1609353bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: one_class_svm.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=3615bytes"
+    },
+    {
+      "check": "個別モデルが存在",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "統合モデルが存在",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "環境変数 MAIL_FROM が設定済み",
+      "status": "WARN",
+      "detail": ""
+    },
+    {
+      "check": "環境変数 MAIL_TO が設定済み",
+      "status": "WARN",
+      "detail": ""
+    },
+    {
+      "check": "環境変数 MAIL_PASSWORD が設定済み",
+      "status": "WARN",
+      "detail": ""
+    },
+    {
+      "check": "Teams Webhook URL が設定済み",
+      "status": "WARN",
+      "detail": ""
+    }
+  ]
+}
