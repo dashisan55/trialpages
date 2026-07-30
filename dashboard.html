@@ -18,7 +18,7 @@
   header p{font-size:11px;opacity:.8;margin-top:2px;}
   .header-right{margin-left:auto;display:flex;align-items:center;gap:12px;}
   .last-updated{font-size:11px;opacity:.7;}
-  .btn-refresh{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;transition:background .15s;}
+  .btn-refresh{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;}
   .btn-refresh:hover{background:rgba(255,255,255,.3);}
   .container{max-width:1400px;margin:0 auto;padding:16px;}
   .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
@@ -49,14 +49,11 @@
   .score-bar{display:flex;align-items:center;gap:6px;min-width:100px;}
   .bar-bg{flex:1;height:8px;border-radius:4px;background:#e5e7eb;overflow:hidden;}
   .bar-fill{height:100%;border-radius:4px;transition:width .3s;}
-  .fill-n{background:#22c55e;}
-  .fill-w{background:#facc15;}
-  .fill-d{background:#ef4444;}
+  .fill-n{background:#22c55e;} .fill-w{background:#facc15;} .fill-d{background:#ef4444;}
   .filter-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);background:#f8f9fa;}
-  .filter-bar select,.filter-bar input{padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;}
+  .filter-bar select{padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;}
   .filter-bar label{font-size:12px;color:var(--text-light);}
-  .detail-panel{font-size:12px;}
-  .detail-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f0;}
+  .detail-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:12px;}
   .detail-row .key{color:var(--text-light);}
   .detail-row .val-num{font-weight:600;color:var(--primary);}
   .model-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
@@ -77,6 +74,28 @@
   .drift-danger{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;}
   .drift-warning{background:#fef9c3;border:1px solid #fde047;color:#92400e;}
   .drift-normal{background:#dcfce7;border:1px solid #86efac;color:#166534;}
+
+  /* ドラッグ＆ドロップエリア */
+  .drop-zone{border:2px dashed var(--primary-light);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:#f8faff;margin-bottom:0;}
+  .drop-zone:hover,.drop-zone.drag-over{background:#e8f0fe;border-color:var(--primary);transform:scale(1.01);}
+  .drop-zone .dz-icon{font-size:48px;margin-bottom:12px;}
+  .drop-zone .dz-title{font-size:15px;font-weight:700;color:var(--primary);margin-bottom:6px;}
+  .drop-zone .dz-sub{font-size:12px;color:var(--text-light);}
+  .drop-zone input[type=file]{display:none;}
+  .judge-result{border-radius:10px;padding:16px;margin-top:12px;display:none;}
+  .judge-result.show{display:block;}
+  .judge-danger{background:#fff5f5;border:2px solid var(--danger);}
+  .judge-warning{background:#fefce8;border:2px solid #ca8a04;}
+  .judge-normal{background:#f0fdf4;border:2px solid var(--success);}
+  .judge-title{font-size:18px;font-weight:700;margin-bottom:12px;}
+  .judge-feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+  .judge-feature-item{background:#fff;border-radius:6px;padding:8px 10px;font-size:11px;border:1px solid var(--border);}
+  .judge-feature-item .jf-name{color:var(--text-light);margin-bottom:2px;}
+  .judge-feature-item .jf-val{font-weight:700;font-size:13px;}
+  .judge-feature-item .jf-drift{font-size:10px;margin-top:2px;}
+  .drift-ok{color:var(--success);}
+  .drift-warn{color:var(--warning);}
+  .drift-ng{color:var(--danger);}
   ::-webkit-scrollbar{width:5px;height:5px;}
   ::-webkit-scrollbar-thumb{background:#c0c8d8;border-radius:3px;}
 </style>
@@ -93,6 +112,7 @@
     <button class="btn-refresh" onclick="loadAll()">🔄 更新</button>
   </div>
 </header>
+
 <div class="container">
   <!-- サマリーカード -->
   <div class="summary-grid">
@@ -102,11 +122,28 @@
     <div class="summary-card card-danger"><div class="val" id="s-danger">-</div><div class="lbl">🚨 異常予兆</div></div>
   </div>
 
-  <!-- ドリフトアラートエリア -->
+  <!-- ドリフトアラート -->
   <div id="driftAlert" style="margin-bottom:16px;display:none;">
     <div class="card">
       <div class="card-header">📡 ベースライン比較（長期トレンド監視）</div>
       <div class="card-body" id="driftAlertBody"></div>
+    </div>
+  </div>
+
+  <!-- ★ ドラッグ＆ドロップ判定エリア ★ -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header">🔬 現地データ即時判定（CSV ドラッグ＆ドロップ）</div>
+    <div class="card-body">
+      <div class="drop-zone" id="dropZone"
+           ondragover="onDragOver(event)" ondragleave="onDragLeave(event)"
+           ondrop="onDrop(event)" onclick="document.getElementById('fileInput').click()">
+        <div class="dz-icon">📂</div>
+        <div class="dz-title">CSVファイルをここにドロップ</div>
+        <div class="dz-sub">またはクリックしてファイルを選択<br>
+          （現地計測CSVをそのまま放り込んでください）</div>
+        <input type="file" id="fileInput" accept=".csv" onchange="onFileSelect(event)">
+      </div>
+      <div class="judge-result" id="judgeResult"></div>
     </div>
   </div>
 
@@ -156,7 +193,7 @@
         <div class="card-body" style="padding:12px;">
           <canvas id="driftChart" height="180"></canvas>
           <p style="font-size:11px;color:var(--text-light);text-align:center;margin-top:8px;">
-            棒グラフ：現在値 ／ 点線：ベースライン平均 ／ 色：乖離度（緑=正常 黄=注意 赤=異常）
+            棒グラフ：現在値 ／ 点線：ベースライン平均 ／ 色：乖離度
           </p>
         </div>
       </div>
@@ -176,10 +213,8 @@
         <div class="card-header">🔍 選択データ詳細</div>
         <div class="card-body">
           <div id="detailPanel">
-            <div class="empty">
-              <div class="e-icon">👆</div>
-              <p>テーブルの行を<br>クリックしてください</p>
-            </div>
+            <div class="empty"><div class="e-icon">👆</div>
+              <p>テーブルの行を<br>クリックしてください</p></div>
           </div>
         </div>
       </div>
@@ -189,10 +224,8 @@
         <div class="card-header">🧠 モデル別スコア比較</div>
         <div class="card-body">
           <div id="modelPanel">
-            <div class="empty">
-              <div class="e-icon">🤖</div>
-              <p>行を選択すると<br>モデル別スコアを表示</p>
-            </div>
+            <div class="empty"><div class="e-icon">🤖</div>
+              <p>行を選択すると<br>モデル別スコアを表示</p></div>
           </div>
         </div>
       </div>
@@ -206,6 +239,7 @@ const DRIFT_URL   = "./reports/baseline_drift.csv";
 const PAGE_SIZE   = 20;
 
 let allResults = [], filteredResults = [], currentPage = 1;
+let baselineData = [];  // ベースラインデータ保持
 
 // ==================== メイン読み込み ====================
 async function loadAll() {
@@ -222,20 +256,16 @@ async function loadResults() {
       const res = await fetch(RESULTS_URL + "?t=" + Date.now());
       if (!res.ok) throw new Error("fetch failed");
       data = await res.json();
-    } catch {
-      data = generateDemoResults();
-    }
+    } catch { data = generateDemoResults(); }
     allResults = data.results || [];
     document.getElementById("s-total").textContent   = data.total   || 0;
     document.getElementById("s-normal").textContent  = data.normal  || 0;
     document.getElementById("s-warning").textContent = data.warning || 0;
     document.getElementById("s-danger").textContent  = data.danger  || 0;
     const dt = data.predicted_at
-      ? new Date(data.predicted_at).toLocaleString("ja-JP")
-      : "不明";
+      ? new Date(data.predicted_at).toLocaleString("ja-JP") : "不明";
     document.getElementById("lastUpdated").textContent = "最終更新: " + dt;
-    applyFilter();
-    drawScoreChart();
+    applyFilter(); drawScoreChart();
   } catch(e) {
     console.error(e);
     document.getElementById("lastUpdated").textContent = "読み込みエラー";
@@ -248,12 +278,10 @@ async function loadDrift() {
     const res = await fetch(DRIFT_URL + "?t=" + Date.now());
     if (!res.ok) throw new Error("drift fetch failed");
     const text = await res.text();
-    const rows = parseCSV(text);
-    renderDriftAlert(rows);
-    drawDriftChart(rows);
-  } catch(e) {
-    console.log("ドリフトデータなし:", e.message);
-  }
+    baselineData = parseCSV(text);
+    renderDriftAlert(baselineData);
+    drawDriftChart(baselineData);
+  } catch(e) { console.log("ドリフトデータなし:", e.message); }
 }
 
 function parseCSV(text) {
@@ -267,40 +295,26 @@ function parseCSV(text) {
   });
 }
 
-// ==================== ドリフトアラート表示 ====================
+// ==================== ドリフトアラート ====================
 function renderDriftAlert(rows) {
   const alertDiv = document.getElementById("driftAlert");
   const body     = document.getElementById("driftAlertBody");
-
   const dangers  = rows.filter(r => r.status === "異常");
   const warnings = rows.filter(r => r.status === "警告");
-
+  alertDiv.style.display = "block";
   if (dangers.length === 0 && warnings.length === 0) {
-    alertDiv.style.display = "block";
     body.innerHTML = `<div class="drift-alert drift-normal">
-      ✅ 全特徴量がベースライン範囲内です。長期トレンド異常なし。
-    </div>`;
+      ✅ 全特徴量がベースライン範囲内です。長期トレンド異常なし。</div>`;
     return;
   }
-
-  alertDiv.style.display = "block";
   let html = "";
-
   if (dangers.length > 0) {
-    html += `<div class="drift-alert drift-danger">
-      🚨 <strong>ベースライン大幅乖離（${dangers.length}件）：</strong>
-      ${dangers.map(r =>
-        `${r.feature}（現在:${parseFloat(r.current_mean).toFixed(1)} / 基準:${parseFloat(r.baseline_mean).toFixed(1)} / ${parseFloat(r.drift_sigma).toFixed(1)}σ）`
-      ).join("　")}
-    </div>`;
+    html += `<div class="drift-alert drift-danger">🚨 <strong>大幅乖離（${dangers.length}件）：</strong>
+      ${dangers.map(r=>`${r.feature}（${parseFloat(r.drift_sigma).toFixed(1)}σ）`).join("　")}</div>`;
   }
   if (warnings.length > 0) {
-    html += `<div class="drift-alert drift-warning">
-      ⚠️ <strong>ベースライン乖離注意（${warnings.length}件）：</strong>
-      ${warnings.map(r =>
-        `${r.feature}（現在:${parseFloat(r.current_mean).toFixed(1)} / 基準:${parseFloat(r.baseline_mean).toFixed(1)} / ${parseFloat(r.drift_sigma).toFixed(1)}σ）`
-      ).join("　")}
-    </div>`;
+    html += `<div class="drift-alert drift-warning">⚠️ <strong>乖離注意（${warnings.length}件）：</strong>
+      ${warnings.map(r=>`${r.feature}（${parseFloat(r.drift_sigma).toFixed(1)}σ）`).join("　")}</div>`;
   }
   body.innerHTML = html;
 }
@@ -308,68 +322,249 @@ function renderDriftAlert(rows) {
 // ==================== ドリフトグラフ ====================
 function drawDriftChart(rows) {
   const canvas = document.getElementById("driftChart");
-  const W = canvas.offsetWidth || 600;
-  const H = 180;
+  const W = canvas.offsetWidth || 600; const H = 180;
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, W, H);
-
-  // 主要特徴量のみ表示（最大8件）
-  const mainFeatures = [
-    "mean_current","max_current","rms_current",
-    "duration","mean_diff","energy","skewness","kurtosis"
-  ];
+  const mainFeatures = ["mean_current","max_current","rms_current","duration","mean_diff","energy","skewness","kurtosis"];
   const displayRows = rows.filter(r => mainFeatures.includes(r.feature)).slice(0, 8);
   if (displayRows.length === 0) return;
-
   const pad = { l:10, r:10, t:20, b:50 };
-  const cW = W - pad.l - pad.r;
-  const cH = H - pad.t - pad.b;
+  const cW = W - pad.l - pad.r; const cH = H - pad.t - pad.b;
   const barW = cW / displayRows.length;
-
-  // 最大値取得
   const maxVal = Math.max(...displayRows.map(r =>
     Math.max(Math.abs(parseFloat(r.current_mean)||0), Math.abs(parseFloat(r.baseline_mean)||0))
   )) * 1.2 || 1;
-
   displayRows.forEach((r, i) => {
-    const cur  = parseFloat(r.current_mean)  || 0;
-    const base = parseFloat(r.baseline_mean) || 0;
-    const drift = parseFloat(r.drift_sigma)  || 0;
-
+    const cur   = parseFloat(r.current_mean)  || 0;
+    const base  = parseFloat(r.baseline_mean) || 0;
+    const drift = parseFloat(r.drift_sigma)   || 0;
     const color = drift >= 3.0 ? "#ef4444" : drift >= 2.0 ? "#facc15" : "#22c55e";
-
     const x = pad.l + i * barW + barW * 0.1;
     const bw = barW * 0.8;
-
-    // 現在値バー
     const barH = Math.abs(cur / maxVal) * cH;
     const barY = pad.t + cH - barH;
     ctx.fillStyle = color + "bb";
     ctx.fillRect(x, barY, bw, barH);
-
-    // ベースライン線
     const baseY = pad.t + cH - (Math.abs(base / maxVal) * cH);
-    ctx.strokeStyle = "#1a4a8a";
-    ctx.setLineDash([4, 3]);
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(x, baseY);
-    ctx.lineTo(x + bw, baseY);
-    ctx.stroke();
+    ctx.strokeStyle = "#1a4a8a"; ctx.setLineDash([4,3]); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(x, baseY); ctx.lineTo(x + bw, baseY); ctx.stroke();
     ctx.setLineDash([]);
-
-    // ラベル
-    ctx.fillStyle = "#555";
-    ctx.font = "9px sans-serif";
-    ctx.textAlign = "center";
+    ctx.fillStyle = "#555"; ctx.font = "9px sans-serif"; ctx.textAlign = "center";
     const label = r.feature.replace("_current","").replace("_"," ");
-    ctx.save();
-    ctx.translate(x + bw/2, pad.t + cH + 5);
-    ctx.rotate(Math.PI / 4);
-    ctx.fillText(label, 0, 0);
-    ctx.restore();
+    ctx.save(); ctx.translate(x + bw/2, pad.t + cH + 5);
+    ctx.rotate(Math.PI / 4); ctx.fillText(label, 0, 0); ctx.restore();
   });
+}
+
+// ==================== ドラッグ＆ドロップ ====================
+function onDragOver(e) {
+  e.preventDefault();
+  document.getElementById("dropZone").classList.add("drag-over");
+}
+function onDragLeave(e) {
+  document.getElementById("dropZone").classList.remove("drag-over");
+}
+function onDrop(e) {
+  e.preventDefault();
+  document.getElementById("dropZone").classList.remove("drag-over");
+  const file = e.dataTransfer.files[0];
+  if (file && file.name.endsWith(".csv")) processCSV(file);
+  else alert("CSVファイルをドロップしてください");
+}
+function onFileSelect(e) {
+  const file = e.target.files[0];
+  if (file) processCSV(file);
+}
+
+// ==================== CSV読み込み・特徴量抽出・判定 ====================
+function processCSV(file) {
+  const result = document.getElementById("judgeResult");
+  result.className = "judge-result show";
+  result.innerHTML = `<div class="loading"><div class="spinner"></div><p>${file.name} を解析中...</p></div>`;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const text = e.target.result;
+      const features = extractFeatures(text, file.name);
+      if (!features) {
+        result.innerHTML = `<div style="color:var(--danger);padding:16px;">
+          ❌ CSVの形式が正しくありません。<br>計測データCSVをドロップしてください。</div>`;
+        return;
+      }
+      const judgment = judgeWithBaseline(features);
+      renderJudgeResult(result, file.name, features, judgment);
+    } catch(err) {
+      result.innerHTML = `<div style="color:var(--danger);padding:16px;">
+        ❌ 読み込みエラー: ${err.message}</div>`;
+    }
+  };
+  reader.readAsText(file, "Shift_JIS");
+}
+
+function extractFeatures(text, filename) {
+  // #コメント行を除去
+  const lines = text.split("\n")
+    .map(l => l.trim())
+    .filter(l => l && !l.startsWith("#"));
+
+  // メタデータ取得
+  const meta = {};
+  let dataStartIdx = -1;
+  for (let i = 0; i < lines.length; i++) {
+    const parts = lines[i].split(",");
+    const key = parts[0] || "";
+    const val = parts[1] || "";
+    if (key.includes("駅名"))     meta.station  = val;
+    if (key.includes("番線"))     meta.line     = val;
+    if (key.includes("号車番号")) meta.car      = val;
+    if (key.includes("ドア番号")) meta.door     = val;
+    if (key.includes("動作種別")) meta.operation = val;
+    if (key.includes("時間")) { dataStartIdx = i + 1; break; }
+  }
+  if (dataStartIdx < 0) return null;
+
+  // データ行をパース
+  const timeArr = [], leftArr = [], rightArr = [];
+  for (let i = dataStartIdx; i < lines.length; i++) {
+    const parts = lines[i].split(",");
+    if (parts.length < 3) continue;
+    const t = parseFloat(parts[0]);
+    const l = parseFloat(parts[1]);
+    const r = parseFloat(parts[2]);
+    if (isNaN(t) || isNaN(l) || isNaN(r)) continue;
+    timeArr.push(t); leftArr.push(l); rightArr.push(r);
+  }
+  if (timeArr.length < 10) return null;
+
+  // 合成電流
+  const currArr = leftArr.map((l, i) => (l + rightArr[i]) / 2);
+
+  // 特徴量計算
+  const mean = arr => arr.reduce((a,b)=>a+b,0)/arr.length;
+  const std  = arr => { const m=mean(arr); return Math.sqrt(mean(arr.map(v=>(v-m)**2))); };
+  const max  = arr => Math.max(...arr);
+  const min  = arr => Math.min(...arr);
+  const pct  = (arr, p) => { const s=[...arr].sort((a,b)=>a-b); return s[Math.floor(s.length*p/100)]; };
+  const diff = arr => arr.slice(1).map((v,i)=>Math.abs(v-arr[i]));
+  const skew = arr => { const m=mean(arr),s=std(arr); return s===0?0:mean(arr.map(v=>((v-m)/s)**3)); };
+  const kurt = arr => { const m=mean(arr),s=std(arr); return s===0?0:mean(arr.map(v=>((v-m)/s)**4))-3; };
+
+  const meanCur = mean(currArr);
+  const stdCur  = std(currArr);
+  const maxCur  = max(currArr);
+  const minCur  = min(currArr);
+  const diffs   = diff(currArr);
+
+  return {
+    filename,
+    meta,
+    mean_current:       parseFloat(meanCur.toFixed(4)),
+    std_current:        parseFloat(stdCur.toFixed(4)),
+    max_current:        parseFloat(maxCur.toFixed(4)),
+    min_current:        parseFloat(minCur.toFixed(4)),
+    range_current:      parseFloat((maxCur - minCur).toFixed(4)),
+    p25_current:        parseFloat(pct(currArr, 25).toFixed(4)),
+    p50_current:        parseFloat(pct(currArr, 50).toFixed(4)),
+    p75_current:        parseFloat(pct(currArr, 75).toFixed(4)),
+    duration:           parseFloat((timeArr[timeArr.length-1] - timeArr[0]).toFixed(4)),
+    data_points:        timeArr.length,
+    mean_diff:          parseFloat(mean(diffs).toFixed(4)),
+    max_diff:           parseFloat(max(diffs).toFixed(4)),
+    energy:             parseFloat(mean(currArr.map(v=>v**2)).toFixed(4)),
+    rms_current:        parseFloat(Math.sqrt(mean(currArr.map(v=>v**2))).toFixed(4)),
+    skewness:           parseFloat(skew(currArr).toFixed(4)),
+    kurtosis:           parseFloat(kurt(currArr).toFixed(4)),
+    mean_current_left:  parseFloat(mean(leftArr).toFixed(4)),
+    mean_current_right: parseFloat(mean(rightArr).toFixed(4)),
+    max_current_left:   parseFloat(max(leftArr).toFixed(4)),
+    max_current_right:  parseFloat(max(rightArr).toFixed(4)),
+  };
+}
+
+function judgeWithBaseline(features) {
+  if (baselineData.length === 0) {
+    return { label: "unknown", score: 0, details: [] };
+  }
+
+  const details = [];
+  let maxDrift = 0;
+
+  const checkFeatures = [
+    "mean_current","max_current","rms_current","std_current",
+    "range_current","duration","mean_diff","max_diff",
+    "energy","skewness","kurtosis"
+  ];
+
+  checkFeatures.forEach(feat => {
+    const base = baselineData.find(r => r.feature === feat);
+    if (!base || features[feat] === undefined) return;
+    const bMean = parseFloat(base.baseline_mean);
+    const bStd  = parseFloat(base.current_mean !== base.baseline_mean
+      ? Math.abs(parseFloat(base.current_mean) - bMean) : 0) || 1;
+
+    // ベースラインのstdを推定（baseline_drift.csvにはstdがないため近似）
+    // 全データのstd_currentをベースのばらつきとして使用
+    const stdBase = baselineData.find(r => r.feature === "std_current");
+    const sigma = stdBase ? parseFloat(stdBase.baseline_mean) : (bMean * 0.1 || 1);
+
+    const drift = sigma > 0 ? Math.abs(features[feat] - bMean) / sigma : 0;
+    maxDrift = Math.max(maxDrift, drift);
+
+    details.push({
+      feature: feat,
+      value:   features[feat],
+      baseline: bMean,
+      drift:   parseFloat(drift.toFixed(2)),
+      status:  drift >= 3.0 ? "danger" : drift >= 1.5 ? "warning" : "normal"
+    });
+  });
+
+  const label = maxDrift >= 3.0 ? "danger" : maxDrift >= 1.5 ? "warning" : "normal";
+  const score = Math.min(1.0, maxDrift / 5.0);
+
+  return { label, score: parseFloat(score.toFixed(3)), maxDrift: parseFloat(maxDrift.toFixed(2)), details };
+}
+
+function renderJudgeResult(el, filename, features, judgment) {
+  const labelText = judgment.label === "danger" ? "🚨 異常予兆"
+                  : judgment.label === "warning" ? "⚠️ 要注意"
+                  : judgment.label === "unknown" ? "❓ ベースラインなし"
+                  : "✅ 正常";
+  const cls = `judge-result show judge-${judgment.label === "unknown" ? "normal" : judgment.label}`;
+  const opLabel = features.meta.operation || "";
+
+  const featureItems = judgment.details.map(d => {
+    const driftCls = d.status === "danger" ? "drift-ng" : d.status === "warning" ? "drift-warn" : "drift-ok";
+    const driftIcon = d.status === "danger" ? "🔴" : d.status === "warning" ? "🟡" : "🟢";
+    return `<div class="judge-feature-item">
+      <div class="jf-name">${d.feature}</div>
+      <div class="jf-val">${d.value}</div>
+      <div class="jf-drift ${driftCls}">${driftIcon} 乖離: ${d.drift}σ（基準: ${d.baseline}）</div>
+    </div>`;
+  }).join("");
+
+  el.className = cls;
+  el.innerHTML = `
+    <div class="judge-title">${labelText}</div>
+    <div style="font-size:12px;color:var(--text-light);margin-bottom:8px;">
+      📄 ${filename}　
+      ${features.meta.station || ""}駅 ${features.meta.line || ""}番線
+      ${features.meta.car || ""}号車 ${features.meta.door || ""}番ドア
+      ${opLabel}
+    </div>
+    <div style="display:flex;gap:16px;font-size:13px;margin-bottom:12px;flex-wrap:wrap;">
+      <span>最大乖離: <strong>${judgment.maxDrift}σ</strong></span>
+      <span>平均電流: <strong>${features.mean_current} mA</strong></span>
+      <span>最大電流: <strong>${features.max_current} mA</strong></span>
+      <span>計測時間: <strong>${features.duration} s</strong></span>
+      <span>データ点数: <strong>${features.data_points}</strong></span>
+    </div>
+    <div class="judge-feature-grid">${featureItems}</div>
+    <div style="margin-top:12px;font-size:11px;color:var(--text-light);">
+      ※ ベースラインとの乖離度（σ）で判定：1.5σ以上=要注意、3.0σ以上=異常予兆
+    </div>`;
 }
 
 // ==================== フィルター ====================
@@ -383,9 +578,7 @@ function applyFilter() {
     if (fL && r.label !== fL) return false;
     return true;
   });
-  currentPage = 1;
-  renderTable();
-  renderPagination();
+  currentPage = 1; renderTable(); renderPagination();
 }
 
 // ==================== テーブル描画 ====================
@@ -395,31 +588,24 @@ function renderTable() {
   const items = filteredResults.slice(start, start + PAGE_SIZE);
   if (items.length === 0) {
     tbody.innerHTML = `<tr><td colspan="7"><div class="empty">
-      <div class="e-icon">📭</div><p>該当データがありません</p>
-    </div></td></tr>`;
+      <div class="e-icon">📭</div><p>該当データがありません</p></div></td></tr>`;
     return;
   }
   tbody.innerHTML = items.map((r, i) => {
     const absIdx = start + i;
-    const rowCls = r.label === "danger" ? "row-danger" : r.label === "warning" ? "row-warning" : "";
-    const badgeCls = `badge-${r.label || "unknown"}`;
-    const badgeText = r.label === "danger" ? "🚨 異常予兆"
-                    : r.label === "warning" ? "⚠️ 要注意"
-                    : r.label === "normal"  ? "✅ 正常" : "❓ 不明";
-    const fillCls = r.label === "danger" ? "fill-d" : r.label === "warning" ? "fill-w" : "fill-n";
-    const pct = Math.min(100, (r.score || 0) * 100).toFixed(0);
-    const actionLabel = r.operation === "open" ? "開動作"
-                      : r.operation === "close" ? "閉動作" : r.action || r.operation;
+    const rowCls = r.label==="danger"?"row-danger":r.label==="warning"?"row-warning":"";
+    const badgeText = r.label==="danger"?"🚨 異常予兆":r.label==="warning"?"⚠️ 要注意":r.label==="normal"?"✅ 正常":"❓ 不明";
+    const fillCls = r.label==="danger"?"fill-d":r.label==="warning"?"fill-w":"fill-n";
+    const pct = Math.min(100,(r.score||0)*100).toFixed(0);
+    const actionLabel = r.operation==="open"?"開動作":r.operation==="close"?"閉動作":r.action||r.operation;
     return `<tr class="${rowCls}" onclick="selectRow(${absIdx})" style="cursor:pointer;">
-      <td style="white-space:nowrap;">${r.datetime || "-"}</td>
-      <td>${r.car}号車</td>
-      <td>${r.door}番</td>
-      <td>${actionLabel}</td>
+      <td style="white-space:nowrap;">${r.datetime||"-"}</td>
+      <td>${r.car}号車</td><td>${r.door}番</td><td>${actionLabel}</td>
       <td><div class="score-bar">
         <div class="bar-bg"><div class="bar-fill ${fillCls}" style="width:${pct}%"></div></div>
-        <span style="font-size:11px;font-weight:600;min-width:36px;">${(r.score || 0).toFixed(3)}</span>
+        <span style="font-size:11px;font-weight:600;min-width:36px;">${(r.score||0).toFixed(3)}</span>
       </div></td>
-      <td><span class="badge ${badgeCls}">${badgeText}</span></td>
+      <td><span class="badge badge-${r.label||"unknown"}">${badgeText}</span></td>
       <td><button onclick="selectRow(${absIdx});event.stopPropagation();"
         style="background:none;border:1px solid #d0d9e6;border-radius:4px;padding:2px 8px;cursor:pointer;font-size:11px;">詳細</button></td>
     </tr>`;
@@ -432,46 +618,41 @@ function renderPagination() {
   if (total <= 1) { el.innerHTML = ""; return; }
   let html = "";
   for (let i = 1; i <= total; i++)
-    html += `<button class="page-btn ${i === currentPage ? "active" : ""}" onclick="goPage(${i})">${i}</button>`;
+    html += `<button class="page-btn ${i===currentPage?"active":""}" onclick="goPage(${i})">${i}</button>`;
   el.innerHTML = html;
 }
-
 function goPage(p) { currentPage = p; renderTable(); renderPagination(); }
 
 // ==================== 行選択 ====================
 function selectRow(idx) {
-  const r = filteredResults[idx];
-  if (!r) return;
+  const r = filteredResults[idx]; if (!r) return;
   const dp = document.getElementById("detailPanel");
-  const featureRows = Object.entries(r.features || {}).map(([k, v]) =>
+  const featureRows = Object.entries(r.features||{}).map(([k,v])=>
     `<div class="detail-row"><span class="key">${k}</span>
-     <span class="val-num">${typeof v === "number" ? v.toFixed(3) : v}</span></div>`
-  ).join("");
-  const actionLabel = r.operation === "open" ? "開動作"
-                    : r.operation === "close" ? "閉動作" : r.action || r.operation;
+     <span class="val-num">${typeof v==="number"?v.toFixed(3):v}</span></div>`).join("");
+  const actionLabel = r.operation==="open"?"開動作":r.operation==="close"?"閉動作":r.action||r.operation;
   dp.innerHTML = `
     <div class="detail-row"><span class="key">日時</span><span class="val-num">${r.datetime}</span></div>
     <div class="detail-row"><span class="key">対象</span>
       <span class="val-num">${r.car}号車 ${r.door}番ドア ${actionLabel}</span></div>
     <div class="detail-row"><span class="key">アンサンブルスコア</span>
       <span class="val-num" style="color:${r.label==="danger"?"var(--danger)":r.label==="warning"?"var(--warning)":"var(--success)}"};">
-        ${(r.score || 0).toFixed(4)}</span></div>
+      ${(r.score||0).toFixed(4)}</span></div>
     <div style="margin-top:10px;font-size:11px;font-weight:600;color:var(--text-light);margin-bottom:6px;">特徴量</div>
     ${featureRows}`;
   const mp = document.getElementById("modelPanel");
-  const details = r.model_details || {};
-  const modelItems = Object.entries(details).map(([name, d]) => {
-    const sc   = d.score != null ? d.score.toFixed(3) : "N/A";
-    const lc   = d.label || "unknown";
-    const fill = lc === "danger" ? "fill-d" : lc === "warning" ? "fill-w" : "fill-n";
-    const pct  = d.score != null ? Math.min(100, d.score * 100).toFixed(0) : 0;
-    const src  = d.source === "individual" ? "個別" : "統合";
+  const details = r.model_details||{};
+  const modelItems = Object.entries(details).map(([name,d])=>{
+    const sc=d.score!=null?d.score.toFixed(3):"N/A";
+    const lc=d.label||"unknown";
+    const fill=lc==="danger"?"fill-d":lc==="warning"?"fill-w":"fill-n";
+    const pct=d.score!=null?Math.min(100,d.score*100).toFixed(0):0;
+    const src=d.source==="individual"?"個別":"統合";
     return `<div class="model-item">
-      <div class="m-name">[${src}] ${name.replace(d.source + "_", "")}</div>
+      <div class="m-name">[${src}] ${name.replace(d.source+"_","")}</div>
       <div class="m-score">${sc}</div>
       <div class="bar-bg" style="margin-top:4px;">
-        <div class="bar-fill ${fill}" style="width:${pct}%;"></div>
-      </div></div>`;
+        <div class="bar-fill ${fill}" style="width:${pct}%;"></div></div></div>`;
   }).join("");
   mp.innerHTML = `<div class="model-grid">${modelItems}</div>`;
 }
@@ -479,95 +660,66 @@ function selectRow(idx) {
 // ==================== スコア推移グラフ ====================
 function drawScoreChart() {
   const canvas = document.getElementById("scoreChart");
-  const W = canvas.offsetWidth || 340;
-  canvas.width = W; canvas.height = 160;
-  const ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, W, 160);
-  const data = allResults.slice(-40);
-  if (data.length === 0) return;
-  const pad = { l:40, r:10, t:10, b:30 };
-  const cW = W - pad.l - pad.r;
-  const cH = 160 - pad.t - pad.b;
-  ctx.strokeStyle = "#e5e7eb"; ctx.lineWidth = 0.5;
-  [0, 0.4, 0.65, 1.0].forEach(v => {
-    const y = pad.t + cH * (1 - v);
-    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cW, y); ctx.stroke();
-    ctx.fillStyle = "#aaa"; ctx.font = "9px sans-serif"; ctx.textAlign = "right";
-    ctx.fillText(v.toFixed(2), pad.l - 3, y + 3);
+  const W = canvas.offsetWidth||340; canvas.width=W; canvas.height=160;
+  const ctx = canvas.getContext("2d"); ctx.clearRect(0,0,W,160);
+  const data = allResults.slice(-40); if(data.length===0)return;
+  const pad={l:40,r:10,t:10,b:30};
+  const cW=W-pad.l-pad.r; const cH=160-pad.t-pad.b;
+  ctx.strokeStyle="#e5e7eb"; ctx.lineWidth=0.5;
+  [0,0.4,0.65,1.0].forEach(v=>{
+    const y=pad.t+cH*(1-v);
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+cW,y);ctx.stroke();
+    ctx.fillStyle="#aaa";ctx.font="9px sans-serif";ctx.textAlign="right";
+    ctx.fillText(v.toFixed(2),pad.l-3,y+3);
   });
-  [{ v:0.40, c:"#ca8a04" }, { v:0.65, c:"#dc2626" }].forEach(({v,c}) => {
-    const y = pad.t + cH * (1 - v);
-    ctx.strokeStyle = c; ctx.setLineDash([4,3]); ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cW, y); ctx.stroke();
-    ctx.setLineDash([]);
+  [{v:0.60,c:"#ca8a04"},{v:0.80,c:"#dc2626"}].forEach(({v,c})=>{
+    const y=pad.t+cH*(1-v);
+    ctx.strokeStyle=c;ctx.setLineDash([4,3]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+cW,y);ctx.stroke();ctx.setLineDash([]);
   });
-  ctx.strokeStyle = "#1d4ed8"; ctx.lineWidth = 1.5; ctx.beginPath();
-  data.forEach((r, i) => {
-    const x = pad.l + (i / (data.length - 1)) * cW;
-    const y = pad.t + cH * (1 - (r.score || 0));
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  ctx.strokeStyle="#1d4ed8";ctx.lineWidth=1.5;ctx.beginPath();
+  data.forEach((r,i)=>{
+    const x=pad.l+(i/(data.length-1))*cW;
+    const y=pad.t+cH*(1-(r.score||0));
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });ctx.stroke();
+  data.forEach((r,i)=>{
+    const x=pad.l+(i/(data.length-1))*cW;
+    const y=pad.t+cH*(1-(r.score||0));
+    const c=r.label==="danger"?"#dc2626":r.label==="warning"?"#ca8a04":"#16a34a";
+    ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();
   });
-  ctx.stroke();
-  data.forEach((r, i) => {
-    const x = pad.l + (i / (data.length - 1)) * cW;
-    const y = pad.t + cH * (1 - (r.score || 0));
-    const c = r.label === "danger" ? "#dc2626" : r.label === "warning" ? "#ca8a04" : "#16a34a";
-    ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
-  });
-  ctx.strokeStyle = "#555"; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, pad.t + cH);
-  ctx.lineTo(pad.l + cW, pad.t + cH); ctx.stroke();
-  ctx.fillStyle = "#555"; ctx.font = "10px sans-serif"; ctx.textAlign = "center";
-  ctx.fillText("直近の動作データ（スコア推移）", pad.l + cW / 2, 158);
+  ctx.strokeStyle="#555";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+cH);
+  ctx.lineTo(pad.l+cW,pad.t+cH);ctx.stroke();
+  ctx.fillStyle="#555";ctx.font="10px sans-serif";ctx.textAlign="center";
+  ctx.fillText("直近の動作データ（スコア推移）",pad.l+cW/2,158);
 }
 
 // ==================== デモデータ ====================
 function generateDemoResults() {
-  const results = [];
-  const operations = ["open", "close"];
-  const now = new Date();
-  for (let car = 1; car <= 3; car++) {
-    for (let door = 1; door <= 3; door++) {
-      for (const op of operations) {
-        const isAnomaly = (car === 2 && door === 1 && op === "open");
-        const isWarning = (car === 1 && door === 3 && op === "close");
-        const score = isAnomaly ? 0.72 + Math.random() * 0.1
-                    : isWarning ? 0.45 + Math.random() * 0.1
-                    : Math.random() * 0.30;
-        const label = score >= 0.65 ? "danger" : score >= 0.40 ? "warning" : "normal";
-        results.push({
-          id: `${now.toISOString()}_${car}_${door}_${op}`,
-          datetime: now.toISOString().slice(0, 16).replace("T", " "),
-          car: String(car), door: String(door),
-          operation: op,
-          action: op === "open" ? "開動作" : "閉動作",
-          score: parseFloat(score.toFixed(4)), label,
-          model_details: {
-            individual_isolation_forest: { score: parseFloat((score + Math.random()*0.05).toFixed(4)), label, source:"individual" },
-            individual_lof:              { score: parseFloat((score + Math.random()*0.05).toFixed(4)), label, source:"individual" },
-            unified_isolation_forest:    { score: parseFloat((score + Math.random()*0.05).toFixed(4)), label, source:"unified" }
-          },
-          features: {
-            mean_current:  parseFloat((300 + Math.random()*80).toFixed(1)),
-            max_current:   parseFloat((400 + Math.random()*200).toFixed(1)),
-            rms_current:   parseFloat((300 + Math.random()*80).toFixed(1)),
-            duration:      parseFloat((10  + Math.random()*5).toFixed(2)),
-            mean_diff:     parseFloat((8   + Math.random()*5).toFixed(3)),
-          }
-        });
-      }
-    }
-  }
-  const danger  = results.filter(r => r.label === "danger").length;
-  const warning = results.filter(r => r.label === "warning").length;
-  return {
-    predicted_at: now.toISOString(),
-    total: results.length,
-    normal: results.length - danger - warning,
-    warning, danger,
-    has_anomaly: danger > 0,
-    results
-  };
+  const results=[]; const operations=["open","close"]; const now=new Date();
+  for(let car=1;car<=3;car++){for(let door=1;door<=3;door++){for(const op of operations){
+    const score=Math.random()*0.30;
+    const label=score>=0.80?"danger":score>=0.60?"warning":"normal";
+    results.push({
+      id:`${now.toISOString()}_${car}_${door}_${op}`,
+      datetime:now.toISOString().slice(0,16).replace("T"," "),
+      car:String(car),door:String(door),operation:op,
+      action:op==="open"?"開動作":"閉動作",
+      score:parseFloat(score.toFixed(4)),label,
+      model_details:{
+        individual_isolation_forest:{score:parseFloat((score+Math.random()*0.05).toFixed(4)),label,source:"individual"},
+        individual_lof:{score:parseFloat((score+Math.random()*0.05).toFixed(4)),label,source:"individual"},
+        unified_isolation_forest:{score:parseFloat((score+Math.random()*0.05).toFixed(4)),label,source:"unified"}
+      },
+      features:{mean_current:parseFloat((80+Math.random()*20).toFixed(1)),max_current:parseFloat((300+Math.random()*100).toFixed(1))}
+    });
+  }}}
+  const danger=results.filter(r=>r.label==="danger").length;
+  const warning=results.filter(r=>r.label==="warning").length;
+  return{predicted_at:now.toISOString(),total:results.length,
+    normal:results.length-danger-warning,warning,danger,has_anomaly:danger>0,results};
 }
 
 window.addEventListener("load", loadAll);
