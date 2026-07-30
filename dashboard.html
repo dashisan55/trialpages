@@ -75,27 +75,49 @@
   .drift-warning{background:#fef9c3;border:1px solid #fde047;color:#92400e;}
   .drift-normal{background:#dcfce7;border:1px solid #86efac;color:#166534;}
 
-  /* ドラッグ＆ドロップエリア */
-  .drop-zone{border:2px dashed var(--primary-light);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:#f8faff;margin-bottom:0;}
+  /* ドラッグ＆ドロップ */
+  .drop-zone{border:2px dashed var(--primary-light);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:#f8faff;}
   .drop-zone:hover,.drop-zone.drag-over{background:#e8f0fe;border-color:var(--primary);transform:scale(1.01);}
   .drop-zone .dz-icon{font-size:48px;margin-bottom:12px;}
   .drop-zone .dz-title{font-size:15px;font-weight:700;color:var(--primary);margin-bottom:6px;}
   .drop-zone .dz-sub{font-size:12px;color:var(--text-light);}
   .drop-zone input[type=file]{display:none;}
-  .judge-result{border-radius:10px;padding:16px;margin-top:12px;display:none;}
+
+  /* 判定結果メイン表示 */
+  .judge-result{border-radius:12px;padding:20px;margin-top:14px;display:none;}
   .judge-result.show{display:block;}
-  .judge-danger{background:#fff5f5;border:2px solid var(--danger);}
+  .judge-danger {background:#fff5f5;border:2px solid var(--danger);}
   .judge-warning{background:#fefce8;border:2px solid #ca8a04;}
-  .judge-normal{background:#f0fdf4;border:2px solid var(--success);}
-  .judge-title{font-size:18px;font-weight:700;margin-bottom:12px;}
-  .judge-feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
-  .judge-feature-item{background:#fff;border-radius:6px;padding:8px 10px;font-size:11px;border:1px solid var(--border);}
-  .judge-feature-item .jf-name{color:var(--text-light);margin-bottom:2px;}
-  .judge-feature-item .jf-val{font-weight:700;font-size:13px;}
-  .judge-feature-item .jf-drift{font-size:10px;margin-top:2px;}
-  .drift-ok{color:var(--success);}
-  .drift-warn{color:var(--warning);}
-  .drift-ng{color:var(--danger);}
+  .judge-normal {background:#f0fdf4;border:2px solid var(--success);}
+  .judge-unknown{background:#f9fafb;border:2px solid #9ca3af;}
+
+  .judge-main{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .judge-icon{font-size:56px;line-height:1;}
+  .judge-text-block{flex:1;}
+  .judge-label{font-size:28px;font-weight:900;margin-bottom:4px;}
+  .judge-label-danger {color:var(--danger);}
+  .judge-label-warning{color:var(--warning);}
+  .judge-label-normal {color:var(--success);}
+  .judge-label-unknown{color:#6b7280;}
+  .judge-sub{font-size:13px;color:var(--text-light);line-height:1.8;}
+  .judge-metrics{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;}
+  .judge-metric{background:rgba(255,255,255,.7);border-radius:8px;padding:8px 14px;text-align:center;min-width:90px;}
+  .judge-metric .jm-val{font-size:18px;font-weight:700;color:var(--primary);}
+  .judge-metric .jm-label{font-size:10px;color:var(--text-light);margin-top:2px;}
+
+  /* プルダウン詳細 */
+  .judge-detail-toggle{margin-top:14px;width:100%;background:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;cursor:pointer;font-size:13px;color:var(--primary);font-weight:600;display:flex;align-items:center;justify-content:space-between;transition:background .15s;}
+  .judge-detail-toggle:hover{background:rgba(0,0,0,.04);}
+  .judge-detail-body{display:none;margin-top:8px;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+  .judge-detail-body.open{display:block;}
+  .judge-feature-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .judge-feature-table th{background:#f0f4f8;padding:7px 10px;text-align:left;color:var(--text-light);font-weight:600;}
+  .judge-feature-table td{padding:7px 10px;border-bottom:1px solid #f0f0f0;}
+  .judge-feature-table tr:last-child td{border-bottom:none;}
+  .drift-ok {color:var(--success);font-weight:600;}
+  .drift-warn{color:var(--warning);font-weight:600;}
+  .drift-ng  {color:var(--danger);font-weight:600;}
+
   ::-webkit-scrollbar{width:5px;height:5px;}
   ::-webkit-scrollbar-thumb{background:#c0c8d8;border-radius:3px;}
 </style>
@@ -114,12 +136,13 @@
 </header>
 
 <div class="container">
+
   <!-- サマリーカード -->
   <div class="summary-grid">
-    <div class="summary-card card-total"><div class="val" id="s-total">-</div><div class="lbl">📊 総判定数</div></div>
-    <div class="summary-card card-normal"><div class="val" id="s-normal">-</div><div class="lbl">✅ 正常</div></div>
+    <div class="summary-card card-total" ><div class="val" id="s-total"  >-</div><div class="lbl">📊 総判定数</div></div>
+    <div class="summary-card card-normal" ><div class="val" id="s-normal" >-</div><div class="lbl">✅ 正常</div></div>
     <div class="summary-card card-warning"><div class="val" id="s-warning">-</div><div class="lbl">⚠️ 要注意</div></div>
-    <div class="summary-card card-danger"><div class="val" id="s-danger">-</div><div class="lbl">🚨 異常予兆</div></div>
+    <div class="summary-card card-danger" ><div class="val" id="s-danger" >-</div><div class="lbl">🚨 異常予兆</div></div>
   </div>
 
   <!-- ドリフトアラート -->
@@ -139,8 +162,7 @@
            ondrop="onDrop(event)" onclick="document.getElementById('fileInput').click()">
         <div class="dz-icon">📂</div>
         <div class="dz-title">CSVファイルをここにドロップ</div>
-        <div class="dz-sub">またはクリックしてファイルを選択<br>
-          （現地計測CSVをそのまま放り込んでください）</div>
+        <div class="dz-sub">またはクリックしてファイルを選択<br>現地計測CSVをそのまま放り込んでください</div>
         <input type="file" id="fileInput" accept=".csv" onchange="onFileSelect(event)">
       </div>
       <div class="judge-result" id="judgeResult"></div>
@@ -234,20 +256,23 @@
 </div>
 
 <script>
-const RESULTS_URL = "./data/results/results_latest.json";
-const DRIFT_URL   = "./reports/baseline_drift.csv";
-const PAGE_SIZE   = 20;
+const RESULTS_URL  = "./data/results/results_latest.json";
+const DRIFT_URL    = "./reports/baseline_drift.csv";
+const BASELINE_URL = "./models/baseline_stats.json";
+const PAGE_SIZE    = 20;
 
 let allResults = [], filteredResults = [], currentPage = 1;
-let baselineData = [];  // ベースラインデータ保持
+let baselineData  = [];
+let baselineStats = {};
 
-// ==================== メイン読み込み ====================
+// ==================== メイン ====================
 async function loadAll() {
   await loadResults();
   await loadDrift();
+  await loadBaselineStats();
 }
 
-// ==================== 判定結果読み込み ====================
+// ==================== 判定結果 ====================
 async function loadResults() {
   document.getElementById("lastUpdated").textContent = "読み込み中...";
   try {
@@ -272,7 +297,7 @@ async function loadResults() {
   }
 }
 
-// ==================== ドリフト読み込み ====================
+// ==================== ドリフト ====================
 async function loadDrift() {
   try {
     const res = await fetch(DRIFT_URL + "?t=" + Date.now());
@@ -282,6 +307,17 @@ async function loadDrift() {
     renderDriftAlert(baselineData);
     drawDriftChart(baselineData);
   } catch(e) { console.log("ドリフトデータなし:", e.message); }
+}
+
+// ==================== ベースライン統計 ====================
+async function loadBaselineStats() {
+  try {
+    const res = await fetch(BASELINE_URL + "?t=" + Date.now());
+    if (!res.ok) throw new Error("baseline fetch failed");
+    const data = await res.json();
+    baselineStats = data.stats || {};
+    console.log("ベースライン読み込み完了:", Object.keys(baselineStats).length, "件");
+  } catch(e) { console.log("ベースラインなし:", e.message); }
 }
 
 function parseCSV(text) {
@@ -308,14 +344,12 @@ function renderDriftAlert(rows) {
     return;
   }
   let html = "";
-  if (dangers.length > 0) {
+  if (dangers.length > 0)
     html += `<div class="drift-alert drift-danger">🚨 <strong>大幅乖離（${dangers.length}件）：</strong>
       ${dangers.map(r=>`${r.feature}（${parseFloat(r.drift_sigma).toFixed(1)}σ）`).join("　")}</div>`;
-  }
-  if (warnings.length > 0) {
+  if (warnings.length > 0)
     html += `<div class="drift-alert drift-warning">⚠️ <strong>乖離注意（${warnings.length}件）：</strong>
       ${warnings.map(r=>`${r.feature}（${parseFloat(r.drift_sigma).toFixed(1)}σ）`).join("　")}</div>`;
-  }
   body.innerHTML = html;
 }
 
@@ -329,8 +363,8 @@ function drawDriftChart(rows) {
   const mainFeatures = ["mean_current","max_current","rms_current","duration","mean_diff","energy","skewness","kurtosis"];
   const displayRows = rows.filter(r => mainFeatures.includes(r.feature)).slice(0, 8);
   if (displayRows.length === 0) return;
-  const pad = { l:10, r:10, t:20, b:50 };
-  const cW = W - pad.l - pad.r; const cH = H - pad.t - pad.b;
+  const pad = {l:10,r:10,t:20,b:50};
+  const cW = W-pad.l-pad.r; const cH = H-pad.t-pad.b;
   const barW = cW / displayRows.length;
   const maxVal = Math.max(...displayRows.map(r =>
     Math.max(Math.abs(parseFloat(r.current_mean)||0), Math.abs(parseFloat(r.baseline_mean)||0))
@@ -343,17 +377,16 @@ function drawDriftChart(rows) {
     const x = pad.l + i * barW + barW * 0.1;
     const bw = barW * 0.8;
     const barH = Math.abs(cur / maxVal) * cH;
-    const barY = pad.t + cH - barH;
     ctx.fillStyle = color + "bb";
-    ctx.fillRect(x, barY, bw, barH);
-    const baseY = pad.t + cH - (Math.abs(base / maxVal) * cH);
+    ctx.fillRect(x, pad.t + cH - barH, bw, barH);
+    const baseY = pad.t + cH - Math.abs(base / maxVal) * cH;
     ctx.strokeStyle = "#1a4a8a"; ctx.setLineDash([4,3]); ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.moveTo(x, baseY); ctx.lineTo(x + bw, baseY); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x, baseY); ctx.lineTo(x+bw, baseY); ctx.stroke();
     ctx.setLineDash([]);
     ctx.fillStyle = "#555"; ctx.font = "9px sans-serif"; ctx.textAlign = "center";
-    const label = r.feature.replace("_current","").replace("_"," ");
-    ctx.save(); ctx.translate(x + bw/2, pad.t + cH + 5);
-    ctx.rotate(Math.PI / 4); ctx.fillText(label, 0, 0); ctx.restore();
+    ctx.save(); ctx.translate(x+bw/2, pad.t+cH+5); ctx.rotate(Math.PI/4);
+    ctx.fillText(r.feature.replace("_current","").replace("_"," "), 0, 0);
+    ctx.restore();
   });
 }
 
@@ -362,7 +395,7 @@ function onDragOver(e) {
   e.preventDefault();
   document.getElementById("dropZone").classList.add("drag-over");
 }
-function onDragLeave(e) {
+function onDragLeave() {
   document.getElementById("dropZone").classList.remove("drag-over");
 }
 function onDrop(e) {
@@ -377,20 +410,19 @@ function onFileSelect(e) {
   if (file) processCSV(file);
 }
 
-// ==================== CSV読み込み・特徴量抽出・判定 ====================
+// ==================== CSV処理・特徴量抽出 ====================
 function processCSV(file) {
   const result = document.getElementById("judgeResult");
-  result.className = "judge-result show";
+  result.className = "judge-result show judge-unknown";
   result.innerHTML = `<div class="loading"><div class="spinner"></div><p>${file.name} を解析中...</p></div>`;
 
   const reader = new FileReader();
   reader.onload = function(e) {
     try {
-      const text = e.target.result;
-      const features = extractFeatures(text, file.name);
+      const features = extractFeatures(e.target.result, file.name);
       if (!features) {
         result.innerHTML = `<div style="color:var(--danger);padding:16px;">
-          ❌ CSVの形式が正しくありません。<br>計測データCSVをドロップしてください。</div>`;
+          ❌ CSVの形式が正しくありません。計測データCSVをドロップしてください。</div>`;
         return;
       }
       const judgment = judgeWithBaseline(features);
@@ -404,167 +436,221 @@ function processCSV(file) {
 }
 
 function extractFeatures(text, filename) {
-  // #コメント行を除去
-  const lines = text.split("\n")
-    .map(l => l.trim())
-    .filter(l => l && !l.startsWith("#"));
-
-  // メタデータ取得
+  const lines = text.split("\n").map(l=>l.trim()).filter(l=>l&&!l.startsWith("#"));
   const meta = {};
   let dataStartIdx = -1;
   for (let i = 0; i < lines.length; i++) {
     const parts = lines[i].split(",");
-    const key = parts[0] || "";
-    const val = parts[1] || "";
-    if (key.includes("駅名"))     meta.station  = val;
-    if (key.includes("番線"))     meta.line     = val;
-    if (key.includes("号車番号")) meta.car      = val;
-    if (key.includes("ドア番号")) meta.door     = val;
+    const key = parts[0]||""; const val = parts[1]||"";
+    if (key.includes("駅名"))     meta.station   = val;
+    if (key.includes("番線"))     meta.line      = val;
+    if (key.includes("号車番号")) meta.car       = val;
+    if (key.includes("ドア番号")) meta.door      = val;
     if (key.includes("動作種別")) meta.operation = val;
-    if (key.includes("時間")) { dataStartIdx = i + 1; break; }
+    if (key.includes("時間"))     { dataStartIdx = i + 1; break; }
   }
   if (dataStartIdx < 0) return null;
 
-  // データ行をパース
-  const timeArr = [], leftArr = [], rightArr = [];
+  const timeArr=[], leftArr=[], rightArr=[];
   for (let i = dataStartIdx; i < lines.length; i++) {
     const parts = lines[i].split(",");
     if (parts.length < 3) continue;
-    const t = parseFloat(parts[0]);
-    const l = parseFloat(parts[1]);
-    const r = parseFloat(parts[2]);
-    if (isNaN(t) || isNaN(l) || isNaN(r)) continue;
+    const t=parseFloat(parts[0]), l=parseFloat(parts[1]), r=parseFloat(parts[2]);
+    if (isNaN(t)||isNaN(l)||isNaN(r)) continue;
     timeArr.push(t); leftArr.push(l); rightArr.push(r);
   }
   if (timeArr.length < 10) return null;
 
-  // 合成電流
-  const currArr = leftArr.map((l, i) => (l + rightArr[i]) / 2);
-
-  // 特徴量計算
-  const mean = arr => arr.reduce((a,b)=>a+b,0)/arr.length;
-  const std  = arr => { const m=mean(arr); return Math.sqrt(mean(arr.map(v=>(v-m)**2))); };
-  const max  = arr => Math.max(...arr);
-  const min  = arr => Math.min(...arr);
-  const pct  = (arr, p) => { const s=[...arr].sort((a,b)=>a-b); return s[Math.floor(s.length*p/100)]; };
-  const diff = arr => arr.slice(1).map((v,i)=>Math.abs(v-arr[i]));
-  const skew = arr => { const m=mean(arr),s=std(arr); return s===0?0:mean(arr.map(v=>((v-m)/s)**3)); };
-  const kurt = arr => { const m=mean(arr),s=std(arr); return s===0?0:mean(arr.map(v=>((v-m)/s)**4))-3; };
-
-  const meanCur = mean(currArr);
-  const stdCur  = std(currArr);
-  const maxCur  = max(currArr);
-  const minCur  = min(currArr);
-  const diffs   = diff(currArr);
+  const currArr = leftArr.map((l,i)=>(l+rightArr[i])/2);
+  const mean = a => a.reduce((s,v)=>s+v,0)/a.length;
+  const std  = a => { const m=mean(a); return Math.sqrt(mean(a.map(v=>(v-m)**2))); };
+  const max  = a => Math.max(...a);
+  const min  = a => Math.min(...a);
+  const pct  = (a,p) => { const s=[...a].sort((x,y)=>x-y); return s[Math.floor(s.length*p/100)]; };
+  const diffs = a => a.slice(1).map((v,i)=>Math.abs(v-a[i]));
+  const skew  = a => { const m=mean(a),s=std(a); return s===0?0:mean(a.map(v=>((v-m)/s)**3)); };
+  const kurt  = a => { const m=mean(a),s=std(a); return s===0?0:mean(a.map(v=>((v-m)/s)**4))-3; };
+  const d = diffs(currArr);
 
   return {
-    filename,
-    meta,
-    mean_current:       parseFloat(meanCur.toFixed(4)),
-    std_current:        parseFloat(stdCur.toFixed(4)),
-    max_current:        parseFloat(maxCur.toFixed(4)),
-    min_current:        parseFloat(minCur.toFixed(4)),
-    range_current:      parseFloat((maxCur - minCur).toFixed(4)),
-    p25_current:        parseFloat(pct(currArr, 25).toFixed(4)),
-    p50_current:        parseFloat(pct(currArr, 50).toFixed(4)),
-    p75_current:        parseFloat(pct(currArr, 75).toFixed(4)),
-    duration:           parseFloat((timeArr[timeArr.length-1] - timeArr[0]).toFixed(4)),
+    filename, meta,
+    mean_current:       +mean(currArr).toFixed(4),
+    std_current:        +std(currArr).toFixed(4),
+    max_current:        +max(currArr).toFixed(4),
+    min_current:        +min(currArr).toFixed(4),
+    range_current:      +(max(currArr)-min(currArr)).toFixed(4),
+    p25_current:        +pct(currArr,25).toFixed(4),
+    p50_current:        +pct(currArr,50).toFixed(4),
+    p75_current:        +pct(currArr,75).toFixed(4),
+    duration:           +(timeArr[timeArr.length-1]-timeArr[0]).toFixed(4),
     data_points:        timeArr.length,
-    mean_diff:          parseFloat(mean(diffs).toFixed(4)),
-    max_diff:           parseFloat(max(diffs).toFixed(4)),
-    energy:             parseFloat(mean(currArr.map(v=>v**2)).toFixed(4)),
-    rms_current:        parseFloat(Math.sqrt(mean(currArr.map(v=>v**2))).toFixed(4)),
-    skewness:           parseFloat(skew(currArr).toFixed(4)),
-    kurtosis:           parseFloat(kurt(currArr).toFixed(4)),
-    mean_current_left:  parseFloat(mean(leftArr).toFixed(4)),
-    mean_current_right: parseFloat(mean(rightArr).toFixed(4)),
-    max_current_left:   parseFloat(max(leftArr).toFixed(4)),
-    max_current_right:  parseFloat(max(rightArr).toFixed(4)),
+    mean_diff:          +mean(d).toFixed(4),
+    max_diff:           +max(d).toFixed(4),
+    energy:             +mean(currArr.map(v=>v**2)).toFixed(4),
+    rms_current:        +Math.sqrt(mean(currArr.map(v=>v**2))).toFixed(4),
+    skewness:           +skew(currArr).toFixed(4),
+    kurtosis:           +kurt(currArr).toFixed(4),
+    mean_current_left:  +mean(leftArr).toFixed(4),
+    mean_current_right: +mean(rightArr).toFixed(4),
+    max_current_left:   +max(leftArr).toFixed(4),
+    max_current_right:  +max(rightArr).toFixed(4),
   };
 }
 
+// ==================== ベースライン判定 ====================
 function judgeWithBaseline(features) {
-  if (baselineData.length === 0) {
-    return { label: "unknown", score: 0, details: [] };
+  if (Object.keys(baselineStats).length === 0) {
+    return { label:"unknown", score:0, maxDrift:0, details:[] };
   }
+
+  const checkFeatures = [
+    "mean_current","max_current","rms_current","std_current",
+    "range_current","mean_diff","max_diff",
+    "energy","skewness","kurtosis",
+    "mean_current_left","mean_current_right",
+    "max_current_left","max_current_right"
+  ];
 
   const details = [];
   let maxDrift = 0;
 
-  const checkFeatures = [
-    "mean_current","max_current","rms_current","std_current",
-    "range_current","duration","mean_diff","max_diff",
-    "energy","skewness","kurtosis"
-  ];
-
   checkFeatures.forEach(feat => {
-    const base = baselineData.find(r => r.feature === feat);
+    const base = baselineStats[feat];
     if (!base || features[feat] === undefined) return;
-    const bMean = parseFloat(base.baseline_mean);
-    const bStd  = parseFloat(base.current_mean !== base.baseline_mean
-      ? Math.abs(parseFloat(base.current_mean) - bMean) : 0) || 1;
-
-    // ベースラインのstdを推定（baseline_drift.csvにはstdがないため近似）
-    // 全データのstd_currentをベースのばらつきとして使用
-    const stdBase = baselineData.find(r => r.feature === "std_current");
-    const sigma = stdBase ? parseFloat(stdBase.baseline_mean) : (bMean * 0.1 || 1);
-
-    const drift = sigma > 0 ? Math.abs(features[feat] - bMean) / sigma : 0;
+    const bMean = base.mean;
+    const bStd  = base.std;
+    if (bStd === 0) {
+      details.push({ feature:feat, value:features[feat],
+        baseline:+bMean.toFixed(3), drift:0, status:"normal" });
+      return;
+    }
+    const drift = Math.abs(features[feat] - bMean) / bStd;
     maxDrift = Math.max(maxDrift, drift);
-
     details.push({
       feature: feat,
       value:   features[feat],
-      baseline: bMean,
-      drift:   parseFloat(drift.toFixed(2)),
-      status:  drift >= 3.0 ? "danger" : drift >= 1.5 ? "warning" : "normal"
+      baseline: +bMean.toFixed(3),
+      bStd:     +bStd.toFixed(3),
+      drift:    +drift.toFixed(2),
+      status:   drift >= 3.0 ? "danger" : drift >= 2.0 ? "warning" : "normal"
     });
   });
 
-  const label = maxDrift >= 3.0 ? "danger" : maxDrift >= 1.5 ? "warning" : "normal";
-  const score = Math.min(1.0, maxDrift / 5.0);
-
-  return { label, score: parseFloat(score.toFixed(3)), maxDrift: parseFloat(maxDrift.toFixed(2)), details };
+  const label = maxDrift >= 3.0 ? "danger"
+              : maxDrift >= 2.0 ? "warning"
+              : "normal";
+  return {
+    label,
+    score:    +(Math.min(1.0, maxDrift/5.0)).toFixed(3),
+    maxDrift: +maxDrift.toFixed(2),
+    details
+  };
 }
 
+// ==================== 判定結果表示 ====================
 function renderJudgeResult(el, filename, features, judgment) {
-  const labelText = judgment.label === "danger" ? "🚨 異常予兆"
-                  : judgment.label === "warning" ? "⚠️ 要注意"
-                  : judgment.label === "unknown" ? "❓ ベースラインなし"
-                  : "✅ 正常";
-  const cls = `judge-result show judge-${judgment.label === "unknown" ? "normal" : judgment.label}`;
-  const opLabel = features.meta.operation || "";
+  const cfg = {
+    danger:  { icon:"🚨", text:"異常予兆",   cls:"judge-danger",  lcls:"judge-label-danger"  },
+    warning: { icon:"⚠️", text:"要注意",     cls:"judge-warning", lcls:"judge-label-warning" },
+    normal:  { icon:"✅", text:"正常",       cls:"judge-normal",  lcls:"judge-label-normal"  },
+    unknown: { icon:"❓", text:"判定不可",   cls:"judge-unknown", lcls:"judge-label-unknown" },
+  };
+  const c = cfg[judgment.label] || cfg.unknown;
+  el.className = `judge-result show ${c.cls}`;
 
-  const featureItems = judgment.details.map(d => {
-    const driftCls = d.status === "danger" ? "drift-ng" : d.status === "warning" ? "drift-warn" : "drift-ok";
-    const driftIcon = d.status === "danger" ? "🔴" : d.status === "warning" ? "🟡" : "🟢";
-    return `<div class="judge-feature-item">
-      <div class="jf-name">${d.feature}</div>
-      <div class="jf-val">${d.value}</div>
-      <div class="jf-drift ${driftCls}">${driftIcon} 乖離: ${d.drift}σ（基準: ${d.baseline}）</div>
-    </div>`;
+  const opLabel = features.meta.operation || "";
+  const metaStr = [
+    features.meta.station ? features.meta.station+"駅" : "",
+    features.meta.line    ? features.meta.line+"番線"  : "",
+    features.meta.car     ? features.meta.car+"号車"   : "",
+    features.meta.door    ? features.meta.door+"番ドア": "",
+    opLabel
+  ].filter(Boolean).join(" ");
+
+  // 特徴量テーブル行
+  const tableRows = judgment.details.map(d => {
+    const driftCls = d.status==="danger"?"drift-ng":d.status==="warning"?"drift-warn":"drift-ok";
+    const icon = d.status==="danger"?"🔴":d.status==="warning"?"🟡":"🟢";
+    return `<tr>
+      <td>${d.feature}</td>
+      <td style="text-align:right;">${d.value}</td>
+      <td style="text-align:right;">${d.baseline}</td>
+      <td style="text-align:right;">${d.bStd ?? "-"}</td>
+      <td style="text-align:right;" class="${driftCls}">${icon} ${d.drift}σ</td>
+    </tr>`;
   }).join("");
 
-  el.className = cls;
   el.innerHTML = `
-    <div class="judge-title">${labelText}</div>
-    <div style="font-size:12px;color:var(--text-light);margin-bottom:8px;">
-      📄 ${filename}　
-      ${features.meta.station || ""}駅 ${features.meta.line || ""}番線
-      ${features.meta.car || ""}号車 ${features.meta.door || ""}番ドア
-      ${opLabel}
+    <!-- メイン判定表示 -->
+    <div class="judge-main">
+      <div class="judge-icon">${c.icon}</div>
+      <div class="judge-text-block">
+        <div class="judge-label ${c.lcls}">${c.text}</div>
+        <div class="judge-sub">
+          📄 ${filename}<br>
+          ${metaStr}
+        </div>
+      </div>
     </div>
-    <div style="display:flex;gap:16px;font-size:13px;margin-bottom:12px;flex-wrap:wrap;">
-      <span>最大乖離: <strong>${judgment.maxDrift}σ</strong></span>
-      <span>平均電流: <strong>${features.mean_current} mA</strong></span>
-      <span>最大電流: <strong>${features.max_current} mA</strong></span>
-      <span>計測時間: <strong>${features.duration} s</strong></span>
-      <span>データ点数: <strong>${features.data_points}</strong></span>
+
+    <!-- 主要指標 -->
+    <div class="judge-metrics">
+      <div class="judge-metric">
+        <div class="jm-val">${judgment.maxDrift}σ</div>
+        <div class="jm-label">最大乖離</div>
+      </div>
+      <div class="judge-metric">
+        <div class="jm-val">${features.mean_current}</div>
+        <div class="jm-label">平均電流 (mA)</div>
+      </div>
+      <div class="judge-metric">
+        <div class="jm-val">${features.max_current}</div>
+        <div class="jm-label">最大電流 (mA)</div>
+      </div>
+      <div class="judge-metric">
+        <div class="jm-val">${features.rms_current}</div>
+        <div class="jm-label">RMS電流 (mA)</div>
+      </div>
+      <div class="judge-metric">
+        <div class="jm-val">${features.duration}s</div>
+        <div class="jm-label">計測時間</div>
+      </div>
+      <div class="judge-metric">
+        <div class="jm-val">${features.data_points}</div>
+        <div class="jm-label">データ点数</div>
+      </div>
     </div>
-    <div class="judge-feature-grid">${featureItems}</div>
-    <div style="margin-top:12px;font-size:11px;color:var(--text-light);">
-      ※ ベースラインとの乖離度（σ）で判定：1.5σ以上=要注意、3.0σ以上=異常予兆
+
+    <!-- プルダウン詳細 -->
+    <button class="judge-detail-toggle" onclick="toggleDetail(this)">
+      <span>📊 特徴量詳細・乖離値を見る</span>
+      <span id="toggleArrow">▼</span>
+    </button>
+    <div class="judge-detail-body">
+      <table class="judge-feature-table">
+        <thead><tr>
+          <th>特徴量</th>
+          <th style="text-align:right;">現在値</th>
+          <th style="text-align:right;">基準値</th>
+          <th style="text-align:right;">基準σ</th>
+          <th style="text-align:right;">乖離度</th>
+        </tr></thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+      <div style="font-size:11px;color:var(--text-light);padding:8px 10px;">
+        ※ 乖離度の基準：🟢 2σ未満=正常　🟡 2〜3σ=要注意　🔴 3σ以上=異常予兆
+      </div>
     </div>`;
+}
+
+function toggleDetail(btn) {
+  const body = btn.nextElementSibling;
+  const arrow = btn.querySelector("#toggleArrow");
+  const isOpen = body.classList.toggle("open");
+  arrow.textContent = isOpen ? "▲" : "▼";
+  btn.querySelector("span").textContent = isOpen
+    ? "📊 特徴量詳細・乖離値を閉じる"
+    : "📊 特徴量詳細・乖離値を見る";
 }
 
 // ==================== フィルター ====================
@@ -584,15 +670,15 @@ function applyFilter() {
 // ==================== テーブル描画 ====================
 function renderTable() {
   const tbody = document.getElementById("resultTableBody");
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const items = filteredResults.slice(start, start + PAGE_SIZE);
+  const start = (currentPage-1)*PAGE_SIZE;
+  const items = filteredResults.slice(start, start+PAGE_SIZE);
   if (items.length === 0) {
     tbody.innerHTML = `<tr><td colspan="7"><div class="empty">
       <div class="e-icon">📭</div><p>該当データがありません</p></div></td></tr>`;
     return;
   }
-  tbody.innerHTML = items.map((r, i) => {
-    const absIdx = start + i;
+  tbody.innerHTML = items.map((r,i) => {
+    const absIdx = start+i;
     const rowCls = r.label==="danger"?"row-danger":r.label==="warning"?"row-warning":"";
     const badgeText = r.label==="danger"?"🚨 異常予兆":r.label==="warning"?"⚠️ 要注意":r.label==="normal"?"✅ 正常":"❓ 不明";
     const fillCls = r.label==="danger"?"fill-d":r.label==="warning"?"fill-w":"fill-n";
@@ -613,30 +699,30 @@ function renderTable() {
 }
 
 function renderPagination() {
-  const total = Math.ceil(filteredResults.length / PAGE_SIZE);
+  const total = Math.ceil(filteredResults.length/PAGE_SIZE);
   const el = document.getElementById("pagination");
-  if (total <= 1) { el.innerHTML = ""; return; }
-  let html = "";
-  for (let i = 1; i <= total; i++)
-    html += `<button class="page-btn ${i===currentPage?"active":""}" onclick="goPage(${i})">${i}</button>`;
-  el.innerHTML = html;
+  if (total<=1){el.innerHTML="";return;}
+  let html="";
+  for(let i=1;i<=total;i++)
+    html+=`<button class="page-btn ${i===currentPage?"active":""}" onclick="goPage(${i})">${i}</button>`;
+  el.innerHTML=html;
 }
-function goPage(p) { currentPage = p; renderTable(); renderPagination(); }
+function goPage(p){currentPage=p;renderTable();renderPagination();}
 
 // ==================== 行選択 ====================
 function selectRow(idx) {
-  const r = filteredResults[idx]; if (!r) return;
+  const r = filteredResults[idx]; if(!r)return;
   const dp = document.getElementById("detailPanel");
   const featureRows = Object.entries(r.features||{}).map(([k,v])=>
     `<div class="detail-row"><span class="key">${k}</span>
      <span class="val-num">${typeof v==="number"?v.toFixed(3):v}</span></div>`).join("");
   const actionLabel = r.operation==="open"?"開動作":r.operation==="close"?"閉動作":r.action||r.operation;
-  dp.innerHTML = `
+  dp.innerHTML=`
     <div class="detail-row"><span class="key">日時</span><span class="val-num">${r.datetime}</span></div>
     <div class="detail-row"><span class="key">対象</span>
       <span class="val-num">${r.car}号車 ${r.door}番ドア ${actionLabel}</span></div>
-    <div class="detail-row"><span class="key">アンサンブルスコア</span>
-      <span class="val-num" style="color:${r.label==="danger"?"var(--danger)":r.label==="warning"?"var(--warning)":"var(--success)}"};">
+    <div class="detail-row"><span class="key">スコア</span>
+      <span class="val-num" style="color:${r.label==="danger"?"var(--danger)":r.label==="warning"?"var(--warning)":"var(--success)"};">
       ${(r.score||0).toFixed(4)}</span></div>
     <div style="margin-top:10px;font-size:11px;font-weight:600;color:var(--text-light);margin-bottom:6px;">特徴量</div>
     ${featureRows}`;
@@ -654,7 +740,7 @@ function selectRow(idx) {
       <div class="bar-bg" style="margin-top:4px;">
         <div class="bar-fill ${fill}" style="width:${pct}%;"></div></div></div>`;
   }).join("");
-  mp.innerHTML = `<div class="model-grid">${modelItems}</div>`;
+  mp.innerHTML=`<div class="model-grid">${modelItems}</div>`;
 }
 
 // ==================== スコア推移グラフ ====================
@@ -679,12 +765,12 @@ function drawScoreChart() {
   });
   ctx.strokeStyle="#1d4ed8";ctx.lineWidth=1.5;ctx.beginPath();
   data.forEach((r,i)=>{
-    const x=pad.l+(i/(data.length-1))*cW;
+    const x=pad.l+(i/(data.length-1||1))*cW;
     const y=pad.t+cH*(1-(r.score||0));
     i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
   });ctx.stroke();
   data.forEach((r,i)=>{
-    const x=pad.l+(i/(data.length-1))*cW;
+    const x=pad.l+(i/(data.length-1||1))*cW;
     const y=pad.t+cH*(1-(r.score||0));
     const c=r.label==="danger"?"#dc2626":r.label==="warning"?"#ca8a04":"#16a34a";
     ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();
@@ -707,13 +793,16 @@ function generateDemoResults() {
       datetime:now.toISOString().slice(0,16).replace("T"," "),
       car:String(car),door:String(door),operation:op,
       action:op==="open"?"開動作":"閉動作",
-      score:parseFloat(score.toFixed(4)),label,
+      score:+score.toFixed(4),label,
       model_details:{
-        individual_isolation_forest:{score:parseFloat((score+Math.random()*0.05).toFixed(4)),label,source:"individual"},
-        individual_lof:{score:parseFloat((score+Math.random()*0.05).toFixed(4)),label,source:"individual"},
-        unified_isolation_forest:{score:parseFloat((score+Math.random()*0.05).toFixed(4)),label,source:"unified"}
+        individual_isolation_forest:{score:+(score+Math.random()*0.05).toFixed(4),label,source:"individual"},
+        individual_lof:{score:+(score+Math.random()*0.05).toFixed(4),label,source:"individual"},
+        unified_isolation_forest:{score:+(score+Math.random()*0.05).toFixed(4),label,source:"unified"}
       },
-      features:{mean_current:parseFloat((80+Math.random()*20).toFixed(1)),max_current:parseFloat((300+Math.random()*100).toFixed(1))}
+      features:{
+        mean_current:+(80+Math.random()*20).toFixed(1),
+        max_current:+(300+Math.random()*100).toFixed(1)
+      }
     });
   }}}
   const danger=results.filter(r=>r.label==="danger").length;
@@ -723,7 +812,7 @@ function generateDemoResults() {
 }
 
 window.addEventListener("load", loadAll);
-window.addEventListener("resize", () => { drawScoreChart(); });
+window.addEventListener("resize", drawScoreChart);
 </script>
 </body>
 </html>
