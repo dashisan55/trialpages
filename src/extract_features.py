@@ -1,17 +1,15 @@
 """
 特徴量抽出スクリプト
-Excelファイル → 特徴量CSV
+ExcelファイルまたはCSVファイル → 特徴量CSV
 
 使い方:
   python src/extract_features.py --input data/raw --output data/features
 """
 
 import os
-import re
 import glob
 import argparse
 import logging
-from pathlib import Path
 from datetime import datetime
 
 import numpy as np
@@ -32,10 +30,35 @@ def load_config(config_path: str = "config/settings.yaml") -> dict:
 
 
 def parse_excel(filepath: str) -> tuple:
+    """
+    ExcelまたはCSVファイルを読み込む
+    """
+    ext = os.path.splitext(filepath)[1].lower()
+
     try:
-        raw = pd.read_excel(filepath, header=None, engine="openpyxl")
+        if ext == ".xlsx":
+            raw = pd.read_excel(filepath, header=None, engine="openpyxl")
+        elif ext == ".csv":
+            # 文字コードを自動判定（UTF-8 → Shift-JIS の順で試みる）
+            for encoding in ["utf-8", "shift-jis", "cp932"]:
+                try:
+                    raw = pd.read_csv(
+                        filepath,
+                        header=None,
+                        encoding=encoding
+                    )
+                    break
+                except (UnicodeDecodeError, Exception):
+                    continue
+            else:
+                logger.error(f"文字コード判定失敗: {filepath}")
+                return None, None
+        else:
+            logger.error(f"非対応ファイル形式: {filepath}")
+            return None, None
+
     except Exception as e:
-        logger.error(f"Excel読み込みエラー: {filepath} → {e}")
+        logger.error(f"ファイル読み込みエラー: {filepath} → {e}")
         return None, None
 
     meta = {}
@@ -150,7 +173,6 @@ def compute_features(meta, df, phases, side="left"):
         steady_mean = feat.get("steady_mean", dc.mean())
         feat["decel_spike_ratio"] = dc.max() / (steady_mean + 1e-6)
         if len(dc) > 1:
-            import numpy as np
             feat["decel_slope"] = float(
                 np.polyfit(range(len(dc)), dc.values, 1)[0]
             )
@@ -176,11 +198,15 @@ def process_file(filepath, phases):
 
 
 def extract_all(raw_dir, output_dir, config):
-    import glob as glob_mod
-    import pandas as pd
-    import numpy as np
     phases = config["feature_extraction"]["phases"]
-    files  = sorted(glob_mod.glob(os.path.join(raw_dir, "**", "*.xlsx"), recursive=True))
+
+    # ExcelとCSVの両方を対象にする
+    files_xlsx = glob.glob(
+        os.path.join(raw_dir, "**", "*.xlsx"), recursive=True)
+    files_csv  = glob.glob(
+        os.path.join(raw_dir, "**", "*.csv"),  recursive=True)
+    files = sorted(files_xlsx + files_csv)
+
     logger.info(f"対象ファイル数: {len(files)}")
 
     all_features = []
