@@ -38,11 +38,11 @@ anomaly_detection:
   individual_model: true
   unified_model: true
   # 汚染率（正常データ中の外れ値想定割合）
-  contamination: 0.02
+  contamination: 0.01
 
 thresholds:
-  warning: 0.40
-  danger:  0.65
+  warning: 0.60
+  danger:  0.80
 
 schedule:
   # 再学習：毎週月曜 2:00 JST
