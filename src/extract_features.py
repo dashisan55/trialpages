@@ -70,8 +70,8 @@ def parse_excel(filepath: str) -> tuple:
     data_start = None
 
     for i, row in raw.iterrows():
-        cell = str(row.iloc[0]) if pd.notna(row.iloc[0]) else ""
-        val  = str(row.iloc[1]) if pd.notna(row.iloc[1]) else ""
+        cell = str(row.iloc[0]) if len(row) > 0 and pd.notna(row.iloc[0]) else ""
+        val  = str(row.iloc[1]) if len(row) > 1 and pd.notna(row.iloc[1]) else ""
 
         if "駅名"      in cell: meta["station"]  = val
         elif "番線"    in cell: meta["line"]      = val
