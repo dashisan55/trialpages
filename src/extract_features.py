@@ -46,7 +46,8 @@ def parse_excel(filepath: str) -> tuple:
                         filepath,
                         header=None,
                         encoding=encoding,
-                        on_bad_lines='skip'
+                        on_bad_lines='skip',
+                        comment='#'
                     )
                     logger.debug(f"読み込み成功 ({encoding}): {filepath}")
                     break
@@ -78,7 +79,8 @@ def parse_excel(filepath: str) -> tuple:
         elif "号車番号" in cell: meta["car"]      = val
         elif "ドア番号" in cell: meta["door"]     = val
         elif "動作日時" in cell: meta["datetime"] = val
-        elif "時刻"    in cell and data_start is None:
+        elif "動作種別" in cell: meta["operation_raw"] = val
+        elif "時間"    in cell and data_start is None:
             data_start = i + 1
 
     if data_start is None:
@@ -96,14 +98,19 @@ def extract_features(meta: dict, df: pd.DataFrame, filepath: str) -> dict:
     メタデータとデータフレームから特徴量を抽出する
     """
     try:
-        # 時刻列と電流列を取得
-        time_col = df.iloc[:, 0].astype(float)
-        current_col = df.iloc[:, 1].astype(float)
+        # 時刻列と電流列を取得（0列目:時間, 1列目:左扉電流, 2列目:右扉電流）
+        time_col    = pd.to_numeric(df.iloc[:, 0], errors='coerce')
+        current_left  = pd.to_numeric(df.iloc[:, 1], errors='coerce')
+        current_right = pd.to_numeric(df.iloc[:, 2], errors='coerce')
 
         # NaNを除去
-        valid = ~(time_col.isna() | current_col.isna())
-        time_arr = time_col[valid].values
-        curr_arr = current_col[valid].values
+        valid = ~(time_col.isna() | current_left.isna())
+        time_arr  = time_col[valid].values
+        curr_left = current_left[valid].values
+        curr_right = current_right[valid].values if not current_right.isna().all() else curr_left
+
+        # 合成電流（左右平均）
+        curr_arr = (curr_left + curr_right) / 2.0
 
         if len(curr_arr) < 10:
             logger.warning(f"データ点数不足: {filepath}")
@@ -116,7 +123,7 @@ def extract_features(meta: dict, df: pd.DataFrame, filepath: str) -> dict:
         elif "閉動作" in filename:
             operation = "close"
         else:
-            operation = "unknown"
+            operation = meta.get("operation_raw", "unknown")
 
         # ファイル名からタイムスタンプを取得
         timestamp_str = filename.split("_")[0]
@@ -162,6 +169,12 @@ def extract_features(meta: dict, df: pd.DataFrame, filepath: str) -> dict:
             # 歪度・尖度
             "skewness": float(pd.Series(curr_arr).skew()),
             "kurtosis": float(pd.Series(curr_arr).kurtosis()),
+
+            # 左右個別の統計量
+            "mean_current_left":  float(np.mean(curr_left)),
+            "mean_current_right": float(np.mean(curr_right)),
+            "max_current_left":   float(np.max(curr_left)),
+            "max_current_right":  float(np.max(curr_right)),
 
             # ラベル（正常=0, 異常=1）※初期値は正常
             "label": 0
