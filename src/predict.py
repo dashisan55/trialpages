@@ -82,11 +82,9 @@ def _map_score(raw_score, dist):
 
 
 def predict_single(row, feature_cols, model_dir, config):
-    car    = str(row.get("car",    "1"))
-    door   = str(row.get("door",   "1"))
-    side   = str(row.get("side",   "left"))
-    action = str(row.get("action", "開動作"))
-    action_short = action.replace("動作", "")
+    car       = str(row.get("car",       "1"))
+    door      = str(row.get("door",      "1"))
+    operation = str(row.get("operation", "open"))
 
     x = row[feature_cols].values.reshape(1, -1)
     x = np.nan_to_num(x, nan=0.0)
@@ -97,7 +95,7 @@ def predict_single(row, feature_cols, model_dir, config):
     # 個別モデルで判定
     individual_dir = os.path.join(
         model_dir, "individual",
-        f"car{car}_door{door}_{side}_{action_short}"
+        f"car{car}_door{door}_{operation}"
     )
     for mn in model_names:
         model, scaler = load_model_and_scaler(individual_dir, mn)
@@ -117,7 +115,7 @@ def predict_single(row, feature_cols, model_dir, config):
         }
 
     # 統合モデルで判定
-    unified_dir = os.path.join(model_dir, "unified", f"unified_{action_short}")
+    unified_dir = os.path.join(model_dir, "unified", f"unified_{operation}")
     for mn in model_names:
         model, scaler = load_model_and_scaler(unified_dir, mn)
         dist = load_dist_info(unified_dir, mn)
@@ -140,20 +138,23 @@ def predict_single(row, feature_cols, model_dir, config):
     ensemble_score = float(np.mean(valid_scores)) if valid_scores else 0.0
     ensemble_label = get_label(ensemble_score, config)
 
+    # 動作種別の日本語表示
+    action_jp = "開動作" if operation == "open" else "閉動作" if operation == "close" else operation
+
     return {
-        "id":            f"{row.get('datetime','')}_{car}_{door}_{side}",
-        "datetime":      str(row.get("datetime", "")),
+        "id":            f"{row.get('timestamp','')}_{car}_{door}_{operation}",
+        "datetime":      str(row.get("timestamp", "")),
         "car":           car,
         "door":          door,
-        "side":          side,
-        "action":        action,
+        "operation":     operation,
+        "action":        action_jp,
         "score":         round(ensemble_score, 4),
         "label":         ensemble_label,
         "model_details": results_by_model,
         "features": {
             col: round(float(row[col]), 4)
-            for col in feature_cols if col in row.index
-            and not np.isnan(float(row[col]))
+            for col in feature_cols
+            if col in row.index and not np.isnan(float(row[col]))
         }
     }
 
@@ -162,8 +163,11 @@ def predict_all(features_path, models_dir, output_path, config):
     df = pd.read_csv(features_path)
     logger.info(f"判定対象: {len(df)}件")
 
-    exclude = ["station","line","car","door","action","side",
-               "datetime","temp","humidity","pressure","filepath"]
+    # 除外列（メタデータ列）
+    exclude = [
+        "timestamp", "station", "line", "car", "door",
+        "operation", "filename", "label"
+    ]
     feature_cols = [c for c in df.columns if c not in exclude]
     logger.info(f"使用特徴量: {len(feature_cols)}列")
 
