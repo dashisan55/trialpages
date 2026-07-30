@@ -1,0 +1,63 @@
+# ========================================
+# ホームドア異常予兆検知システム 設定ファイル
+# ========================================
+
+station:
+  name: "五反田"
+  line: 1
+  cars: [1, 2, 3]
+  doors: [1, 2, 3]
+
+data:
+  raw_dir: "data/raw"
+  features_dir: "data/features"
+  results_dir: "data/results"
+  models_dir: "models"
+  reports_dir: "reports"
+  # 学習に使う直近日数
+  train_days: 90
+
+feature_extraction:
+  # フェーズ定義（秒）
+  phases:
+    idle:    [0.00, 0.78]
+    startup: [0.78, 1.00]
+    steady:  [1.00, 2.75]
+    decel:   [2.75, 3.30]
+    bounce:  [3.30, 4.15]
+    lock:    [4.15, 4.35]
+    after:   [4.35, 11.0]
+
+anomaly_detection:
+  # 使用モデル
+  models:
+    - "isolation_forest"
+    - "lof"
+    - "one_class_svm"
+  # 個別モデル（ドアごと）と統合モデルの両方を作成
+  individual_model: true
+  unified_model: true
+  # 汚染率（正常データ中の外れ値想定割合）
+  contamination: 0.02
+
+thresholds:
+  warning: 0.40
+  danger:  0.65
+
+schedule:
+  # 再学習：毎週月曜 2:00 JST
+  retrain_cron: "0 17 * * 0"   # UTC 17:00 = JST 02:00
+  # 朝の点検判定：毎日 5:30 JST
+  morning_check_cron: "30 20 * * *"  # UTC 20:30 = JST 05:30
+
+notification:
+  email:
+    enabled: true
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    # GitHub Secrets に設定
+    # MAIL_FROM, MAIL_TO, MAIL_PASSWORD
+  teams:
+    enabled: true
+    # GitHub Secrets に設定
+    # TEAMS_WEBHOOK_URL
