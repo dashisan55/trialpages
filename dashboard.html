@@ -486,7 +486,7 @@ function extractFeatures(text, filename) {
     data_points:        timeArr.length,
     mean_diff:          +mean(d).toFixed(4),
     max_diff:           +max(d).toFixed(4),
-    energy:             +mean(currArr.map(v=>v**2)).toFixed(4),
+    energy:             currArr.reduce((s,v)=>s+v**2,0).toFixed(4),
     rms_current:        +Math.sqrt(mean(currArr.map(v=>v**2))).toFixed(4),
     skewness:           +skew(currArr).toFixed(4),
     kurtosis:           +kurt(currArr).toFixed(4),
