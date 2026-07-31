@@ -28,44 +28,77 @@ jobs:
 
       # ③ 依存パッケージインストール
       - name: パッケージインストール
-        run: pip install -r requirements.txt
-
-      # ④ 特徴量抽出
-      - name: 特徴量抽出
         run: |
-          python src/extract_features.py \
-            --input  data/raw \
-            --output data/features \
-            --config config/settings.yaml
+          pip install -r requirements.txt
+          pip install boto3
+
+      # ④ S3から特徴量CSVを取得
+      - name: S3から特徴量データ取得
+        env:
+          AWS_ACCESS_KEY_ID:     ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION:    ${{ secrets.AWS_REGION }}
+        run: |
+          python - <<'EOF'
+          import boto3
+          import os
+
+          bucket = "training-s3-apne1-471112986994-001"
+          prefix = "homedoor/features"
+
+          s3 = boto3.client('s3')
+          os.makedirs("data/features", exist_ok=True)
+
+          files = [
+              "features_all.csv",
+              "features_fault.csv",
+          ]
+          for f in files:
+              s3_key = f"{prefix}/{f}"
+              local  = f"data/features/{f}"
+              print(f"ダウンロード中: {s3_key} → {local}")
+              s3.download_file(bucket, s3_key, local)
+              size = os.path.getsize(local) / 1024 / 1024
+              print(f"✅ 完了: {size:.1f}MB")
+          EOF
 
       # ⑤ モデル学習
       - name: モデル学習・比較
         run: |
           python src/train_models.py \
-            --features data/features/features_latest.csv \
+            --features data/features/features_all.csv \
             --models   models \
             --reports  reports \
             --config   config/settings.yaml
 
-      # ⑥ 検証AI実行
+      # ⑥ 異常判定実行
+      - name: 異常判定
+        run: |
+          python src/predict.py \
+            --features data/features/features_all.csv \
+            --models   models \
+            --output   data/results/results_latest.json \
+            --config   config/settings.yaml
+
+      # ⑦ 検証AI実行
       - name: 検証AI・自動デバッグ
         run: |
           python src/validate_ai.py \
-            --features data/features/features_latest.csv \
+            --features data/features/features_all.csv \
             --models   models \
             --reports  reports
 
-      # ⑦ 生成ファイルをリポジトリにコミット・プッシュ
+      # ⑧ 生成ファイルをリポジトリにコミット・プッシュ
       - name: モデル・レポートをコミット
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add models/ reports/ data/features/
+          git add models/ reports/ data/results/
           git diff --cached --quiet || git commit -m \
             "🤖 自動再学習 $(date +'%Y-%m-%d %H:%M JST')"
           git push
 
-      # ⑧ 学習完了通知
+      # ⑨ 学習完了通知
       - name: 完了通知（メール・Teams）
         env:
           MAIL_FROM:         ${{ secrets.MAIL_FROM }}
