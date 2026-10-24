@@ -1,0 +1,4461 @@
+{
+  "timestamp": "2026-10-24T22:39:57.257668",
+  "summary": {
+    "total": 890,
+    "passed": 885,
+    "errors": 1,
+    "warnings": 4
+  },
+  "details": [
+    {
+      "check": "特徴量CSVが存在する",
+      "status": "PASS",
+      "detail": "data/features/features_latest.csv が見つかりません"
+    },
+    {
+      "check": "行数が1以上",
+      "status": "PASS",
+      "detail": "行数=430"
+    },
+    {
+      "check": "必須列が存在する",
+      "status": "ERROR",
+      "detail": "['timestamp', 'station', 'line', 'car', 'door', 'operation', 'filename', 'mean_current', 'std_current', 'max_current', 'min_current', 'range_current', 'p25_current', 'p50_current', 'p75_current', 'duration', 'data_points', 'mean_diff', 'max_diff', 'energy', 'rms_current', 'skewness', 'kurtosis', 'mean_current_left', 'mean_current_right', 'max_current_left', 'max_current_right', 'label']"
+    },
+    {
+      "check": "数値列の欠損率が10%以下",
+      "status": "PASS",
+      "detail": "欠損率=0.0%"
+    },
+    {
+      "check": "モデルファイルが1件以上存在",
+      "status": "PASS",
+      "detail": "検索パス=models"
+    },
+    {
+      "check": "モデルファイルが空でない: one_class_svm.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=3615bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: lof.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=73166bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: isolation_forest.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1609353bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: scaler.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1607bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: one_class_svm.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=5055bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: lof.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=73166bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: isolation_forest.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=2049705bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: scaler.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1607bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: one_class_svm.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=3615bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: lof.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=73166bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: isolation_forest.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1609353bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: scaler.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1607bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: one_class_svm.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=5055bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: lof.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=73166bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: isolation_forest.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=2049705bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: scaler.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1607bytes"
+    },
+    {
+      "check": "個別モデルが存在",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "統合モデルが存在",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "判定結果JSONが存在",
+      "status": "PASS",
+      "detail": "data/results/results_latest.json"
+    },
+    {
+      "check": "判定結果が空でない",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 00:03:54_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5431"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 00:03:54_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 00:18:29_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6156"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 00:18:29_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 00:24:58_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5242"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 00:24:58_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 00:33:02_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6012"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 00:33:02_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 00:55:19_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5058"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 00:55:19_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 04:34:03_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6934"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 04:34:03_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 04:34:42_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6192"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 04:34:42_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 04:57:04_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5431"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 04:57:04_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 04:57:24_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6261"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 04:57:24_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 05:30:12_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.4633"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 05:30:12_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 05:35:47_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.626"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 05:35:47_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 06:06:53_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5475"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 06:06:53_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 06:10:16_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.5979"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 06:10:16_1_1_close",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 06:25:29_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5251"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 06:25:29_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 06:33:47_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6084"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 06:33:47_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 06:37:41_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5395"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 06:37:41_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 06:45:48_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6065"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 06:45:48_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 06:48:57_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5272"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 06:48:57_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 06:54:43_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6144"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 06:54:43_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 06:57:57_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5454"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 06:57:57_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:01:13_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6075"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:01:13_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:04:23_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5384"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:04:23_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:08:45_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6045"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:08:45_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:12:23_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5301"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:12:23_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:16:50_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6078"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:16:50_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:20:33_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5495"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:20:33_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:23:49_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6064"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:23:49_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:26:43_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5469"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:26:43_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:30:18_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6008"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:30:18_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:33:07_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5463"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:33:07_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:36:17_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6066"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:36:17_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:38:33_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5329"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:38:33_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:41:23_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6094"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:41:23_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:44:02_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5478"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:44:02_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:46:24_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6141"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:46:24_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:48:55_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5471"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:48:55_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:51:20_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6062"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:51:20_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:55:22_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5316"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:55:22_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 07:57:36_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.608"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 07:57:36_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:03:38_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5367"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:03:38_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:06:01_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6033"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:06:01_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:08:36_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5478"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:08:36_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:10:51_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6228"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:10:51_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:13:36_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5462"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:13:36_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:15:43_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6186"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:15:43_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:18:09_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5401"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:18:09_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:20:43_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6176"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:20:43_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:23:28_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5442"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:23:28_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:25:58_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6074"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:25:58_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:28:18_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5388"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:28:18_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:30:28_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.613"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:30:28_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:33:05_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5414"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:33:05_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:35:30_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6164"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:35:30_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:38:35_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.544"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:38:35_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:40:50_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6172"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:40:50_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:43:36_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5562"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:43:36_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:45:48_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6179"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:45:48_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:48:31_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5415"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:48:31_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:50:42_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6222"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:50:42_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:53:41_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5472"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:53:41_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 08:55:56_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6247"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 08:55:56_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:01:03_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5532"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:01:03_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:03:11_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.619"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:03:11_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:07:11_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5552"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:07:11_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:09:22_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6269"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:09:22_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:14:00_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5438"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:14:00_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:16:17_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6169"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:16:17_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:19:26_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.537"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:19:26_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:23:07_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6227"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:23:07_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:25:48_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5526"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:25:48_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:29:49_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.623"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:29:49_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:33:07_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5544"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:33:07_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:37:56_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6262"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:37:56_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:40:16_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5277"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:40:16_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:44:01_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6232"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:44:01_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:47:01_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5485"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:47:01_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:53:49_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6246"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:53:49_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 09:56:25_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5553"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 09:56:25_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 10:02:11_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6266"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 10:02:11_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 10:08:52_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5459"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 10:08:52_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 10:17:13_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6251"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 10:17:13_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 10:23:25_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5323"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 10:23:25_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 10:32:07_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6175"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 10:32:07_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 10:38:06_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5325"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 10:38:06_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 10:47:05_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6186"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 10:47:05_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 10:54:12_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5384"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 10:54:12_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 11:02:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6184"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 11:02:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 11:08:17_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.542"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 11:08:17_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 11:17:06_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6252"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 11:17:06_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 11:23:50_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.55"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 11:23:50_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 11:32:07_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6174"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 11:32:07_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 11:37:55_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5554"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 11:37:55_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 11:47:04_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.621"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 11:47:04_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 11:53:35_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5572"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 11:53:35_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 12:02:07_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6278"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 12:02:07_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 12:08:17_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5485"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 12:08:17_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 12:17:16_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.622"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 12:17:16_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 12:23:25_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5471"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 12:23:25_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 12:32:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.629"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 12:32:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 12:38:08_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5575"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 12:38:08_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 12:47:07_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6257"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 12:47:07_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 12:53:06_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5414"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 12:53:06_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 13:02:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6246"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 13:02:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 13:07:54_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5543"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 13:07:54_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 13:17:05_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6242"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 13:17:05_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 13:23:32_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5411"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 13:23:32_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 13:32:08_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6284"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 13:32:08_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 13:37:54_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5518"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 13:37:54_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 13:47:13_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6277"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 13:47:13_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 13:52:58_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5426"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 13:52:58_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 14:02:06_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6275"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 14:02:06_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 14:08:06_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5543"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 14:08:06_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 14:17:12_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6295"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 14:17:12_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 14:23:17_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5549"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 14:23:17_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 14:32:18_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6353"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 14:32:18_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 14:38:37_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5253"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 14:38:37_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 14:47:14_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6286"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 14:47:14_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 14:53:03_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5463"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 14:53:03_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 15:02:05_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6205"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 15:02:05_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 15:08:18_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5587"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 15:08:18_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 15:17:02_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6318"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 15:17:02_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 15:23:27_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.559"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 15:23:27_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 15:30:22_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6381"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 15:30:22_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 15:41:30_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.559"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 15:41:30_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 15:48:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6393"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 15:48:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 15:53:07_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.4978"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 15:53:07_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 16:00:10_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6301"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 16:00:10_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 16:11:36_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5529"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 16:11:36_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 16:18:14_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6322"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 16:18:14_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 16:21:44_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5438"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 16:21:44_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 16:30:08_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6392"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 16:30:08_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 16:32:45_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.553"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 16:32:45_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 16:42:08_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6358"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 16:42:08_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 16:45:27_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5616"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 16:45:27_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 16:54:10_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6362"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 16:54:10_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 16:54:40_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.8031"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 16:54:40_1_1_open",
+      "status": "PASS",
+      "detail": "label=danger"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 16:57:08_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5554"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 16:57:08_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:04:55_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6342"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:04:55_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:08:42_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.538"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:08:42_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:14:53_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6339"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:14:53_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:18:06_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.559"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:18:06_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:24:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6334"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:24:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:27:21_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5492"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:27:21_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:33:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6177"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:33:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:37:01_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5542"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:37:01_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:41:49_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.637"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:41:49_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:44:45_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5215"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:44:45_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:50:34_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6312"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:50:34_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:53:58_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5489"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:53:58_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 17:58:31_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6325"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 17:58:31_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:02:04_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5487"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:02:04_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:06:33_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6262"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:06:33_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:09:08_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.56"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:09:08_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:14:29_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6336"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:14:29_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:18:09_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5591"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:18:09_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:22:32_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6314"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:22:32_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:26:50_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5425"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:26:50_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:30:32_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6302"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:30:32_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:33:37_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5559"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:33:37_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:38:32_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6343"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:38:32_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:42:16_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5613"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:42:16_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:46:34_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.635"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:46:34_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:50:30_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5499"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:50:30_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:54:24_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6372"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:54:24_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 18:58:20_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5454"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 18:58:20_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:02:34_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6293"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:02:34_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:06:51_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5467"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:06:51_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:11:28_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6325"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:11:28_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:14:35_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5603"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:14:35_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:20:31_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6313"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:20:31_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:23:44_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5473"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:23:44_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:29:03_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6276"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:29:03_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:32:04_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.555"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:32:04_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:38:02_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6245"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:38:02_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:41:08_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5514"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:41:08_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:47:08_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6375"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:47:08_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:49:54_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5519"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:49:54_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 19:56:02_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6376"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 19:56:02_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:01:12_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5314"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:01:12_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:06:07_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6351"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:06:07_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:09:26_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5536"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:09:26_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:16:29_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6337"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:16:29_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:19:17_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5565"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:19:17_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:27:29_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6196"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:27:29_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:30:59_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5547"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:30:59_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:38:27_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6273"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:38:27_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:42:40_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5429"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:42:40_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:48:57_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6375"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:48:57_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:54:01_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5616"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:54:01_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 20:59:54_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6206"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 20:59:54_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 21:04:38_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5494"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 21:04:38_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 21:11:23_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6296"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 21:11:23_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 21:16:12_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5474"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 21:16:12_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 21:23:21_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6332"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 21:23:21_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 21:29:06_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5298"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 21:29:06_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 21:37:51_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6354"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 21:37:51_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 21:44:40_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5572"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 21:44:40_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 21:52:48_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6345"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 21:52:48_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 22:00:41_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5594"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 22:00:41_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 22:07:19_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6347"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 22:07:19_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 22:14:25_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5414"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 22:14:25_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 22:22:24_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6289"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 22:22:24_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 22:28:54_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5612"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 22:28:54_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 22:37:23_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6258"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 22:37:23_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 22:43:49_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5626"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 22:43:49_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 22:52:22_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6276"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 22:52:22_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 23:00:51_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5469"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 23:00:51_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 23:08:23_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6267"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 23:08:23_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 23:13:52_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5508"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 23:13:52_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 23:25:56_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6272"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 23:25:56_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 23:28:50_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5615"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 23:28:50_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 23:35:59_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6099"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 23:35:59_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 23:43:43_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.4861"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 23:43:43_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 23:53:21_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6169"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 23:53:21_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-29 23:59:43_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.547"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-29 23:59:43_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 00:10:27_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6294"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 00:10:27_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 00:18:01_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5137"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 00:18:01_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 00:25:37_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6319"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 00:25:37_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 00:28:21_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.553"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 00:28:21_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 00:33:08_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6167"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 00:33:08_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 00:48:58_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5539"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 00:48:58_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 04:36:51_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6924"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 04:36:51_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 04:37:04_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6243"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 04:37:04_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 04:57:05_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5462"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 04:57:05_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 04:57:23_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6187"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 04:57:23_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 05:30:21_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5357"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 05:30:21_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 05:35:52_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6201"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 05:35:52_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 06:06:33_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5523"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 06:06:33_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 06:10:15_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6245"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 06:10:15_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 06:25:42_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5466"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 06:25:42_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 06:33:46_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6241"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 06:33:46_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 06:37:26_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5543"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 06:37:26_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 06:45:49_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6223"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 06:45:49_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 06:48:45_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5527"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 06:48:45_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 06:54:50_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.628"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 06:54:50_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 06:57:55_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5597"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 06:57:55_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:01:16_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6187"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:01:16_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:04:00_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5529"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:04:00_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:08:52_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6258"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:08:52_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:13:03_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.551"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:13:03_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:16:45_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6278"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:16:45_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:19:59_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5318"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:19:59_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:23:47_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6258"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:23:47_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:26:42_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5529"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:26:42_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:30:19_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6341"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:30:19_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:32:49_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5524"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:32:49_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:36:19_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6345"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:36:19_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:39:05_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5483"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:39:05_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:41:37_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6374"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:41:37_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:44:04_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5615"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:44:04_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:46:22_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.634"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:46:22_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:49:00_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5619"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:49:00_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:51:22_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6264"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:51:22_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:54:36_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5406"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:54:36_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 07:57:01_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6341"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 07:57:01_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:00:07_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5427"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:00:07_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:02:31_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.634"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:02:31_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:05:05_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5499"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:05:05_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:07:41_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6323"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:07:41_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:10:06_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5493"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:10:06_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:12:14_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6376"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:12:14_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:14:51_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5523"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:14:51_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:17:12_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6356"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:17:12_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:19:42_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.4883"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:19:42_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:21:54_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6204"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:21:54_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:24:22_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5586"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:24:22_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:26:41_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6243"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:26:41_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:28:57_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5605"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:28:57_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:31:18_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.626"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:31:18_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:34:16_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5577"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:34:16_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:36:39_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.633"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:36:39_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:39:10_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5542"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:39:10_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:41:47_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6289"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:41:47_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:45:08_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5515"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:45:08_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:47:41_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6181"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:47:41_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:50:46_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.545"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:50:46_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:53:03_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6324"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:53:03_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:56:55_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5569"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:56:55_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 08:59:55_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6364"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 08:59:55_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:03:58_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.552"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:03:58_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:08:53_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6233"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:08:53_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:11:55_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.563"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:11:55_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:15:06_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6364"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:15:06_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:18:23_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5591"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:18:23_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:23:08_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6264"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:23:08_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:25:52_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5528"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:25:52_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:29:46_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.634"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:29:46_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:32:39_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5496"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:32:39_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:38:01_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6257"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:38:01_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:40:28_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5652"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:40:28_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:44:19_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6267"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:44:19_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:46:51_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5559"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:46:51_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:53:51_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6343"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:53:51_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 09:56:18_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5251"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 09:56:18_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 10:02:08_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6277"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 10:02:08_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 10:09:08_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5441"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 10:09:08_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 10:17:12_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6335"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 10:17:12_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 10:23:20_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5429"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 10:23:20_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 10:32:08_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6259"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 10:32:08_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 10:38:22_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5348"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 10:38:22_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 10:47:03_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6356"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 10:47:03_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 10:53:14_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5454"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 10:53:14_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 11:02:07_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6274"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 11:02:07_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 11:08:21_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5062"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 11:08:21_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 11:17:04_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6022"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 11:17:04_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 11:23:29_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5476"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 11:23:29_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 11:32:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.633"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 11:32:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 11:39:21_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5257"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 11:39:21_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 11:47:21_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6133"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 11:47:21_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 11:53:10_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.529"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 11:53:10_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 12:02:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6321"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 12:02:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 12:08:24_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5446"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 12:08:24_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 12:17:04_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6238"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 12:17:04_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 12:23:55_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.4761"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 12:23:55_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 12:32:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6208"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 12:32:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 12:39:04_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.52"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 12:39:04_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 12:47:10_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6302"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 12:47:10_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 12:53:41_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.548"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 12:53:41_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 13:02:07_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6202"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 13:02:07_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 13:08:02_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5458"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 13:08:02_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 13:17:04_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6266"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 13:17:04_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 13:23:14_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5377"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 13:23:14_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 13:32:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6273"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 13:32:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 13:38:20_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5191"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 13:38:20_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 13:47:12_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6027"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 13:47:12_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 13:52:54_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5426"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 13:52:54_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 14:02:08_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6231"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 14:02:08_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 14:08:41_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5588"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 14:08:41_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 14:17:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6275"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 14:17:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 14:23:00_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5018"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 14:23:00_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 14:32:10_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6287"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 14:32:10_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 14:38:12_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5502"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 14:38:12_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 14:47:07_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6199"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 14:47:07_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 14:52:52_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5469"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 14:52:52_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 15:02:08_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6249"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 15:02:08_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 15:08:42_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5531"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 15:08:42_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 15:17:04_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6236"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 15:17:04_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 15:23:08_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5454"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 15:23:08_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 15:30:15_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6256"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 15:30:15_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 15:42:29_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5493"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 15:42:29_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 15:48:11_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6254"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 15:48:11_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 15:53:12_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5595"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 15:53:12_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 16:00:12_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.5967"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 16:00:12_1_1_close",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 16:16:03_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5536"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 16:16:03_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 16:18:11_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.627"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 16:18:11_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 16:23:55_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5489"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 16:23:55_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 16:30:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6237"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 16:30:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 16:35:41_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5404"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 16:35:41_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 16:42:10_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6261"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 16:42:10_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 16:47:42_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5367"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 16:47:42_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 16:54:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6147"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 16:54:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 16:58:50_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5297"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 16:58:50_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:04:50_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.628"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:04:50_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:10:00_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5537"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:10:00_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:14:52_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6118"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:14:52_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:17:53_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5238"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:17:53_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:24:11_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6347"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:24:11_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:26:56_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5384"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:26:56_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:33:09_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6323"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:33:09_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:37:55_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.4998"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:37:55_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:41:50_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6332"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:41:50_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:44:32_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5372"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:44:32_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:53:18_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.7017"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:53:18_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 17:53:28_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.8063"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 17:53:28_1_1_open",
+      "status": "PASS",
+      "detail": "label=danger"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:01:43_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5563"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:01:43_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:04:32_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6379"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:04:32_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:06:54_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5189"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:06:54_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:09:14_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6264"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:09:14_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:12:10_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5485"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:12:10_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:15:02_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6361"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:15:02_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:19:41_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5423"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:19:41_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:22:28_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.633"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:22:28_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:26:30_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.557"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:26:30_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:30:31_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6355"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:30:31_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:34:28_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.3472"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:34:28_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:38:30_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6211"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:38:30_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:45:03_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5473"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:45:03_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:47:24_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6359"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:47:24_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:55:34_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.532"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:55:34_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 18:58:47_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6322"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 18:58:47_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:01:21_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5491"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:01:21_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:04:08_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6349"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:04:08_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:07:01_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.543"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:07:01_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:11:26_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6319"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:11:26_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:14:22_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5223"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:14:22_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:20:29_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6274"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:20:29_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:23:44_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5543"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:23:44_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:29:00_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6307"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:29:00_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:31:58_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5529"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:31:58_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:38:03_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6307"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:38:03_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:41:09_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5153"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:41:09_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:47:20_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.632"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:47:20_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:52:08_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5471"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:52:08_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 19:56:06_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6355"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 19:56:06_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:00:21_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5426"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:00:21_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:06:02_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6244"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:06:02_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:08:33_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5407"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:08:33_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:16:31_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6361"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:16:31_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:19:36_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5486"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:19:36_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:27:30_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6285"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:27:30_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:31:02_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5473"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:31:02_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:38:30_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6342"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:38:30_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:42:44_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5435"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:42:44_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:49:03_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.631"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:49:03_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:54:04_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5223"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:54:04_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 20:59:59_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6367"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 20:59:59_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 21:04:36_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5555"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 21:04:36_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 21:11:18_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6166"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 21:11:18_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 21:16:13_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5542"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 21:16:13_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 21:23:25_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6227"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 21:23:25_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 21:28:48_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5399"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 21:28:48_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 21:37:53_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6285"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 21:37:53_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 21:45:09_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5527"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 21:45:09_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 21:52:53_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6276"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 21:52:53_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 21:59:18_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.3681"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 21:59:18_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 22:07:27_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.636"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 22:07:27_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 22:14:07_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5492"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 22:14:07_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 22:22:24_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6277"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 22:22:24_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 22:28:51_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5625"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 22:28:51_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 22:37:22_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6302"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 22:37:22_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 22:44:22_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5486"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 22:44:22_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 22:52:20_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.635"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 22:52:20_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 22:59:02_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5517"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 22:59:02_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 23:08:21_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6352"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 23:08:21_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 23:13:48_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5585"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 23:13:48_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 23:25:51_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.638"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 23:25:51_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 23:28:44_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5271"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 23:28:44_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 23:35:53_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6354"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 23:35:53_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 23:43:51_1_1_open",
+      "status": "PASS",
+      "detail": "score=0.5646"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 23:43:51_1_1_open",
+      "status": "PASS",
+      "detail": "label=normal"
+    },
+    {
+      "check": "スコアが0-1の範囲: 2026-06-30 23:53:14_1_1_close",
+      "status": "PASS",
+      "detail": "score=0.6349"
+    },
+    {
+      "check": "判定ラベルが正しい: 2026-06-30 23:53:14_1_1_close",
+      "status": "PASS",
+      "detail": "label=warning"
+    },
+    {
+      "check": "異常率が50%以下",
+      "status": "PASS",
+      "detail": "異常率=0.5%"
+    },
+    {
+      "check": "環境変数 MAIL_FROM が設定済み",
+      "status": "WARN",
+      "detail": ""
+    },
+    {
+      "check": "環境変数 MAIL_TO が設定済み",
+      "status": "WARN",
+      "detail": ""
+    },
+    {
+      "check": "環境変数 MAIL_PASSWORD が設定済み",
+      "status": "WARN",
+      "detail": ""
+    },
+    {
+      "check": "Teams Webhook URL が設定済み",
+      "status": "WARN",
+      "detail": ""
+    }
+  ]
+}
