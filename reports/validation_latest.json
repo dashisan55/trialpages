@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-14T00:59:23.525005",
+  "timestamp": "2026-11-15T00:05:27.998454",
   "summary": {
     "total": 890,
     "passed": 885,
@@ -33,9 +33,19 @@
       "detail": "検索パス=models"
     },
     {
+      "check": "モデルファイルが空でない: one_class_svm.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=3615bytes"
+    },
+    {
       "check": "モデルファイルが空でない: isolation_forest.pkl",
       "status": "PASS",
-      "detail": "ファイルサイズ=2049705bytes"
+      "detail": "ファイルサイズ=1609353bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: scaler.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1607bytes"
     },
     {
       "check": "モデルファイルが空でない: lof.pkl",
@@ -48,54 +58,34 @@
       "detail": "ファイルサイズ=5055bytes"
     },
     {
-      "check": "モデルファイルが空でない: scaler.pkl",
-      "status": "PASS",
-      "detail": "ファイルサイズ=1607bytes"
-    },
-    {
-      "check": "モデルファイルが空でない: isolation_forest.pkl",
-      "status": "PASS",
-      "detail": "ファイルサイズ=1609353bytes"
-    },
-    {
-      "check": "モデルファイルが空でない: lof.pkl",
-      "status": "PASS",
-      "detail": "ファイルサイズ=73166bytes"
-    },
-    {
-      "check": "モデルファイルが空でない: one_class_svm.pkl",
-      "status": "PASS",
-      "detail": "ファイルサイズ=3615bytes"
-    },
-    {
-      "check": "モデルファイルが空でない: scaler.pkl",
-      "status": "PASS",
-      "detail": "ファイルサイズ=1607bytes"
-    },
-    {
-      "check": "モデルファイルが空でない: isolation_forest.pkl",
-      "status": "PASS",
-      "detail": "ファイルサイズ=1609353bytes"
-    },
-    {
-      "check": "モデルファイルが空でない: lof.pkl",
-      "status": "PASS",
-      "detail": "ファイルサイズ=73166bytes"
-    },
-    {
-      "check": "モデルファイルが空でない: one_class_svm.pkl",
-      "status": "PASS",
-      "detail": "ファイルサイズ=3615bytes"
-    },
-    {
-      "check": "モデルファイルが空でない: scaler.pkl",
-      "status": "PASS",
-      "detail": "ファイルサイズ=1607bytes"
-    },
-    {
       "check": "モデルファイルが空でない: isolation_forest.pkl",
       "status": "PASS",
       "detail": "ファイルサイズ=2049705bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: scaler.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1607bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: lof.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=73166bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: one_class_svm.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=3615bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: isolation_forest.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1609353bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: scaler.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=1607bytes"
     },
     {
       "check": "モデルファイルが空でない: lof.pkl",
@@ -108,9 +98,19 @@
       "detail": "ファイルサイズ=5055bytes"
     },
     {
+      "check": "モデルファイルが空でない: isolation_forest.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=2049705bytes"
+    },
+    {
       "check": "モデルファイルが空でない: scaler.pkl",
       "status": "PASS",
       "detail": "ファイルサイズ=1607bytes"
+    },
+    {
+      "check": "モデルファイルが空でない: lof.pkl",
+      "status": "PASS",
+      "detail": "ファイルサイズ=73166bytes"
     },
     {
       "check": "個別モデルが存在",
